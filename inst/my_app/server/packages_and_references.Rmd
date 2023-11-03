@@ -1,0 +1,81 @@
+---
+title: "Packages & References"
+author: "Gordon Grabert"
+date: "`r Sys.Date()`"
+output: html_fragment
+bibliography: packages.bib
+csl: biomed-central.csl
+nocite: |
+        @*
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Packages & References
+
+Here is the list of packages and their references that were used for MeTEor.
+
+### Packages
+
+```{r Packages, eval=FALSE, message=FALSE, warning=FALSE, include=TRUE, tidy = TRUE}
+library(httr)
+library(dendextend)
+library(stats)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(DT)
+library(ggpubr)
+library(plotly)
+library(graphics)
+library(visNetwork)
+library(utils)
+library(tibble)
+library(stringr)
+library(shinyWidgets)
+library(shiny)
+library(readr)
+library(pheatmap)
+library(mgm)
+library(jtools)
+library(grid)
+library(heatmaply)
+library(grDevices)
+library(ggridges)
+library(ggrepel)
+library(FactoMineR)
+library(factoextra)
+library(datamods)
+library(corrr)
+library(reticulate)
+library(igraph)
+library(caret)
+library(shinyjs)
+library(jsonlite)
+library(pROC)
+library(plotROC)
+library(shinydashboard)
+library(shinycssloaders)
+library(randomForest)
+library(xgboost)
+library(MLmetrics)
+library(rlang)
+library(lme4)
+library(sjPlot)
+library(htmlTable)
+library(Biobase)
+library(rstatix)
+library(EnhancedVolcano)
+library(doParallel)
+library(parallel)
+library(foreach)
+library(magrittr)
+library(limma)
+```
+
+### References
+
+
+

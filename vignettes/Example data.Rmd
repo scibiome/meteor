@@ -1,0 +1,23 @@
+---
+title: "MeTEor-Example data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{MeTEor-Example data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(MeTEor)
+
+data("example_data")
+
+head(example_data)
+```
