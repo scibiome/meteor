@@ -1,4 +1,4 @@
-# MeTEor - MEtabolite Trajectory ExplORer ![MeTEor Logo](man/figures/logo.png){width=200px height=200px}
+# MeTEor - MEtabolite Trajectory ExplORer <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
 # Overview
 
