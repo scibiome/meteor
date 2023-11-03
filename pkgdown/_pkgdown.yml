@@ -1,0 +1,24 @@
+url: https://scibiome.github.io/meteor/
+
+home:
+  title: Build websites for R packages
+  sidebar:
+    structure: [links, license, community, citation, authors, dev, custom]
+    components:
+      custom:
+        title: Research Institute
+        text: This application was developed by the Division Data Science in Biomedicine,
+              Peter L. Reichertz Institute for Medical Informatics of TU Braunschweig and Hannover Medical School
+
+
+authors:
+  Data Science in Biomedicine:
+    href: https://www.compsysmed.de/
+    html: >-
+      <img src='https://www.compsysmed.de/media/scibiome_logo_hu28c98603dd3cc7d737f50751fffabc22_54234_1200x0_resize_lanczos_3.png' alt='scibiome' height='120' style="margin-bottom: 3px;" />
+
+
+template:
+  bootstrap: 5
+  theme: dracula
+
