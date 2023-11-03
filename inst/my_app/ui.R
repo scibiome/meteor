@@ -1029,7 +1029,10 @@ ui <- dashboardPage(
           column(
             width = 4,
             actionButton("act_volc", "Compute")
-          )
+          ),
+          column(width = 2, actionButton("load_top_features_volcano", "Add top features to selection"))
+
+
         ),
         fluidRow(column(width = 12, height = 20, withSpinner(plotOutput("volcano.plot", width = "100%", height = "1000px"))))
       ),
