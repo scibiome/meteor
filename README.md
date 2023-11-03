@@ -79,7 +79,7 @@ rminiconda::install_miniconda(path = "C:\\miniconda_py_r", name='miniconda_for_m
 ### Install MeTEor
 
 ```r
-remotes::install_github("gordongrabert/meteor")
+remotes::install_github("scibiome/meteor")
 
 library(MeTEor)
 

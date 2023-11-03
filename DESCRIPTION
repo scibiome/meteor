@@ -12,7 +12,8 @@ Authors@R: c(
     person("Kraft", "Anke RM", role = c("aut")),
     person("Cornberg", "Markus", role = c("aut")),
     person("Hiller", "Karsten", role = c("aut")),
-    person("Kacprowski", "Tim", role = c("aut"))
+    person("Kacprowski", "Tim", role = c("aut")),
+    person("Data Science in Biomedicine", role = c("fnd"))
     )
 Description: METEOR streamlines exploratory analysis of
              time-resolved metabolomics data and offers user-friendly

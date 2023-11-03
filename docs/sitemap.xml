@@ -1,39 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://scibiome.github.io/meteor/404.html</loc>
   </url>
   <url>
-    <loc>/LICENSE-text.html</loc>
+    <loc>https://scibiome.github.io/meteor/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
+    <loc>https://scibiome.github.io/meteor/LICENSE.html</loc>
   </url>
   <url>
-    <loc>/articles/Example data.html</loc>
+    <loc>https://scibiome.github.io/meteor/articles/Example_data.html</loc>
   </url>
   <url>
-    <loc>/articles/Example_data.html</loc>
+    <loc>https://scibiome.github.io/meteor/articles/index.html</loc>
   </url>
   <url>
-    <loc>/articles/MeTEor-Vignette.html</loc>
+    <loc>https://scibiome.github.io/meteor/authors.html</loc>
   </url>
   <url>
-    <loc>/articles/index.html</loc>
+    <loc>https://scibiome.github.io/meteor/index.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://scibiome.github.io/meteor/reference/example_data.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://scibiome.github.io/meteor/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/example_data.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/meteor.html</loc>
+    <loc>https://scibiome.github.io/meteor/reference/meteor.html</loc>
   </url>
 </urlset>
