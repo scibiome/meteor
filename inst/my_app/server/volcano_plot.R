@@ -34,6 +34,27 @@ volcano.dat <- reactiveValues(
   volcano = NULL
 )
 
+#################################################
+observeEvent(input$load_top_features_volcano, {
+
+  # mobse
+  req(data())
+  dat.nam <- data()
+  metabolite.names <- unique(dat.nam[,3]) %>% as.list()
+
+  # volcano.dat$res[order(volcano.dat$res$adj.P.Val),]
+
+
+
+  ui_metabolites$selection <- c(ui_metabolites$selection, rownames(head(volcano.dat$res, 10)))
+
+  updatePickerInput(session, inputId = "metabolite_Picker", choices = metabolite.names, selected=ui_metabolites$selection,
+                    choicesOpt = list(
+                      style = c(rep("color: black;", length(metabolite.names))))
+  )
+
+}, ignoreInit = TRUE)
+
 
 
 observeEvent(input$act_volc, {
@@ -118,7 +139,7 @@ observeEvent(input$act_volc, {
   volcano.dat$data.pre <- data.pre
   volcano.dat$form.test <- form.test
   volcano.dat$cate.name <- cate.name
-  volcano.dat$res <- fit.res.tab.show
+  volcano.dat$res <- fit.res.tab.show[order(fit.res.tab.show$P.Value),]
   volcano.dat$volcano <- voc.plot
 })
 

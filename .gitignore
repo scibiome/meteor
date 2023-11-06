@@ -3,3 +3,6 @@
 .RData
 .Ruserdata
 inst/my_env/
+/.Rprofile
+/renv/
+.idea
