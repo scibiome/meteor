@@ -1,7 +1,7 @@
 url: https://scibiome.github.io/meteor/
 
 home:
-  title: Build websites for R packages
+  title: MeTEor - MEtabolite Trajectory ExplORer
   sidebar:
     structure: [links, license, community, citation, authors, dev, custom]
     components:
