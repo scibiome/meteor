@@ -1,6 +1,6 @@
-#' Example data to test MeTEor
+#' Covid data to test MeTEor
 #'
-#' An example longitudinal data set to test MeTEor
+#' An covid longitudinal data set to test MeTEor
 #'
 #'
 #' @docType data
