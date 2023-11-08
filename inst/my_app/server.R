@@ -121,7 +121,8 @@ options(shiny.maxRequestSize=60*1024^2)
 server <- function(input, output, session) {
 
   #### Example data ----
-  #example_data <<- read_csv("example_data.csv")
+  example_data <<- read_csv("example_data.csv")
+  covid_data <<- read_csv("covid_data.csv")
 
   #### Source: tcam_shiny.py ----
   reticulate::source_python("tcam_shiny.py")
