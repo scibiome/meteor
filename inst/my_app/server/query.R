@@ -47,7 +47,7 @@ observeEvent(input$metabolite_Picker, {
 observeEvent(input$raw_list.dt_cell_edit, {
   d <- raw_list$data
   tmp <- d
-  row <- tmp$row[input$raw_list.dt_cell_edit$row]
+  row <- input$raw_list.dt_cell_edit$row
   raw_list$data[row, input$raw_list.dt_cell_edit$col] <- input$raw_list.dt_cell_edit$value
 })
 
