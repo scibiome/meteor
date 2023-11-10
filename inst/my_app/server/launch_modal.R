@@ -7,7 +7,7 @@ output$info_box_launch <- renderUI({
   HTML("<p align = 'justify'> With the import module you can easily load your data into MeTEor.
                                          Just press the button 'Click for data importing'. <p></p>
                                          Example data can be easily selected via
-                                         <b> Environment > Select a data.frame > 'example_data'</b>.
+                                         <b> Environment > Select a data.frame > 'covid_data' or example_data'</b>.
                                          Under external file you can load your own data.</p> <p>")
 })
 
