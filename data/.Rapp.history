@@ -1,1 +1,3 @@
 load("/Users/gordonplri/Documents/Packages/meteor/data/example_data.rda")
+load("/Users/gordonplri/Documents/Publications/MeTEor/meteor/data/covid_data.rda")
+load("/Users/gordonplri/Documents/Publications/MeTEor/meteor/data/example_data.rda")

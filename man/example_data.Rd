@@ -3,7 +3,7 @@
 \docType{data}
 \name{example_data}
 \alias{example_data}
-\title{Example data to test MeTEor}
+\title{Covid data to test MeTEor}
 \format{
 A data frame with 180000 rows and 6 variables
 }
@@ -11,6 +11,6 @@ A data frame with 180000 rows and 6 variables
 data(example_data)
 }
 \description{
-An example longitudinal data set to test MeTEor
+An covid longitudinal data set to test MeTEor
 }
 \keyword{datasets}
