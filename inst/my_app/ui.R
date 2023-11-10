@@ -65,7 +65,7 @@ ui <- dashboardPage(
           choices = "",
           selected = "",
           grid = TRUE,
-          animate = TRUE
+          animate = F
         ), startExpanded = F
       ),
       menuItem("Categorical Variables",
