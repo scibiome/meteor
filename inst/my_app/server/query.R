@@ -118,6 +118,21 @@ output$export.dt <-   renderDT({
               query_results_json <- httr::content(query_results, "text", encoding = "UTF-8")
               query_results_parsed <- jsonlite::fromJSON(query_results_json, flatten = TRUE)
 
+
+              if (length(query_results_parsed$data) == 0) {
+                show_alert(
+                  title = NULL,
+                  text = tags$span(
+                    tags$h3("Error",
+                            style = "color: steelblue;"),
+                    "No matches found. Please edit metabolite names in the datatable."
+                  ),
+                  html = TRUE
+                )
+                return()
+              }
+
+
               # Group the data by pathway name and input ID, and count the number of hits
               query_results_table <- query_results_parsed$data %>%
                 group_by(pathwayId, pathwayName, inputId) %>%
