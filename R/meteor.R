@@ -59,7 +59,7 @@
 meteor <- function() {
   appDir <- system.file("my_app", package = "MeTEor")
   if (appDir == "") {
-    stop("Could not find myapp. Try re-installing `mypackage`.", call. = FALSE)
+    stop("Could not find my_app. Try re-installing `MeTEor`.", call. = FALSE)
   }
 
   shiny::runApp(appDir, display.mode = "normal", host = "0.0.0.0", port = 3838, quiet = F)

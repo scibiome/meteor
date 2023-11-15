@@ -27,7 +27,6 @@ library(shiny)
 library(readr)
 library(pheatmap)
 library(mgm)
-# library(metabolomics)
 library(jtools)
 library(grid)
 library(heatmaply)
@@ -692,12 +691,12 @@ ui <- dashboardPage(
                 plotlyOutput("line_plot")
               )
             ),
-          #  fluidRow(
-          #    column(
-          #      width = 12, height = 12,
-          #      plotlyOutput("vis_grid")
-          #    )
-          #  ),
+            #  fluidRow(
+            #    column(
+            #      width = 12, height = 12,
+            #      plotlyOutput("vis_grid")
+            #    )
+            #  ),
           ),
           tabPanel(
             "Model comparison",
@@ -723,7 +722,8 @@ ui <- dashboardPage(
                   collapsible = TRUE,
                   htmlOutput("multi_tab")
                 )
-              )),
+              )
+            ),
             fluidRow(
               column(
                 width = 12,
@@ -734,8 +734,9 @@ ui <- dashboardPage(
                   collapsible = TRUE,
                   verbatimTextOutput("res.anova")
                 )
-              ))
+              )
             )
+          )
         ),
         # fluidRow(
         #   column(
@@ -1031,8 +1032,6 @@ ui <- dashboardPage(
             actionButton("act_volc", "Compute")
           ),
           column(width = 2, actionButton("load_top_features_volcano", "Add top features to selection"))
-
-
         ),
         fluidRow(column(width = 12, height = 20, withSpinner(plotOutput("volcano.plot", width = "100%", height = "1000px"))))
       ),
