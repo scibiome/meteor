@@ -19,7 +19,6 @@ library(shiny)
 library(readr)
 library(pheatmap)
 library(mgm)
-#library(metabolomics)
 library(jtools)
 library(grid)
 library(heatmaply)
@@ -59,13 +58,11 @@ library(markdown)
 
 #### Python module ####
 
-
 # Get information about the operating system
 sys_info <- Sys.info()
 
 # Extract the name of the operating system
 os_name <- sys_info["sysname"]
-#
 
 IS_IN_CONTAINER <- Sys.getenv("IS_IN_CONTAINER")
 
@@ -124,13 +121,9 @@ server <- function(input, output, session) {
   load("../../data/covid_data.rda")
   load("../../data/example_data.rda")
 
-  #example_data <<- read_csv("example_data.csv")
-  #covid_data <<- read_csv("covid_data.csv")
-
   #### Source: tcam_shiny.py ----
   reticulate::source_python("tcam_shiny.py")
 
-    # delete comment later
   #### source: launch_modal.R ====
   source(file.path("server", "launch_modal.R"), local = TRUE)$value
 
