@@ -6,3 +6,5 @@ inst/my_env/
 /.Rprofile
 /renv/
 .idea
+/inst/my_app/.covid_data.csv
+/inst/my_app/.example_data.csv
