@@ -315,6 +315,7 @@ observeEvent(input$act_repeated_anova, {
 
   data.filtered <- data() %>%
     filter(metabolites %in% input$id10)
+  print("asds")
 
 
   a <- input$repeated_category
