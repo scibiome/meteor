@@ -35,7 +35,7 @@ docker pull gordomics/meteor
 #### Windows/Linux:
 
 ``` bash
-docker run -d —rm -p 3838:3838 gordomics/meteor
+docker run -d -—rm -p 3838:3838 gordomics/meteor
 ```
 
 #### MacOS:
