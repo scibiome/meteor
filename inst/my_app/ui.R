@@ -27,6 +27,7 @@ library(shiny)
 library(readr)
 library(pheatmap)
 library(mgm)
+# library(metabolomics)
 library(jtools)
 library(grid)
 library(heatmaply)
@@ -64,7 +65,7 @@ ui <- dashboardPage(
           choices = "",
           selected = "",
           grid = TRUE,
-          animate = F
+          animate = TRUE
         ), startExpanded = F
       ),
       menuItem("Categorical Variables",
@@ -611,6 +612,33 @@ ui <- dashboardPage(
               column(width = 2, actionButton("load_top_features_anova", "Add top features to selection"))
             ),
             fluidRow(column(width = 4, DTOutput("ranking.sorted"))),
+          ),
+          tabPanel(
+            "Repeated ANOVA",
+            fluidRow(box(
+              title = "Mixed ANOVA for feature selection (Info)",
+              status = "info", solidHeader = TRUE,
+              collapsible = TRUE, collapsed = TRUE,
+              htmlOutput("info_box_repeated_anova")
+            )),
+            fluidRow(
+              column(
+                width = 8,
+                selectInput(
+                  inputId = "repeated_category", label = "Category:",
+                  choices = "",
+                  selected = "",
+                  width = "800px",
+                  multiple = F,
+                  selectize = TRUE
+                ),
+              )
+            ),
+            fluidRow(
+              column(width = 1, actionButton("act_repeated_anova", "Compute!")),
+              # column(width = 2, actionButton("load_top_features_anova", "Add top features to selection"))
+            ),
+            fluidRow(column(width = 4, DTOutput("repeated_ranking.sorted"))),
           )
         )
 
@@ -691,12 +719,12 @@ ui <- dashboardPage(
                 plotlyOutput("line_plot")
               )
             ),
-            #  fluidRow(
-            #    column(
-            #      width = 12, height = 12,
-            #      plotlyOutput("vis_grid")
-            #    )
-            #  ),
+          #  fluidRow(
+          #    column(
+          #      width = 12, height = 12,
+          #      plotlyOutput("vis_grid")
+          #    )
+          #  ),
           ),
           tabPanel(
             "Model comparison",
@@ -722,8 +750,7 @@ ui <- dashboardPage(
                   collapsible = TRUE,
                   htmlOutput("multi_tab")
                 )
-              )
-            ),
+              )),
             fluidRow(
               column(
                 width = 12,
@@ -734,9 +761,8 @@ ui <- dashboardPage(
                   collapsible = TRUE,
                   verbatimTextOutput("res.anova")
                 )
-              )
+              ))
             )
-          )
         ),
         # fluidRow(
         #   column(
@@ -1032,6 +1058,8 @@ ui <- dashboardPage(
             actionButton("act_volc", "Compute")
           ),
           column(width = 2, actionButton("load_top_features_volcano", "Add top features to selection"))
+
+
         ),
         fluidRow(column(width = 12, height = 20, withSpinner(plotOutput("volcano.plot", width = "100%", height = "1000px"))))
       ),

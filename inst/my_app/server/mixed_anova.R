@@ -306,6 +306,95 @@ output$ranking.sorted <- DT::renderDT(datatable(mixed.anova.feat.selection$ranki
                                                    )
 ))
 
+### repeated measurements ANOVA
+
+
+observeEvent(input$act_repeated_anova, {
+
+  print("asd")
+
+  data.filtered <- data() %>%
+    filter(metabolites %in% input$id10)
+
+
+  a <- input$repeated_category
+  data.filtered <- data() %>%
+    filter(!!sym(input$catVars) %in% input$repeated_category)
+  #
+  #
+  #
+  # summary_stats <- data.filtered %>%
+  #   group_by(time, input$catVars) %>%
+  #   rstatix::get_summary_stats(values, type = "mean_sd")
+  #
+  #
+  # colnames(summary_stats) <- c("Time", "Category", "Variable", "N", "Mean", "SD")
+  #
+  #
+  #
+  #
+  #
+  # res_mixed_anova <- data.filtered %>%
+  #   rstatix::anova_test(
+  #     data = ., dv = values, wid = id,
+  #     between = input$catVars, within = time
+  #   ) %>%
+  #   get_anova_table()
+  #
+  # form.test <- paste0("values~ ", input$catVars)
+  #
+  #
+  # pairwise <- data.filtered %>%
+  #   group_by(time) %>%
+  #   pairwise_t_test(as.formula(form.test), p.adjust.method = "bonferroni")
+  # pairwise
+  #
+  #
+  # # Visualization: boxplots with p-values
+  # pairwise <- pairwise %>% add_xy_position(x = "time")
+  #
+  # pairwise.filtered <- pairwise %>% filter(time != as.character(pairwise[1, 1]))
+  #
+  # boxplot <- data.filtered %>%
+  #   as.data.frame() %>%
+  #   mutate(catVars = as.factor(input$catVars)) %>%
+  #   ggboxplot(.,
+  #             x = "time", y = "values",
+  #             color = input$catVars, palette = "jco"
+  #   ) +
+  #   stat_pvalue_manual(pairwise.filtered, tip.length = 0, hide.ns = TRUE) +
+  #   labs(
+  #     subtitle = get_test_label(res_mixed_anova, detailed = TRUE),
+  #     caption = get_pwc_label(pairwise)
+  #   )
+  #
+  # reactive_mixed_anova$summary_stats <- summary_stats
+  # reactive_mixed_anova$res_mixed_anova <- res_mixed_anova
+  # reactive_mixed_anova$boxplot <- boxplot
+  # reactive_mixed_anova$data.filtered <- data.filtered
+  # reactive_mixed_anova$pairwise <- pairwise
+  # reactive_mixed_anova$pairwise.filtered <- pairwise.filtered
+  # reactive_mixed_anova$computation_done <- TRUE
+})
+
+
+observeEvent(input$catVars, {
+  req(data())
+  dat.nam <- data()
+  a <- input$catVars
+  dat.nam <- dat.nam[a]
+
+  trt.names <- unique(dat.nam[,1]) %>% as.list()
+
+  choices <- trt.names[!is.na(trt.names)]
+
+  updateSelectInput(session, "repeated_category", choices = choices, selected = choices)
+})
+
+
+
+
+
 
 observeEvent(input$load_top_features_anova, {
 
