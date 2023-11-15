@@ -66,60 +66,59 @@ os_name <- sys_info["sysname"]
 
 IS_IN_CONTAINER <- Sys.getenv("IS_IN_CONTAINER")
 
-if (IS_IN_CONTAINER == "TRUE")
-    {
-    print("In container, ENV already installed")
+if (IS_IN_CONTAINER == "TRUE") {
+  print("In container, ENV already installed")
+} else {
+  print(IS_IN_CONTAINER)
+  # Check the name of the operating system
+  if (os_name == "Windows") {
+    # Check if directory my_env exists
+    if (!dir.exists("../my_env")) {
+      reticulate::use_python(rminiconda::find_miniconda_python("miniconda_for_meteor", path = "C:\\miniconda_py_r"), required = TRUE)
+      reticulate::conda_create(envname = "../my_env", python = rminiconda::find_miniconda_python("miniconda_for_meteor", path = "C:\\miniconda_py_r"))
+      reticulate::use_condaenv("../my_env", required = T)
+      reticulate::py_install(packages = c(c("pandas == 1.5.2"), "mprod-package", c("numpy == 1.23.0")))
     } else {
-      print(IS_IN_CONTAINER)
-      # Check the name of the operating system
-      if (os_name == "Windows") {
-        # Check if directory my_env exists
-        if (!dir.exists("../my_env")){
-          reticulate::use_python(rminiconda::find_miniconda_python('miniconda_for_meteor', path = "C:\\miniconda_py_r"), required = TRUE)
-          reticulate::conda_create(envname = '../my_env', python = rminiconda::find_miniconda_python('miniconda_for_meteor', path = "C:\\miniconda_py_r"))
-          reticulate::use_condaenv('../my_env', required = T)
-          reticulate::py_install(packages = c(c("pandas == 1.5.2"), "mprod-package", c("numpy == 1.23.0")))
-        } else{
-          reticulate::use_condaenv('../my_env', required = T)
-        }
-
-      } else if (os_name == "Linux") {
-        # Check if directory my_env exists
-        if (!dir.exists("../my_env")){
-          reticulate::use_python(rminiconda::find_miniconda_python('miniconda_for_meteor'), required = TRUE)
-          reticulate::conda_create(envname = '../my_env', python = rminiconda::find_miniconda_python('miniconda_for_meteor'))
-          reticulate::use_condaenv('../my_env', required = T)
-          reticulate::py_install(packages = c(c("pandas == 1.5.2"), "mprod-package", c("numpy == 1.23.0")))
-        } else{
-          reticulate::use_condaenv('../my_env', required = T)
-        }
-
-      } else if (os_name == "Darwin") {
-        # Check if directory my_env exists
-        if (!dir.exists("../my_env")){
-          reticulate::use_python(rminiconda::find_miniconda_python('miniconda_for_meteor'), required = TRUE)
-          reticulate::conda_create(envname = '../my_env', python = rminiconda::find_miniconda_python('miniconda_for_meteor'))
-          reticulate::use_condaenv('../my_env', required = T)
-          reticulate::py_install(packages = c(c("pandas == 1.5.2"), "mprod-package", c("numpy == 1.23.0")))
-          } else{
-          reticulate::use_condaenv('../my_env', required = T)
-        }
-
-      } else {
-        print("Unknown operating system.")
-      }
+      reticulate::use_condaenv("../my_env", required = T)
+    }
+  } else if (os_name == "Linux") {
+    # Check if directory my_env exists
+    if (!dir.exists("../my_env")) {
+      reticulate::use_python(rminiconda::find_miniconda_python("miniconda_for_meteor"), required = TRUE)
+      reticulate::conda_create(envname = "../my_env", python = rminiconda::find_miniconda_python("miniconda_for_meteor"))
+      reticulate::use_condaenv("../my_env", required = T)
+      reticulate::py_install(packages = c(c("pandas == 1.5.2"), "mprod-package", c("numpy == 1.23.0")))
+    } else {
+      reticulate::use_condaenv("../my_env", required = T)
+    }
+  } else if (os_name == "Darwin") {
+    # Check if directory my_env exists
+    if (!dir.exists("../my_env")) {
+      reticulate::use_python(rminiconda::find_miniconda_python("miniconda_for_meteor"), required = TRUE)
+      reticulate::conda_create(envname = "../my_env", python = rminiconda::find_miniconda_python("miniconda_for_meteor"))
+      reticulate::use_condaenv("../my_env", required = T)
+      reticulate::py_install(packages = c(c("pandas == 1.5.2"), "mprod-package", c("numpy == 1.23.0")))
+    } else {
+      reticulate::use_condaenv("../my_env", required = T)
+    }
+  } else {
+    print("Unknown operating system.")
   }
+}
 
 
 #### File size limit ####
-options(shiny.maxRequestSize=60*1024^2)
+options(shiny.maxRequestSize = 60 * 1024^2)
 
 #### Server function #####
 server <- function(input, output, session) {
-
   #### Example data ----
-  load("../../data/covid_data.rda")
-  load("../../data/example_data.rda")
+  # outside package
+  # load("../../data/covid_data.rda")
+  # load("../../data/example_data.rda")
+  # inside package
+  data("covid_data", package = "MeTEor")
+  data("example_data", package = "MeTEor")
 
   #### Source: tcam_shiny.py ----
   reticulate::source_python("tcam_shiny.py")
@@ -168,6 +167,4 @@ server <- function(input, output, session) {
 
   #### source: packages_and_references ====
   source(file.path("server", "packages_and_references.R"), local = TRUE)$value
-
 }
-

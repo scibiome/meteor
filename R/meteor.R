@@ -62,5 +62,5 @@ meteor <- function() {
     stop("Could not find myapp. Try re-installing `mypackage`.", call. = FALSE)
   }
 
-  shiny::runApp(appDir, display.mode = "normal", host = "0.0.0.0", port = 3838)
+  shiny::runApp(appDir, display.mode = "normal", host = "0.0.0.0", port = 3838, quiet = F)
 }
