@@ -75,6 +75,7 @@ Imports:
     limma,
     knitr,
     rmarkdown,
+    markdown,
     doParallel,
     parallel,
     foreach, 
