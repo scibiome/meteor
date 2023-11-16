@@ -312,15 +312,79 @@ output$ranking.sorted <- DT::renderDT(datatable(mixed.anova.feat.selection$ranki
 observeEvent(input$act_repeated_anova, {
 
   print("asd")
+  # summary_stats <- data_filtered %>%
+  #   group_by(time, input$catVars) %>%
+  #   rstatix::get_summary_stats(values, type = "mean_sd")
 
-  data.filtered <- data() %>%
-    filter(metabolites %in% input$id10)
-  print("asds")
 
 
-  a <- input$repeated_category
-  data.filtered <- data() %>%
+  # Get unique metabolites
+  req(data())
+  dat.nam <- data()
+  metabolites <- unique(dat.nam[, 3]) %>% as.character()
+
+  # Create an empty data frame for ranking
+  ranking <- data.frame(metabolites = metabolites, time.p.value = NA)
+
+  # Iterate over metabolites and calculate ANOVA p-value
+  data_no_na <- data() %>%
     filter(!!sym(input$catVars) %in% input$repeated_category)
+  data_no_na2 <- data_no_na[!is.na(data_no_na[input$catVars]), ]
+
+
+    # Set up a parallel backend
+  cl <- parallel::makeCluster(parallel::detectCores())
+  doParallel::registerDoParallel(cl)
+  # Load the required packages on each node
+  clusterEvalQ(cl, {
+    library(dplyr)
+    library(magrittr)
+    library(rstatix)
+  })
+
+  # Define the list of metabolites
+  # metabolites <- c("metabolite1", "metabolite2", "metabolite3")
+
+  # Define the function to be applied to each metabolite
+  anova_func <- function(i, data, cat) {
+    anova.res <- data %>%
+      filter(metabolites == i) %>%
+      anova_test(
+        data = .,
+        dv = values,
+        wid = id,
+        within = time
+      ) %>%
+      get_anova_table()
+    return(c(i,
+             anova.res[1, 5]))
+  }
+
+  # Apply the function to each metabolite in parallel
+  cat <- input$catVars
+  results <- foreach(i = metabolites, .combine = rbind) %dopar% {
+    anova_func(i, data_no_na2, cat)
+  }
+  unique(data_no_na2["diagnosis"])
+  # Convert the results to a data frame
+  colnames(results) <- c("metabolites", "time.p.value")
+  rownames(results) <- 1:nrow(results)
+  ranking <- as.data.frame(results)
+
+  # Stop the parallel backend
+  stopCluster(cl)
+
+  unregister <- function() {
+    env <- foreach:::.foreachGlobals
+    rm(list=ls(name=env), pos=env)
+  }
+  unregister()
+
+
+
+  mixed.anova.feat.selection$ranking <- ranking
+  result_anova_sorted <- mixed.anova.feat.selection$ranking %>%
+    arrange(desc(time.p.value))
   #
   #
   #
