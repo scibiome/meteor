@@ -123,6 +123,9 @@ server <- function(input, output, session) {
   #### Source: tcam_shiny.py ----
   reticulate::source_python("tcam_shiny.py")
 
+  #### source: sidebar_ui.R ====
+  source(file.path("server", "sidebar_ui.R"), local = TRUE)$value
+
   #### source: launch_modal.R ====
   source(file.path("server", "launch_modal.R"), local = TRUE)$value
 
@@ -150,7 +153,7 @@ server <- function(input, output, session) {
   #### source: linear_mixed_model.R ====
   source(file.path("server", "linear_mixed_model.R"), local = TRUE)$value
 
-  ### source: network.R ====
+  #### source: network.R ====
   source(file.path("server", "network.R"), local = TRUE)$value
 
   #### source: line_plot.R ====
