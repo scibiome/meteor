@@ -23,7 +23,7 @@ observe({
   updateMultiInput(session, "repeated_anova_metabolite", choices = metabolite.names, selected = metabolite.names)
 })
 
-reactive_mixed_anova <- reactiveValues(
+reactive_repeated_anova <- reactiveValues(
   computation_done = FALSE,
   data.filtered = NULL,
   summary_stats = NULL,
@@ -38,7 +38,7 @@ reactive_mixed_anova <- reactiveValues(
 observeEvent(input$act_repeated_anova, {
 
   data.filtered <- data() %>%
-    filter(metabolites %in% input$id10)
+    filter(metabolites %in% input$repeated_anova_metabolite)
 
 
 
@@ -49,14 +49,10 @@ observeEvent(input$act_repeated_anova, {
 
   colnames(summary_stats) <- c("Time", "Category", "Variable", "N", "Mean", "SD")
 
-
-
-
-
   res_mixed_anova <- data.filtered %>%
     rstatix::anova_test(
       data = ., dv = values, wid = id,
-      between = input$catVars, within = time
+      within = time
     ) %>%
     get_anova_table()
 
@@ -87,18 +83,18 @@ observeEvent(input$act_repeated_anova, {
       caption = get_pwc_label(pairwise)
     )
 
-  reactive_mixed_anova$summary_stats <- summary_stats
-  reactive_mixed_anova$res_mixed_anova <- res_mixed_anova
-  reactive_mixed_anova$boxplot <- boxplot
-  reactive_mixed_anova$data.filtered <- data.filtered
-  reactive_mixed_anova$pairwise <- pairwise
-  reactive_mixed_anova$pairwise.filtered <- pairwise.filtered
-  reactive_mixed_anova$computation_done <- TRUE
+  reactive_repeated_anova$summary_stats <- summary_stats
+  reactive_repeated_anova$res_mixed_anova <- res_mixed_anova
+  reactive_repeated_anova$boxplot <- boxplot
+  reactive_repeated_anova$data.filtered <- data.filtered
+  reactive_repeated_anova$pairwise <- pairwise
+  reactive_repeated_anova$pairwise.filtered <- pairwise.filtered
+  reactive_repeated_anova$computation_done <- TRUE
 })
 
 
 output$summary_stats_repeated_anova <- renderDT(
-  datatable(reactive_mixed_anova$summary_stats,
+  datatable(reactive_repeated_anova$summary_stats,
             caption = "Summary statistics",
             options = list(
               searching = FALSE,
@@ -110,54 +106,13 @@ output$summary_stats_repeated_anova <- renderDT(
 
 
 output$res_repeated_anova <- renderPrint({
-  reactive_mixed_anova$res_mixed_anova
+  reactive_repeated_anova$res_mixed_anova
 })
-
-output$boxplot_repeated_anova <- renderPlot({
-  a <- 1
-  # TODO check if there are more than onvalue for colors
-  if (reactive_mixed_anova$computation_done){
-    boxplot <- reactive_mixed_anova$data.filtered %>%
-      as.data.frame() %>%
-      mutate(!!sym(input$catVars) := factor(!!sym(input$catVars))) %>%
-      ggboxplot(.,
-                x = "time", y = "values",
-                color = input$catVars, palette = "jco", fill="#edeff4", size=2
-      ) +
-      stat_pvalue_manual(reactive_mixed_anova$pairwise.filtered, tip.length = 0, hide.ns = TRUE) +
-      labs(
-        subtitle = get_test_label(reactive_mixed_anova$res_mixed_anova, detailed = TRUE),
-        caption = get_pwc_label(reactive_mixed_anova$pairwise)
-      ) + theme(
-        text = element_text(size = 16),
-        panel.background = element_rect(fill = "#edeff4",
-                                        colour = NA_character_), # necessary to avoid drawing panel outline
-        panel.grid.major = element_blank(), # get rid of major grid
-        panel.grid.minor = element_blank(), # get rid of minor grid
-        plot.background = element_rect(fill = "#edeff4",
-                                       colour = NA_character_), # necessary to avoid drawing plot outline
-        legend.background = element_rect(fill = "#edeff4"),
-        # legend.box.background = element_rect(fill = "#edeff4"),
-        # legend.key = element_rect(fill = "#edeff4")
-      )
-    return(boxplot)
-  }
-
-}, bg = '#edeff4')
-
-
-
-
-
-
-
-
-
 
 
 ### repeated ANOVA for feature selection
 
-reactive_repeated_anova <- reactiveValues(
+reactive_repeated_anova_selection <- reactiveValues(
   computation_done = FALSE,
   data.filtered = NULL,
   summary_stats = NULL,
@@ -316,8 +271,4 @@ observeEvent(input$catVars, {
 
   updateSelectInput(session, "repeated_category", choices = choices, selected = choices)
 })
-
-
-
-################### Repeated ANOVA
 

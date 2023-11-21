@@ -646,7 +646,7 @@ ui <- dashboardPage(
               collapsible = TRUE, collapsed = FALSE,
               verbatimTextOutput("res_repeated_anova")
             ))),
-            fluidRow(column(width = 12, plotOutput("boxplot_repeated_anova", width = "100%", height = "1000px"))),
+            fluidRow(column(width = 12, plotOutput("boxplot_repeated_anova", width = "100%", height = 1000))),
           ),
 
           tabPanel(

@@ -117,7 +117,7 @@ output$res_mixed_anova <- renderPrint({
 })
 
 output$boxplot_mixed_anova <- renderPlot({
-  a <- 1
+
   # TODO check if there are more than onvalue for colors
   if (reactive_mixed_anova$computation_done){
       boxplot <- reactive_mixed_anova$data.filtered %>%
