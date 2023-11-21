@@ -127,6 +127,7 @@ ui <- dashboardPage(
         tabName = "stattest", icon = icon("fas fa-chart-column"),
         menuSubItem("Friedman test", tabName = "fried"),
         menuSubItem("Mixed ANOVA", tabName = "mixedanova"),
+        menuSubItem("Repeated ANOVA", tabName = "repanova"),
         menuSubItem("Linear mixed model", tabName = "lmm")
       ),
       menuItem("Network Diagram",
@@ -612,8 +613,10 @@ ui <- dashboardPage(
               column(width = 2, actionButton("load_top_features_anova", "Add top features to selection"))
             ),
             fluidRow(column(width = 4, DTOutput("ranking.sorted"))),
-          ),
-
+          ))),
+          tabItem(
+            tabName = "repanova",
+            tabsetPanel(
           tabPanel(
             "Repeated ANOVA",
             fluidRow(box(

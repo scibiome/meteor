@@ -205,7 +205,7 @@ observeEvent(input$act_repeated_anova_selection, {
   results <- foreach(i = metabolites, .combine = rbind) %dopar% {
     anova_func(i, data_no_na2, cat)
   }
-  unique(data_no_na2["diagnosis"])
+  # unique(data_no_na2["diagnosis"])
   # Convert the results to a data frame
   colnames(results) <- c("metabolites", "time.p.value")
   rownames(results) <- 1:nrow(results)
