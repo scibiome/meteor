@@ -294,6 +294,7 @@ observeEvent(input$act_mixed_anova_selection, {
 
   })
 
+
 output$ranking.sorted <- DT::renderDT(datatable(mixed.anova.feat.selection$ranking.sorted,
                                                    caption = "Ranked metabolites by p-values",
                                                    extensions = "Buttons",
@@ -305,161 +306,6 @@ output$ranking.sorted <- DT::renderDT(datatable(mixed.anova.feat.selection$ranki
                                                      buttons = c("copy", "print", "csv", "excel")
                                                    )
 ))
-
-### repeated measurements ANOVA
-
-
-observeEvent(input$act_repeated_anova, {
-
-  print("asd")
-  # summary_stats <- data_filtered %>%
-  #   group_by(time, input$catVars) %>%
-  #   rstatix::get_summary_stats(values, type = "mean_sd")
-
-
-
-  # Get unique metabolites
-  req(data())
-  dat.nam <- data()
-  metabolites <- unique(dat.nam[, 3]) %>% as.character()
-
-  # Create an empty data frame for ranking
-  ranking <- data.frame(metabolites = metabolites, time.p.value = NA)
-
-  # Iterate over metabolites and calculate ANOVA p-value
-  data_no_na <- data() %>%
-    filter(!!sym(input$catVars) %in% input$repeated_category)
-  data_no_na2 <- data_no_na[!is.na(data_no_na[input$catVars]), ]
-
-
-    # Set up a parallel backend
-  cl <- parallel::makeCluster(parallel::detectCores())
-  doParallel::registerDoParallel(cl)
-  # Load the required packages on each node
-  clusterEvalQ(cl, {
-    library(dplyr)
-    library(magrittr)
-    library(rstatix)
-  })
-
-  # Define the list of metabolites
-  # metabolites <- c("metabolite1", "metabolite2", "metabolite3")
-
-  # Define the function to be applied to each metabolite
-  anova_func <- function(i, data, cat) {
-    anova.res <- data %>%
-      filter(metabolites == i) %>%
-      anova_test(
-        data = .,
-        dv = values,
-        wid = id,
-        within = time
-      ) %>%
-      get_anova_table()
-    return(c(i,
-             anova.res[1, 5]))
-  }
-
-  # Apply the function to each metabolite in parallel
-  cat <- input$catVars
-  results <- foreach(i = metabolites, .combine = rbind) %dopar% {
-    anova_func(i, data_no_na2, cat)
-  }
-  unique(data_no_na2["diagnosis"])
-  # Convert the results to a data frame
-  colnames(results) <- c("metabolites", "time.p.value")
-  rownames(results) <- 1:nrow(results)
-  ranking <- as.data.frame(results)
-
-  # Stop the parallel backend
-  stopCluster(cl)
-
-  unregister <- function() {
-    env <- foreach:::.foreachGlobals
-    rm(list=ls(name=env), pos=env)
-  }
-  unregister()
-
-
-
-  mixed.anova.feat.selection$ranking <- ranking
-  result_anova_sorted <- mixed.anova.feat.selection$ranking %>%
-    arrange(desc(time.p.value))
-  #
-  #
-  #
-  # summary_stats <- data.filtered %>%
-  #   group_by(time, input$catVars) %>%
-  #   rstatix::get_summary_stats(values, type = "mean_sd")
-  #
-  #
-  # colnames(summary_stats) <- c("Time", "Category", "Variable", "N", "Mean", "SD")
-  #
-  #
-  #
-  #
-  #
-  # res_mixed_anova <- data.filtered %>%
-  #   rstatix::anova_test(
-  #     data = ., dv = values, wid = id,
-  #     between = input$catVars, within = time
-  #   ) %>%
-  #   get_anova_table()
-  #
-  # form.test <- paste0("values~ ", input$catVars)
-  #
-  #
-  # pairwise <- data.filtered %>%
-  #   group_by(time) %>%
-  #   pairwise_t_test(as.formula(form.test), p.adjust.method = "bonferroni")
-  # pairwise
-  #
-  #
-  # # Visualization: boxplots with p-values
-  # pairwise <- pairwise %>% add_xy_position(x = "time")
-  #
-  # pairwise.filtered <- pairwise %>% filter(time != as.character(pairwise[1, 1]))
-  #
-  # boxplot <- data.filtered %>%
-  #   as.data.frame() %>%
-  #   mutate(catVars = as.factor(input$catVars)) %>%
-  #   ggboxplot(.,
-  #             x = "time", y = "values",
-  #             color = input$catVars, palette = "jco"
-  #   ) +
-  #   stat_pvalue_manual(pairwise.filtered, tip.length = 0, hide.ns = TRUE) +
-  #   labs(
-  #     subtitle = get_test_label(res_mixed_anova, detailed = TRUE),
-  #     caption = get_pwc_label(pairwise)
-  #   )
-  #
-  # reactive_mixed_anova$summary_stats <- summary_stats
-  # reactive_mixed_anova$res_mixed_anova <- res_mixed_anova
-  # reactive_mixed_anova$boxplot <- boxplot
-  # reactive_mixed_anova$data.filtered <- data.filtered
-  # reactive_mixed_anova$pairwise <- pairwise
-  # reactive_mixed_anova$pairwise.filtered <- pairwise.filtered
-  # reactive_mixed_anova$computation_done <- TRUE
-})
-
-
-observeEvent(input$catVars, {
-  req(data())
-  dat.nam <- data()
-  a <- input$catVars
-  dat.nam <- dat.nam[a]
-
-  trt.names <- unique(dat.nam[,1]) %>% as.list()
-
-  choices <- trt.names[!is.na(trt.names)]
-
-  updateSelectInput(session, "repeated_category", choices = choices, selected = choices)
-})
-
-
-
-
-
 
 observeEvent(input$load_top_features_anova, {
 
@@ -488,3 +334,8 @@ output$info_box_mixed_anova_selection <- renderUI({
       Additionally, the number of metabolites to be included in the ranking can be specified.
        ")
 })
+
+
+
+
+
