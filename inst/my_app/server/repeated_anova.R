@@ -23,6 +23,36 @@ observe({
   updateMultiInput(session, "repeated_anova_metabolite", choices = metabolite.names, selected = metabolite.names)
 })
 
+
+# observeEvent(input$catVars, {
+#   req(data())
+#   dat.nam <- data()
+#   a <- input$catVars
+#   dat.nam <- dat.nam[a]
+#
+#   trt.names <- unique(dat.nam[,1]) %>% as.list()
+#
+#   choices <- trt.names[!is.na(trt.names)]
+#
+#   updateSelectInput(session, "trtmt", choices = choices, selected = choices)
+# })
+
+
+observe({
+  req(data())
+  req(input$catVars)
+  dat.nam <- data()
+  a <- input$catVars
+  dat.nam <- dat.nam[a]
+
+  trt.names <- unique(dat.nam[,1]) %>% as.list()
+
+  choices <- trt.names[!is.na(trt.names)]
+
+  updateSelectInput(session, "repeated_anova_category", choices = choices, selected = choices)
+})
+
+
 reactive_repeated_anova <- reactiveValues(
   computation_done = FALSE,
   data.filtered = NULL,
@@ -39,29 +69,33 @@ observeEvent(input$act_repeated_anova, {
 
   data.filtered <- data() %>%
     filter(metabolites %in% input$repeated_anova_metabolite)  %>%
-    filter(!!sym(input$catVars) %in% input$trtmt)
+    filter(!!sym(input$catVars) %in% input$repeated_anova_category)
 
 
   summary_stats <- data.filtered %>%
-    group_by(time, !!sym(input$catVars)) %>%
+    group_by(time) %>%
     rstatix::get_summary_stats(values, type = "mean_sd")
+
+  summary_stats <- summary_stats %>%
+    mutate(category = as.factor(input$catVars)) %>%
+    select(time, category, variable, n, mean, sd)
 
 
   colnames(summary_stats) <- c("Time", "Category", "Variable", "N", "Mean", "SD")
 
   res_mixed_anova <- data.filtered %>%
-    group_by(!!sym(input$catVars)) %>%
+    # group_by(!!sym(input$catVars)) %>%
     rstatix::anova_test(
       data = ., dv = values, wid = id,
       within = time, detailed = TRUE
     ) %>%
     get_anova_table()
 
-  form.test <- paste0("values~ ", time)
+  form.test <- paste0("values ~ time")
 
 
   pairwise <- data.filtered %>%
-    # group_by(input$catVars) %>%
+    group_by(!!sym(input$catVars)) %>%
     pairwise_t_test(as.formula(form.test), p.adjust.method = "bonferroni")
   pairwise
 
@@ -73,10 +107,10 @@ observeEvent(input$act_repeated_anova, {
 
   boxplot <- data.filtered %>%
     as.data.frame() %>%
-    mutate(catVars = as.factor(input$catVars)) %>%
+    # mutate(catVars = as.factor(input$catVars)) %>%
     ggboxplot(.,
-              x = input$catVars, y = "values",
-              color = input$catVars, palette = "jco"
+              x = "time", y = "values",
+              color = "time", palette = "jco"
     ) +
     stat_pvalue_manual(pairwise.filtered, tip.length = 0, hide.ns = TRUE) +
     labs(
@@ -134,7 +168,7 @@ output$boxplot_repeated_anova <- renderPlot({
       mutate(!!sym(input$catVars) := factor(!!sym(input$catVars))) %>%
       ggboxplot(.,
                 x = "time", y = "values",
-                color = input$catVars, palette = "jco", fill="#edeff4", size=2
+                color = "time", palette = "jco", fill="#edeff4", size=2
       ) +
       stat_pvalue_manual(reactive_repeated_anova$pairwise.filtered, tip.length = 0, hide.ns = TRUE) +
       labs(

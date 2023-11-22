@@ -638,6 +638,21 @@ ui <- dashboardPage(
                 ),
               )
             ),
+            fluidRow(
+              column(
+                width = 8,
+                selectInput(
+                  inputId = "repeated_anova_category",
+                  label = "Category:",
+                  choices = "",
+                  selected = "",
+                  width = "800px",
+                  multiple = F,
+                  selectize = TRUE
+                ),
+              )
+            ),
+
             fluidRow(column(
               width = 4,
               actionButton("act_repeated_anova", "Compute!")
