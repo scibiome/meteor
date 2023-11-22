@@ -38,43 +38,44 @@ reactive_repeated_anova <- reactiveValues(
 observeEvent(input$act_repeated_anova, {
 
   data.filtered <- data() %>%
-    filter(metabolites %in% input$repeated_anova_metabolite)
-
+    filter(metabolites %in% input$repeated_anova_metabolite)  %>%
+    filter(!!sym(input$catVars) %in% input$trtmt)
 
 
   summary_stats <- data.filtered %>%
-    group_by(time, input$catVars) %>%
+    group_by(time, !!sym(input$catVars)) %>%
     rstatix::get_summary_stats(values, type = "mean_sd")
 
 
   colnames(summary_stats) <- c("Time", "Category", "Variable", "N", "Mean", "SD")
 
   res_mixed_anova <- data.filtered %>%
+    group_by(!!sym(input$catVars)) %>%
     rstatix::anova_test(
       data = ., dv = values, wid = id,
-      within = time
+      within = time, detailed = TRUE
     ) %>%
     get_anova_table()
 
-  form.test <- paste0("values~ ", input$catVars)
+  form.test <- paste0("values~ ", time)
 
 
   pairwise <- data.filtered %>%
-    group_by(time) %>%
+    # group_by(input$catVars) %>%
     pairwise_t_test(as.formula(form.test), p.adjust.method = "bonferroni")
   pairwise
 
 
   # Visualization: boxplots with p-values
-  pairwise <- pairwise %>% add_xy_position(x = "time")
+  pairwise <- pairwise %>% add_xy_position(x = "category")
 
-  pairwise.filtered <- pairwise %>% filter(time != as.character(pairwise[1, 1]))
+  pairwise.filtered <- pairwise %>% filter(input$catVars != as.character(pairwise[1, 1]))
 
   boxplot <- data.filtered %>%
     as.data.frame() %>%
     mutate(catVars = as.factor(input$catVars)) %>%
     ggboxplot(.,
-              x = "time", y = "values",
+              x = input$catVars, y = "values",
               color = input$catVars, palette = "jco"
     ) +
     stat_pvalue_manual(pairwise.filtered, tip.length = 0, hide.ns = TRUE) +
@@ -193,7 +194,8 @@ observeEvent(input$act_repeated_anova_selection, {
         data = .,
         dv = values,
         wid = id,
-        within = time
+        within = time,
+        detailed = TRUE
       ) %>%
       get_anova_table()
     return(c(i,
