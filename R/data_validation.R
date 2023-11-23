@@ -1,3 +1,23 @@
+#' Validate and process data for analysis
+#'
+#' This function performs several checks on the input data to ensure it meets the expected
+#' requirements for analysis. It checks column names, data types, and performs additional
+#' validations.
+#'
+#' @param data A data frame containing the input data.
+#' @return No explicit return value. The function stops with an error if any check fails.
+#'
+#' @importFrom dplyr %>%
+#' @importFrom tidyr pivot_wider
+#'
+#' @examples
+#' \dontrun{
+#' # Assuming covid_data is your data frame
+#' data_validation(covid_data)
+#' }
+#'
+#' @export
+#'
 data_validation <- function(data) {
   expected_column_names <- c("id", "time", "metabolites", "values")
 
@@ -23,10 +43,10 @@ data_validation <- function(data) {
     # Check if the fifth column is one of the allowed types
     fifth_column_index <- 5
     if (!(is.factor(data[[fifth_column_index]]) ||
-      is.numeric(data[[fifth_column_index]]) ||
-      is.integer(data[[fifth_column_index]]) ||
-      is.double(data[[fifth_column_index]]) ||
-      is.character(data[[fifth_column_index]]))) {
+          is.numeric(data[[fifth_column_index]]) ||
+          is.integer(data[[fifth_column_index]]) ||
+          is.double(data[[fifth_column_index]]) ||
+          is.character(data[[fifth_column_index]]))) {
       stop("Error: The fifth column should be a factor, numeric, integer, double, or character.")
     } else {
       message("Fifth column passed the check!")
@@ -39,11 +59,33 @@ data_validation <- function(data) {
   # Check if metabolites column names are syntactically valid
   illegal_metabolites <- grep("[^A-Za-z0-9_.]", data$metabolites)
   if (length(illegal_metabolites) > 0 || grepl("^[0-9._]", data$metabolites[1])) {
-    stop("Error: Metabolites column contains illegal characters or does not start with a letter or dot not followed by a number. Column names should consist of letters, numbers, dots, or underscores only, and should start with a letter or a dot not followed by a number.")
+    stop("Error: Metabolite names contain illegal characters or do not start with a letter or dot not followed by a number. Names should consist of letters, numbers, dots, or underscores only, and should start with a letter or a dot not followed by a number.")
   } else {
-    message("Metabolites column names passed the check!")
+    message("Metabolite names passed the check!")
+  }
+
+  # Pivot the data to wide format by metabolites and time
+  data_wide <- data %>%
+    pivot_wider(
+      id_cols = c(id),
+      names_from = c(metabolites, time),
+      values_from = values
+    )
+
+  # Check for duplicate IDs in the wide-format data
+  duplicate_ids <- data_wide[duplicated(data_wide$id), "id"]
+
+  # Print the duplicate IDs
+  if (any(duplicated(data_wide$id))) {
+    message("Duplicate IDs found:")
+    print(duplicate_ids)
+    stop("Error: Duplicate IDs found in the wide-format data.")
+  } else {
+    message("No duplicate IDs found in the wide-format data.")
   }
 }
 
 
-data_validation(covid_data)
+# data_validation(covid_data)
+#
+# head(covid_data)
