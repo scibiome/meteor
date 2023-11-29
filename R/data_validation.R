@@ -1,4 +1,4 @@
-#' Validate and process data for analysis
+#' Check Data for MeTEor
 #'
 #' This function performs several checks on the input data to ensure it meets the expected
 #' requirements for analysis. It checks column names, data types, and performs additional
@@ -13,12 +13,12 @@
 #' @examples
 #' \dontrun{
 #' # Assuming covid_data is your data frame
-#' data_validation(covid_data)
+#' data_check(covid_data)
 #' }
 #'
 #' @export
 #'
-data_validation <- function(data) {
+data_check <- function(data) {
   expected_column_names <- c("id", "time", "metabolites", "values")
 
   # Check if the first four column names match the expected names
