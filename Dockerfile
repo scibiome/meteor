@@ -32,8 +32,11 @@ COPY ./inst/my_app ./app
 # Install libnlopt-dev
 RUN apt-get update && apt-get install -y libnlopt-dev
 # install renv & restore packages
-RUN Rscript -e 'install.packages("renv")'
-RUN Rscript -e 'renv::restore()'
+# RUN Rscript -e 'install.packages("renv")'
+# RUN Rscript -e 'renv::restore()'
+
+RUN Rscript -e 'install.packages("remotes")'
+RUN Rscript -e 'remotes::install_github("scibiome/meteor")'
 
 # expose port
 EXPOSE 3838
@@ -42,7 +45,8 @@ EXPOSE 3838
 ENV RSTUDIO_PANDOC=/usr/lib/rstudio/bin/pandoc
 
 # run app on container start
-CMD ["R", "-e", "shiny::runApp('/app', host = '0.0.0.0', port = 3838)"]
+#CMD ["R", "-e", "shiny::runApp('/app', host = '0.0.0.0', port = 3838)"]
+CMD ["R", "-e", "MeTEor::meteor()"]
 
 ENV IS_IN_CONTAINER="TRUE"
 
