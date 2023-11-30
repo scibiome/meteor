@@ -16,24 +16,17 @@ RUN \
     libssh2-1-dev \
     unixodbc-dev \
     libcurl4-openssl-dev \
-    libssl-dev
+    libssl-dev \
+    libglpk40
 
 ## update system libraries
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get clean
 
-# copy necessary files
-## renv.lock file
-COPY renv.lock ./renv.lock
-## app folder
-COPY ./inst/my_app ./app
 
 # Install libnlopt-dev
 RUN apt-get update && apt-get install -y libnlopt-dev
-# install renv & restore packages
-# RUN Rscript -e 'install.packages("renv")'
-# RUN Rscript -e 'renv::restore()'
 
 RUN Rscript -e 'install.packages("remotes")'
 RUN Rscript -e 'remotes::install_github("scibiome/meteor")'
@@ -45,8 +38,7 @@ EXPOSE 3838
 ENV RSTUDIO_PANDOC=/usr/lib/rstudio/bin/pandoc
 
 # run app on container start
-#CMD ["R", "-e", "shiny::runApp('/app', host = '0.0.0.0', port = 3838)"]
-CMD ["R", "-e", "MeTEor::meteor()"]
+CMD ["Rscript", "-e", "MeTEor::meteor()"]
 
 ENV IS_IN_CONTAINER="TRUE"
 
