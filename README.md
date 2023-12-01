@@ -7,7 +7,7 @@
 Currently implemented features include:
 
 -   **Dimensionality Reduction:** PCA, Modern Tensor Factorization (TCAM)
--   **Statistical models:** Linear Mixed Models, Mixed ANOVA, Friedman test
+-   **Statistical models:** Linear Mixed Models, Repeated Measures ANOVA, Mixed ANOVA, Friedman test
 -   **Prediction models:** Logistic regression, Random Forest, XGBoost
 -   **Network plots:** Pearson correlation network, Gaussian graphical model
 -   **Ridge plots**
