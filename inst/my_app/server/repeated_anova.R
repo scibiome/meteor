@@ -87,7 +87,7 @@ observeEvent(input$act_repeated_anova, {
     # group_by(!!sym(input$catVars)) %>%
     rstatix::anova_test(
       data = ., dv = values, wid = id,
-      within = time, detailed = TRUE
+      within = time#, detailed = TRUE
     ) %>%
     get_anova_table()
 
@@ -228,8 +228,8 @@ observeEvent(input$act_repeated_anova_selection, {
         data = .,
         dv = values,
         wid = id,
-        within = time,
-        detailed = TRUE
+        within = time#,
+        #detailed = TRUE
       ) %>%
       get_anova_table()
     return(c(i,
