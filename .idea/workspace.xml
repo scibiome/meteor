@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3e8d5c1-4e84-4333-a8a6-633f140095fb" name="Changes" comment="update website" />
+    <list default="true" id="c3e8d5c1-4e84-4333-a8a6-633f140095fb" name="Changes" comment="--rm">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,7 +39,7 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "data__validator",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "/Users/gordonplri/Documents/Publications/MeTEor/meteor"
   }
 }]]></component>
@@ -74,7 +76,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700502322228</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="--rm">
+      <option name="closed" value="true" />
+      <created>1701440169435</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1701440169435</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -105,6 +115,7 @@
     <MESSAGE value="add my_env to gitignore" />
     <MESSAGE value="update website and added covid data" />
     <MESSAGE value="update website" />
-    <option name="LAST_COMMIT_MESSAGE" value="update website" />
+    <MESSAGE value="--rm" />
+    <option name="LAST_COMMIT_MESSAGE" value="--rm" />
   </component>
 </project>
