@@ -4,37 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3e8d5c1-4e84-4333-a8a6-633f140095fb" name="Changes" comment="add my_env to gitignore">
-      <change afterPath="$PROJECT_DIR$/docs/articles/Covid_data.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/reference/covid_data.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/man/covid_data.Rd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vignettes/Covid_data.Rmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/R/covid_data.R" beforeDir="false" afterPath="$PROJECT_DIR$/R/covid_data.R" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data-raw/covid_data.R" beforeDir="false" afterPath="$PROJECT_DIR$/data-raw/covid_data.R" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/.Rapp.history" beforeDir="false" afterPath="$PROJECT_DIR$/data/.Rapp.history" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/covid_data.rda" beforeDir="false" afterPath="$PROJECT_DIR$/data/covid_data.rda" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/404.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/LICENSE-text.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/LICENSE-text.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/LICENSE.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/LICENSE.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/articles/Example_data.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/articles/Example_data.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/articles/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/articles/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/authors.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/authors.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/pkgdown.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/pkgdown.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/reference/example_data.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/reference/example_data.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/reference/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/reference/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/reference/meteor.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/reference/meteor.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/search.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/search.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/sitemap.xml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/sitemap.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/man/example_data.Rd" beforeDir="false" afterPath="$PROJECT_DIR$/man/example_data.Rd" afterDir="false" />
-    </list>
+    <list default="true" id="c3e8d5c1-4e84-4333-a8a6-633f140095fb" name="Changes" comment="update website" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="gordon_hide_menu" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -56,7 +37,7 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "data__validator",
     "last_opened_file_path": "/Users/gordonplri/Documents/Publications/MeTEor/meteor"
   }
 }]]></component>
@@ -77,7 +58,23 @@
       <option name="project" value="LOCAL" />
       <updated>1699023518422</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="update website and added covid data">
+      <option name="closed" value="true" />
+      <created>1699629265021</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1699629265021</updated>
+    </task>
+    <task id="LOCAL-00003" summary="update website">
+      <option name="closed" value="true" />
+      <created>1700502322228</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1700502322228</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -91,7 +88,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/main" />
+                        <option value="gordon_hide_menu" />
                       </list>
                     </value>
                   </entry>
@@ -106,6 +103,8 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="add my_env to gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="add my_env to gitignore" />
+    <MESSAGE value="update website and added covid data" />
+    <MESSAGE value="update website" />
+    <option name="LAST_COMMIT_MESSAGE" value="update website" />
   </component>
 </project>

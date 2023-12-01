@@ -16,33 +16,33 @@ RUN \
     libssh2-1-dev \
     unixodbc-dev \
     libcurl4-openssl-dev \
-    libssl-dev
+    libssl-dev \
+    libglpk40
 
 ## update system libraries
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get clean
-
-# copy necessary files
-## renv.lock file
-COPY renv.lock ./renv.lock
-## app folder
-COPY ./inst/my_app ./app
+    apt-get clean && apt-get install -y wget && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install libnlopt-dev
 RUN apt-get update && apt-get install -y libnlopt-dev
-# install renv & restore packages
-RUN Rscript -e 'install.packages("renv")'
-RUN Rscript -e 'renv::restore()'
+
+
+# Install pandoc
+
+# Download and install Pandoc
+RUN wget https://github.com/jgm/pandoc/releases/download/2.17.1/pandoc-2.17.1-linux-amd64.tar.gz && \
+    tar xvzf pandoc-2.17.1-linux-amd64.tar.gz --strip-components 1 -C /usr/local && \
+    rm pandoc-2.17.1-linux-amd64.tar.gz
+
+# Install MeTEor
+
+RUN Rscript -e 'install.packages("remotes")'
+RUN Rscript -e 'remotes::install_github("scibiome/meteor")'
 
 # expose port
 EXPOSE 3838
-
-# Set the RSTUDIO_PANDOC environment variable
-ENV RSTUDIO_PANDOC=/usr/lib/rstudio/bin/pandoc
-
-# run app on container start
-CMD ["R", "-e", "shiny::runApp('/app', host = '0.0.0.0', port = 3838)"]
 
 ENV IS_IN_CONTAINER="TRUE"
 
@@ -63,3 +63,6 @@ RUN conda --version
 RUN pip3 install pandas==1.5.2 --upgrade
 RUN conda install -c conda-forge -y mprod-package
 RUN pip3 install numpy==1.23.0 --upgrade
+
+# run app on container start
+CMD ["Rscript", "-e", "MeTEor::meteor()"]
