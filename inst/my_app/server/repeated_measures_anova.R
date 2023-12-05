@@ -1,5 +1,5 @@
 
-output$info_box_reapeated_anova <- renderUI({
+output$info_box_repeated_anova <- renderUI({
   HTML("<p align = 'justify'>
 This section enables you to perform a mixed ANOVA analysis for a specific metabolite,
 using a between-subjects factor (selected categorical variable) and a within-subjects factor (time).
