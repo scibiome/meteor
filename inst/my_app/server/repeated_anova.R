@@ -24,19 +24,6 @@ observe({
 })
 
 
-# observeEvent(input$catVars, {
-#   req(data())
-#   dat.nam <- data()
-#   a <- input$catVars
-#   dat.nam <- dat.nam[a]
-#
-#   trt.names <- unique(dat.nam[,1]) %>% as.list()
-#
-#   choices <- trt.names[!is.na(trt.names)]
-#
-#   updateSelectInput(session, "trtmt", choices = choices, selected = choices)
-# })
-
 
 observe({
   req(data())
@@ -145,7 +132,7 @@ output$res_repeated_anova <- renderPrint({
 })
 
 
-### repeated ANOVA for feature selection
+### repeated measures ANOVA for feature selection
 
 reactive_repeated_anova_selection <- reactiveValues(
   computation_done = FALSE,

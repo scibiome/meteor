@@ -127,7 +127,7 @@ ui <- dashboardPage(
         tabName = "stattest", icon = icon("fas fa-chart-column"),
         menuSubItem("Friedman test", tabName = "fried"),
         menuSubItem("Mixed ANOVA", tabName = "mixedanova"),
-        menuSubItem("Repeated ANOVA", tabName = "repanova"),
+        menuSubItem("RM ANOVA", tabName = "repanova"),
         menuSubItem("Linear mixed model", tabName = "lmm")
       ),
       menuItem("Network Diagram",
@@ -659,7 +659,7 @@ ui <- dashboardPage(
             )),
             fluidRow(column(width = 12, DT::DTOutput("summary_stats_repeated_anova"))),
             fluidRow(column(width = 12, box(
-              title = "Repeated ANOVA results:",
+              title = "Repeated Measures ANOVA results:",
               status = "info", solidHeader = TRUE,
               collapsible = TRUE, collapsed = FALSE,
               verbatimTextOutput("res_repeated_anova")
@@ -668,7 +668,7 @@ ui <- dashboardPage(
           ),
 
           tabPanel(
-            "Repeated ANOVA for Feature Selection",
+            "Repeated Measures ANOVA for Feature Selection",
             fluidRow(box(
               title = "Repeated ANOVA (Info)",
               status = "info", solidHeader = TRUE,
