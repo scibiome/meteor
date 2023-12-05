@@ -148,7 +148,7 @@ server <- function(input, output, session) {
   source(file.path("server", "mixed_anova.R"), local = TRUE)$value
 
   #### source: repeated_anova.R ====
-  source(file.path("server", "repeated_anova.R"), local = TRUE)$value
+  source(file.path("server", "repeated_measures_anova.R"), local = TRUE)$value
 
   #### source: linear_mixed_model.R ====
   source(file.path("server", "linear_mixed_model.R"), local = TRUE)$value
