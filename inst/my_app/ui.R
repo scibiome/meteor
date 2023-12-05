@@ -243,7 +243,7 @@ ui <- dashboardPage(
                                           as well as visualizations for interactive data exploration.
                                           Additionally, advanced methods for dimensionality reduction of
                                           multivariate longitudinal data are integrated [1].
-                                          Hence, METEOR streamlines exploratory analysis of
+                                          Hence, MeTEor streamlines exploratory analysis of
                                           time-resolved metabolomics data and offers user-friendly
                                           access to advanced data science approaches.</p>
 
@@ -617,9 +617,9 @@ ui <- dashboardPage(
             tabName = "repanova",
             tabsetPanel(
           tabPanel(
-            "Repeated ANOVA",
+            "Repeated Measures ANOVA",
             fluidRow(box(
-              title = "Repeated ANOVA (Info)",
+              title = "Repeated Measures ANOVA (Info)",
               status = "info", solidHeader = TRUE,
               collapsible = TRUE, collapsed = TRUE,
               htmlOutput("info_box_repeated_anova")
