@@ -579,7 +579,7 @@ ui <- dashboardPage(
                   selected = "",
                   width = "800px",
                   multiple = F,
-                  selectize = TRUE
+                  selectize = T
                 ),
               )
             ),
