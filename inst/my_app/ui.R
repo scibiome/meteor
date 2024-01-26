@@ -79,7 +79,7 @@ ui <- dashboardPage(
         ),
         selectInput(
           inputId = "trtmt",
-          label = "Categorical variable Levels:",
+          label = "Categorical variable levels",
           choices = "",
           selected = "",
           multiple = TRUE
