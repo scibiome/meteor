@@ -87,6 +87,20 @@ observeEvent(input$rp_compute, {
 output$ridgeplot1 <- renderPlot({
   if(ridgeplot_stored$computation_done_plot1)
   {
+
+    if (nrow(ridgeplot_stored$computed_data_plot1) == 0) {
+      show_alert(
+        title = NULL,
+        text = tags$span(
+          tags$h3("Error",
+                  style = "color: steelblue;"),
+          "No metabolite selected!"
+        ),
+        html = TRUE
+      )
+      return()
+    }
+
     ggplot(data= ridgeplot_stored$computed_data_plot1, aes(x = values, y = metabolites, fill = time)) +
     geom_density_ridges(alpha = 0.3, scale = 1) +
     theme_ridges() +
@@ -130,6 +144,20 @@ observeEvent(input$rp_compute2, {
 output$ridgeplot2 <- renderPlot({
   if(ridgeplot_stored$computation_done_plot2)
   {
+
+    if (nrow(ridgeplot_stored$computed_data_plot2) == 0) {
+      show_alert(
+        title = NULL,
+        text = tags$span(
+          tags$h3("Error",
+                  style = "color: steelblue;"),
+          "No metabolite selected!"
+        ),
+        html = TRUE
+      )
+      return()
+    }
+
       ggplot(data= ridgeplot_stored$computed_data_plot2, aes(x = values, y = metabolites, fill = !!sym(catv()))) +
       geom_density_ridges(alpha = 0.3, scale = 1) +
       theme_ridges() +

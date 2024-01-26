@@ -1,8 +1,10 @@
 ##### Line Plot ####
 
-lineplot_stored <- reactiveValues(computation_done_plot2 = FALSE, computed_data_plot2 = NULL,
-                                  computation_done_plot3 = FALSE, computed_data_plot3 = NULL,
-                                  computation_done_plot4 = FALSE, computed_data_plot4 = NULL)
+lineplot_stored <- reactiveValues(
+  computation_done_plot2 = FALSE, computed_data_plot2 = NULL,
+  computation_done_plot3 = FALSE, computed_data_plot3 = NULL,
+  computation_done_plot4 = FALSE, computed_data_plot4 = NULL
+)
 
 
 
@@ -32,31 +34,49 @@ output$info_box_ml <- renderUI({
 })
 
 output$plot2 <- renderPlotly({
-  if(lineplot_stored$computation_done_plot2)
-  {
-  p <- ggplot(data= lineplot_stored$computed_data_plot2, aes(x = as.factor(time), y = values, group = factor(id))) +
-                  geom_line(aes(color = factor(!!sym(input$catVars))), alpha = 0.8) +
-                  theme_apa() + labs(color = input$catVars) +
-                  xlab("time") +
-                  facet_wrap(~metabolites) +
-                  theme(
-                    panel.background = element_rect(fill = "transparent",
-                                                    colour = NA_character_), # necessary to avoid drawing panel outline
-                    panel.grid.major = element_blank(), # get rid of major grid
-                    panel.grid.minor = element_blank(), # get rid of minor grid
-                    plot.background = element_rect(fill = "transparent",
-                                                   colour = NA_character_), # necessary to avoid drawing plot outline
-                    legend.background = element_rect(fill = "transparent"),
-                    legend.box.background = element_rect(fill = "transparent"),
-                    legend.key = element_rect(fill = "transparent")
-                  )
+  if (lineplot_stored$computation_done_plot2) {
+    if (nrow(lineplot_stored$computed_data_plot2) == 0) {
+      show_alert(
+        title = NULL,
+        text = tags$span(
+          tags$h3("Error",
+            style = "color: steelblue;"
+          ),
+          "No metabolite selected!"
+        ),
+        html = TRUE
+      )
+      return()
+    }
 
-  ggplotly(p)
 
-  }})
+    p <- ggplot(data = lineplot_stored$computed_data_plot2, aes(x = as.factor(time), y = values, group = factor(id))) +
+      geom_line(aes(color = factor(!!sym(input$catVars))), alpha = 0.8) +
+      theme_apa() +
+      labs(color = input$catVars) +
+      xlab("time") +
+      facet_wrap(~metabolites) +
+      theme(
+        panel.background = element_rect(
+          fill = "transparent",
+          colour = NA_character_
+        ), # necessary to avoid drawing panel outline
+        panel.grid.major = element_blank(), # get rid of major grid
+        panel.grid.minor = element_blank(), # get rid of minor grid
+        plot.background = element_rect(
+          fill = "transparent",
+          colour = NA_character_
+        ), # necessary to avoid drawing plot outline
+        legend.background = element_rect(fill = "transparent"),
+        legend.box.background = element_rect(fill = "transparent"),
+        legend.key = element_rect(fill = "transparent")
+      )
+
+    ggplotly(p)
+  }
+})
 
 observeEvent(input$lp_compute3, {
-
   a <- catv()
   vars <- c("id", "time", a, "metabolites", "values")
 
@@ -66,38 +86,55 @@ observeEvent(input$lp_compute3, {
   lineplot_stored$computation_done_plot3 <- TRUE
 })
 output$plot3 <- renderPlotly({
-  if(lineplot_stored$computation_done_plot3)
-  {
-  p <- ggplot(data= lineplot_stored$computed_data_plot3, aes(x = as.factor(time), y = values,color = factor(!!sym(input$catVars)))) +
-                  stat_summary(aes(group= factor(!!sym(input$catVars))),fun=mean,geom="line") +
-                  theme_apa() +
-                  labs(color = input$catVars) +
-                  xlab("time") +
-                  facet_wrap(~metabolites) +
-                  theme(
-                    panel.background = element_rect(fill = "transparent",
-                                                    colour = NA_character_), # necessary to avoid drawing panel outline
-                    panel.grid.major = element_blank(), # get rid of major grid
-                    panel.grid.minor = element_blank(), # get rid of minor grid
-                    plot.background = element_rect(fill = "transparent",
-                                                   colour = NA_character_), # necessary to avoid drawing plot outline
-                    legend.background = element_rect(fill = "transparent"),
-                    legend.box.background = element_rect(fill = "transparent"),
-                    legend.key = element_rect(fill = "transparent")
-                  )
+  if (lineplot_stored$computation_done_plot3) {
+    if (nrow(lineplot_stored$computed_data_plot3) == 0) {
+      show_alert(
+        title = NULL,
+        text = tags$span(
+          tags$h3("Error",
+            style = "color: steelblue;"
+          ),
+          "No metabolite selected!"
+        ),
+        html = TRUE
+      )
+      return()
+    }
 
 
-  ggplotly(p)
+
+    p <- ggplot(data = lineplot_stored$computed_data_plot3, aes(x = as.factor(time), y = values, color = factor(!!sym(input$catVars)))) +
+      stat_summary(aes(group = factor(!!sym(input$catVars))), fun = mean, geom = "line") +
+      theme_apa() +
+      labs(color = input$catVars) +
+      xlab("time") +
+      facet_wrap(~metabolites) +
+      theme(
+        panel.background = element_rect(
+          fill = "transparent",
+          colour = NA_character_
+        ), # necessary to avoid drawing panel outline
+        panel.grid.major = element_blank(), # get rid of major grid
+        panel.grid.minor = element_blank(), # get rid of minor grid
+        plot.background = element_rect(
+          fill = "transparent",
+          colour = NA_character_
+        ), # necessary to avoid drawing plot outline
+        legend.background = element_rect(fill = "transparent"),
+        legend.box.background = element_rect(fill = "transparent"),
+        legend.key = element_rect(fill = "transparent")
+      )
+
+
+    ggplotly(p)
   }
-
 })
 
 observeEvent(input$lp_compute4, {
-
   a <- catv()
 
   vars <- c("id", "time", a, "metabolites", "values")
-  var  <- c(a)
+  var <- c(a)
 
   lineplot_stored$computed_data_plot4 <- data() %>%
     filter(metabolites %in% ui_metabolites$selection)
@@ -106,28 +143,44 @@ observeEvent(input$lp_compute4, {
 })
 
 output$plot4 <- renderPlotly({
-  if(lineplot_stored$computation_done_plot4)
-  {
-
-  p <-  ggplot(data=lineplot_stored$computed_data_plot4, aes(x = as.factor(time), y = values, color = metabolites)) +
-                stat_summary(aes(group=metabolites), fun=mean,geom="line") +
-                theme_apa() +
-                xlab("time") +
-                #labs(color = metabolites) +
-                theme(
-                  panel.background = element_rect(fill = "transparent",
-                                                  colour = NA_character_), # necessary to avoid drawing panel outline
-                  panel.grid.major = element_blank(), # get rid of major grid
-                  panel.grid.minor = element_blank(), # get rid of minor grid
-                  plot.background = element_rect(fill = "transparent",
-                                                 colour = NA_character_), # necessary to avoid drawing plot outline
-                  legend.background = element_rect(fill = "transparent"),
-                  legend.box.background = element_rect(fill = "transparent"),
-                  legend.key = element_rect(fill = "transparent")
-                )
+  if (lineplot_stored$computation_done_plot4) {
+    if (nrow(lineplot_stored$computed_data_plot4) == 0) {
+      show_alert(
+        title = NULL,
+        text = tags$span(
+          tags$h3("Error",
+            style = "color: steelblue;"
+          ),
+          "No metabolite selected!"
+        ),
+        html = TRUE
+      )
+      return()
+    }
 
 
-  ggplotly(p)
+    p <- ggplot(data = lineplot_stored$computed_data_plot4, aes(x = as.factor(time), y = values, color = metabolites)) +
+      stat_summary(aes(group = metabolites), fun = mean, geom = "line") +
+      theme_apa() +
+      xlab("time") +
+      # labs(color = metabolites) +
+      theme(
+        panel.background = element_rect(
+          fill = "transparent",
+          colour = NA_character_
+        ), # necessary to avoid drawing panel outline
+        panel.grid.major = element_blank(), # get rid of major grid
+        panel.grid.minor = element_blank(), # get rid of minor grid
+        plot.background = element_rect(
+          fill = "transparent",
+          colour = NA_character_
+        ), # necessary to avoid drawing plot outline
+        legend.background = element_rect(fill = "transparent"),
+        legend.box.background = element_rect(fill = "transparent"),
+        legend.key = element_rect(fill = "transparent")
+      )
 
 
-}})
+    ggplotly(p)
+  }
+})

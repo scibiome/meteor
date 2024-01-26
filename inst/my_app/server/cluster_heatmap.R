@@ -154,6 +154,21 @@ observeEvent(input$timepoint, {
   output$clustheatmap2 <- renderPlotly({
     if(heatmap_plot_stored$computation_done_plot)
     {
+      if (nrow(heatmap_plot_stored$computed_data_plot) == 0) {
+        show_alert(
+          title = NULL,
+          text = tags$span(
+            tags$h3("Error",
+                    style = "color: steelblue;"
+            ),
+            "No metabolites selected!"
+          ),
+          html = TRUE
+        )
+        return()
+      }
+
+
           gg_back_box <- theme(
                           panel.background = element_rect(fill = "#edeff4"),
                           plot.background = element_rect(fill = "#edeff4"),
