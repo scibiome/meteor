@@ -18,7 +18,7 @@ Authors@R: c(
 Description: METEOR streamlines exploratory analysis of
              time-resolved metabolomics data and offers user-friendly
              access to advanced data science approaches.
-License: MIT + file LICENSE
+License: GPL (>= 3)
 URL: https://scibiome.github.io/meteor/, https://github.com/scibiome/meteor
 BugReports: https://github.com/scibiome/meteor/issues
 Encoding: UTF-8
