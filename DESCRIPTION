@@ -6,16 +6,14 @@ Authors@R: c(
     person("Grabert", "Gordon", email = "gordon.grabert@tu-braunschweig.de", role = c("aut", "cre"),
             comment = c(ORCID = "0000-0001-5499-9970")),
     person("Dehncke", "Daniel", email = "daniel.dehncke@plri.de", role = c("aut")),
-    person("Kalix", "Leon", role = c("aut")),
     person("More", "Tushar", role = c("aut")),
-    person("List", "Markus", role = c("aut")),
     person("Kraft", "Anke RM", role = c("aut")),
     person("Cornberg", "Markus", role = c("aut")),
     person("Hiller", "Karsten", role = c("aut")),
     person("Kacprowski", "Tim", role = c("aut")),
     person("Data Science in Biomedicine", role = c("fnd"))
     )
-Description: METEOR streamlines exploratory analysis of
+Description: MeTEor streamlines exploratory analysis of
              time-resolved metabolomics data and offers user-friendly
              access to advanced data science approaches.
 License: GPL (>= 3)
