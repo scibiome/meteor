@@ -1,0 +1,98 @@
+---
+title: "MeTEor_Vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{MeTEor-Vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r message= FALSE, warning=FALSE}
+library(tidyverse)
+library(VIM)
+library(laeken)
+```
+
+```{r read_data}
+# read in CSV file
+example_data <- read.csv(file = "../raw_example_data/raw_example_data.csv")
+head(example_data[, 1:8], n = 5)
+```
+
+```{r remove_duplicates}
+# check if the data contains duplicates
+duplicated_rows <- example_data[duplicated(example_data), ]
+
+# drop duplicates
+example_data <- example_data[!duplicated(example_data), ]
+
+head(example_data[, 1:8], n = 5)
+```
+
+```{r drop}
+# reorder columns
+example_data <- example_data %>% relocate("time", .before = "metabolite_1")
+
+
+# drop column measurement_complete since it is not used
+example_data <- example_data %>% select(-comp)
+
+head(example_data[, 1:8], n = 5)
+```
+
+```{r non_numeric_columns}
+# check if all data is numeric
+non_numeric_columns <- names(example_data)[!sapply(example_data, is.numeric)]
+
+# in out case we just drop the columns, however editing them by hand is also an option
+example_data <- example_data %>% select(-all_of(non_numeric_columns))
+
+head(example_data[, 1:8], n = 5)
+```
+
+```{r scale}
+# Remove columns with more than 10% NA
+example_data <- example_data[, which(colMeans(!is.na(example_data)) > 0.9)]
+
+# transform to numeric
+cleaned_data <- example_data %>% mutate_if(is.character, as.numeric)
+
+# Select the numeric columns you want to scale
+columns_to_scale <- 5:ncol(cleaned_data)
+
+# Scale the selected numeric columns
+cleaned_data[, columns_to_scale] <- scale(cleaned_data[, columns_to_scale])
+
+head(cleaned_data[, 1:8], n = 5)
+```
+
+```{r missing_data}
+# find columns with missing values
+columns_with_missing <- names(cleaned_data)[colSums(is.na(cleaned_data)) > 0]
+
+# impute columns using KNN
+data_meta_imputed <- kNN(cleaned_data, numFun = weightedMean, weightDist=TRUE, imp_var = FALSE)
+
+head(data_meta_imputed[, 1:8], n = 5)
+```
+
+```{r long}
+data_meta_imputed_long <- data_meta_imputed  %>%
+  pivot_longer(!c("id", "time", "sex", "treatment"), names_to = "metabolites", values_to = "values") %>%
+  relocate(time, .after = id)%>%
+  relocate(sex, .after = values)%>%
+  relocate(treatment, .after = values)
+
+head(data_meta_imputed_long, n = 5)
+```
+
+```{r write}
+write.csv(data_meta_imputed_long, file = "../raw_example_data/data_long.csv", row.names = FALSE )
+```
