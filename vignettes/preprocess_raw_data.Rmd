@@ -1,8 +1,8 @@
 ---
-title: "MeTEor_Vignette"
+title: "MeTEor Preprocessing steps"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{MeTEor-Vignette}
+  %\VignetteIndexEntry{MeTEor Preprocessing steps}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
