@@ -41,7 +41,7 @@ Imports:
     tibble,
     stringr,
     shinyWidgets,
-    shiny (== 1.7.5),
+    shiny,
     readr,
     pheatmap,
     mgm,
