@@ -114,12 +114,8 @@ options(shiny.maxRequestSize = 60 * 1024^2)
 server <- function(input, output, session) {
   #### Example data ----
   # outside package
-  # load("../../data/covid_data.rda")
-  # load("../../data/example_data.rda")
-  # inside package
-  data("covid_data", package = "MeTEor")
-  data("example_data", package = "MeTEor")
-
+  load("../../data/covid_data.rda")
+  load("../../data/example_data.rda")
   #### Source: tcam_shiny.py ----
   reticulate::source_python("tcam_shiny.py")
 
