@@ -1,6 +1,9 @@
-#' Covid data to test MeTEor
+#' Simulated longitudinal metabolomics data
 #'
-#' An covid longitudinal data set to test MeTEor
+#' Simulated longitudinal metabolomics dataset containing
+#' a patient identifier (id), timepoint of measurement (time),
+#' metabolites (metabolites), measurement values (values),
+#' categorical variables (treatment, sex).
 #'
 #'
 #' @docType data

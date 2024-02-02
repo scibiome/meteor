@@ -3,7 +3,7 @@
 \docType{data}
 \name{example_data}
 \alias{example_data}
-\title{Covid data to test MeTEor}
+\title{Simulated longitudinal metabolomics data}
 \format{
 A data frame with 180000 rows and 6 variables
 }
@@ -11,6 +11,9 @@ A data frame with 180000 rows and 6 variables
 data(example_data)
 }
 \description{
-An covid longitudinal data set to test MeTEor
+Simulated longitudinal metabolomics dataset containing
+a patient identifier (id), timepoint of measurement (time),
+metabolites (metabolites), measurement values (values),
+categorical variables (treatment, sex).
 }
 \keyword{datasets}
