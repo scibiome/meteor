@@ -1,0 +1,27 @@
+# Manual to work with MeTEor
+
+![Import the data](../images/Import.png)
+
+
+![You can one of the two sample datasets or import your own files by clicking on External File](../images/sample_data.png)
+
+
+![an image caption Source: Ultimate Funny Dog Videos Compilation 2013.](../images/PCA.png)
+
+
+
+
+![an image caption Source: Ultimate Funny Dog Videos Compilation 2013.](../images/TCAM.png)
+
+
+![an image caption Source: Ultimate Funny Dog Videos Compilation 2013.](../images/XGB.png)
+
+![an image caption Source: Ultimate Funny Dog Videos Compilation 2013.](../images/rANOVA.png)
+
+
+![an image caption Source: Ultimate Funny Dog Videos Compilation 2013.](../images/Ridge.png)
+
+
+![an image caption Source: Ultimate Funny Dog Videos Compilation 2013.](../images/line_plot.png)
+
+
