@@ -18,51 +18,53 @@ knitr::opts_chunk$set(
 library(tidyverse)
 library(VIM)
 library(laeken)
+library(MeTEor)
+
 ```
 
 ```{r read_data}
 # read in CSV file
-example_data <- read.csv(file = "../raw_example_data/raw_example_data.csv")
-head(example_data[, 1:8], n = 5)
+data("raw_example_data")
+head(raw_example_data[, 1:8], n = 5)
 ```
 
 ```{r remove_duplicates}
 # check if the data contains duplicates
-duplicated_rows <- example_data[duplicated(example_data), ]
+duplicated_rows <- raw_example_data[duplicated(raw_example_data), ]
 
 # drop duplicates
-example_data <- example_data[!duplicated(example_data), ]
+raw_example_data <- raw_example_data[!duplicated(raw_example_data), ]
 
-head(example_data[, 1:8], n = 5)
+head(raw_example_data[, 1:8], n = 5)
 ```
 
 ```{r drop}
 # reorder columns
-example_data <- example_data %>% relocate("time", .before = "metabolite_1")
+raw_example_data <- raw_example_data %>% relocate("time", .before = "metabolite_1")
 
 
 # drop column measurement_complete since it is not used
-example_data <- example_data %>% select(-comp)
+raw_example_data <- raw_example_data %>% select(-comp)
 
-head(example_data[, 1:8], n = 5)
+head(raw_example_data[, 1:8], n = 5)
 ```
 
 ```{r non_numeric_columns}
 # check if all data is numeric
-non_numeric_columns <- names(example_data)[!sapply(example_data, is.numeric)]
+non_numeric_columns <- names(raw_example_data)[!sapply(raw_example_data, is.numeric)]
 
 # in out case we just drop the columns, however editing them by hand is also an option
-example_data <- example_data %>% select(-all_of(non_numeric_columns))
+raw_example_data <- raw_example_data %>% select(-all_of(non_numeric_columns))
 
-head(example_data[, 1:8], n = 5)
+head(raw_example_data[, 1:8], n = 5)
 ```
 
 ```{r scale}
 # Remove columns with more than 10% NA
-example_data <- example_data[, which(colMeans(!is.na(example_data)) > 0.9)]
+raw_example_data <- raw_example_data[, which(colMeans(!is.na(raw_example_data)) > 0.9)]
 
 # transform to numeric
-cleaned_data <- example_data %>% mutate_if(is.character, as.numeric)
+cleaned_data <- raw_example_data %>% mutate_if(is.character, as.numeric)
 
 # Select the numeric columns you want to scale
 columns_to_scale <- 5:ncol(cleaned_data)
@@ -94,5 +96,5 @@ head(data_meta_imputed_long, n = 5)
 ```
 
 ```{r write}
-write.csv(data_meta_imputed_long, file = "../raw_example_data/data_long.csv", row.names = FALSE )
+write.csv(data_meta_imputed_long, file = "data_long.csv", row.names = FALSE )
 ```
