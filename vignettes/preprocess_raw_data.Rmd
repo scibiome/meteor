@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+# Library
+
 ```{r message= FALSE, warning=FALSE}
 library(tidyverse)
 library(VIM)
@@ -22,11 +24,21 @@ library(MeTEor)
 
 ```
 
+# Data
+
+In the first step load unprocessed data set "raw_example_data". This data set represents a sample of metabolomic data and exhibits common issues such as missing values and duplicates. Additionally, the current format does not adhere to the specifications required by MeTEor.
+
 ```{r read_data}
 # read in CSV file
 data("raw_example_data")
 head(raw_example_data[, 1:8], n = 5)
 ```
+
+# Preprocessing steps:
+
+## Remove duplicate cases.
+
+The first step is to check whether duplicate cases are contained in the data record. If this is the case, these can be removed from the data set.
 
 ```{r remove_duplicates}
 # check if the data contains duplicates
@@ -38,10 +50,13 @@ raw_example_data <- raw_example_data[!duplicated(raw_example_data), ]
 head(raw_example_data[, 1:8], n = 5)
 ```
 
+## Reordering and dropping irrelevant columns.
+
+If the data set contains columns that are irrelevant for further analysis, these can be removed from the data set.
+
 ```{r drop}
 # reorder columns
 raw_example_data <- raw_example_data %>% relocate("time", .before = "metabolite_1")
-
 
 # drop column measurement_complete since it is not used
 raw_example_data <- raw_example_data %>% select(-comp)
@@ -49,19 +64,13 @@ raw_example_data <- raw_example_data %>% select(-comp)
 head(raw_example_data[, 1:8], n = 5)
 ```
 
+## Checking data types.
+
+For the analysis in MeTEor, it is important that metabolite values are variables of the "numeric" type. The "time" variable should also be a variable of the type "numeric" or "integer". The categorical variables can be of different data types.
+
 ```{r non_numeric_columns}
 # check if all data is numeric
 non_numeric_columns <- names(raw_example_data)[!sapply(raw_example_data, is.numeric)]
-
-# in out case we just drop the columns, however editing them by hand is also an option
-raw_example_data <- raw_example_data %>% select(-all_of(non_numeric_columns))
-
-head(raw_example_data[, 1:8], n = 5)
-```
-
-```{r scale}
-# Remove columns with more than 10% NA
-raw_example_data <- raw_example_data[, which(colMeans(!is.na(raw_example_data)) > 0.9)]
 
 # transform to numeric
 cleaned_data <- raw_example_data %>% mutate_if(is.character, as.numeric)
@@ -73,11 +82,23 @@ columns_to_scale <- 5:ncol(cleaned_data)
 cleaned_data[, columns_to_scale] <- scale(cleaned_data[, columns_to_scale])
 
 head(cleaned_data[, 1:8], n = 5)
+
 ```
 
+## 
+
+## Imputation
+
+The dataset contains missing values, which need to be addressed before conducting analysis in MeTEor. Initially, it's crucial to identify metabolites with missing data. Some metabolites may exhibit a higher prevalence of missing values. For instance, metabolites with more than 10% missing values can be filtered out initially. Subsequently, for the remaining missing values, techniques like k-nearest neighbor imputation can be employed to impute the missing data.
+
 ```{r missing_data}
-# find columns with missing values
+
+# Find columns with missing values
 columns_with_missing <- names(cleaned_data)[colSums(is.na(cleaned_data)) > 0]
+head(columns_with_missing)
+
+# Remove columns with more than 10% NA
+cleaned_data <- cleaned_data[, which(colMeans(!is.na(cleaned_data)) > 0.9)]
 
 # impute columns using KNN
 data_meta_imputed <- kNN(cleaned_data, numFun = weightedMean, weightDist=TRUE, imp_var = FALSE)
@@ -85,15 +106,23 @@ data_meta_imputed <- kNN(cleaned_data, numFun = weightedMean, weightDist=TRUE, i
 head(data_meta_imputed[, 1:8], n = 5)
 ```
 
+## Change data format
+
+The data format is being transformed from wide to long format to make it compatible with MeTEor. This also involves reorganizing the columns to ensure that the dataset is structured appropriately.
+
 ```{r long}
 data_meta_imputed_long <- data_meta_imputed  %>%
-  pivot_longer(!c("id", "time", "sex", "treatment"), names_to = "metabolites", values_to = "values") %>%
-  relocate(time, .after = id)%>%
-  relocate(sex, .after = values)%>%
-  relocate(treatment, .after = values)
+                              pivot_longer(!c("id", "time", "sex", "treatment"), 
+                                           names_to = "metabolites", values_to = "values") %>%
+                              relocate(time, .after = id) %>%
+                              relocate(sex, .after = values) %>%
+                              relocate(treatment, .after = values)
 
 head(data_meta_imputed_long, n = 5)
+
 ```
+
+# Export data set
 
 ```{r write}
 write.csv(data_meta_imputed_long, file = "data_long.csv", row.names = FALSE )

@@ -1,6 +1,7 @@
-#' Unprocessed sample data
+#' Unprocessed example data
 #'
-#' Unprocessed sample data set, which is in wide format and contains missing values.
+#' The dataset provided is in wide format and has not been processed.
+#' It contains missing values and duplicates, which need to be addressed prior to using MeTEor.
 #'
 #'
 #' @docType data
