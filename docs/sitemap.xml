@@ -16,6 +16,9 @@
     <loc>https://scibiome.github.io/meteor/articles/Example_data.html</loc>
   </url>
   <url>
+    <loc>https://scibiome.github.io/meteor/articles/Tutorial.html</loc>
+  </url>
+  <url>
     <loc>https://scibiome.github.io/meteor/articles/index.html</loc>
   </url>
   <url>
@@ -44,5 +47,8 @@
   </url>
   <url>
     <loc>https://scibiome.github.io/meteor/reference/meteor.html</loc>
+  </url>
+  <url>
+    <loc>https://scibiome.github.io/meteor/reference/raw_example_data.html</loc>
   </url>
 </urlset>
