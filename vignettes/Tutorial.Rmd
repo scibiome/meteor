@@ -1,3 +1,12 @@
+---
+title: "MeTEor Tutorial"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{MeTEor Tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
 # MeTEor Tutorial
 
 ## Load Data
@@ -6,28 +15,24 @@
 
 With the import module you can easily load your data into MeTEor. Just press the button 'Click for data importing'.
 
-
 ![](../man/figures/sample_data.png)
 
 Example data can be easily selected via Environment \> Select a data.frame \> "covid_data" or "example_data". Under external file you can load your own data.
 
 ### Configurator
 
-
 ![](../man/figures/Configurator.png){width="500px"}
 
 The covid_data is loaded in MeTEor. In the Configurator you can select a subset of the data for further analysis.
 
-You can select the 
+You can select the
 
-* timepoint 
-* categorical variable
-  + categorical variable levels
-* metabolites
-
+-   timepoint
+-   categorical variable
+    -   categorical variable levels
+-   metabolites
 
 ## Statistical Analysis
-
 
 ### PCA
 
@@ -35,13 +40,11 @@ You can select the
 
 A principal component analysis is performed for the selected time point. The eigenvalues of the principal components are shown in the diagram in the upper left corner. A scatter plot with the observations colored by the selected grouping variable is displayed in the upper right corner. The contributions of the variables to the principal components and a biplot are displayed at the bottom. A 3D scatterplot can also be created in the bottom panel. The principal components can be selected by dropdown menu for the different dimensions.
 
-
 ### TCAM
 
 ![](../man/figures/TCAM.png)
 
 TCAM is an unsupervised tensor factorization method for the analysis of multiway data such as longitudinal omics data.
-
 
 ### Prediction
 
@@ -49,13 +52,11 @@ TCAM is an unsupervised tensor factorization method for the analysis of multiway
 
 You can perform binary classification using three different algorithms: logistic regression (LR), random forest (RF), and XGBoost (XGB). Multiple sizes of the test set and the type of cross-validation to be used, either stratified 5-fold cross-validation or leave-one-out cross-validation (LOOCV). In instances where the test set size is set to 0%, the application will not compute an ROC curve. This section further provides a metabolite selection feature that allows you to load the ten most important features. The number can be less if features are not used by the model.
 
-
-### rANOVA
+### Repeated Measures ANOVA
 
 ![](../man/figures/rANOVA.png)
 
 Repeated measures ANOVA can be used for feature selection by analyzing how different features impact the outcome variable across multiple measurements or conditions within the same subjects. It helps identify significant features while considering within-subject correlations or dependencies, aiding in the selection of relevant predictors for the outcome variable.
-
 
 ## Visualization
 
@@ -71,13 +72,11 @@ This section presents ridge plots contrasting the distribution of selected metab
 
 Line plots to visualize the mean metabolite course of a category group. On the x-axis are the time points, for each metabolite. The lines are colored by the selected category.
 
-
 ### Cluster Heatmap
 
 ![](../man/figures/heatmap.png)
 
 The Cluster Heatmap tool allows to visualize and cluster metabolite data across different time points for multiple metabolites. The tool generates a heatmap plot where each row represents a single observation, and each column represents the metabolites at the selected timepoint. The plot can be customized by changing the number of clusters for both rows and columns and be downloaded as a PNG image by right-clicking on it.
-
 
 ## Functional Analysis
 
