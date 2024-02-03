@@ -3,7 +3,7 @@
 \docType{data}
 \name{raw_example_data}
 \alias{raw_example_data}
-\title{Unprocessed sample data}
+\title{Unprocessed example data}
 \format{
 A data frame with 1802 rows and 105 variables
 }
@@ -11,6 +11,7 @@ A data frame with 1802 rows and 105 variables
 data(raw_example_data)
 }
 \description{
-Unprocessed sample data set, which is in wide format and contains missing values.
+The dataset provided is in wide format and has not been processed.
+It contains missing values and duplicates, which need to be addressed prior to using MeTEor.
 }
 \keyword{datasets}

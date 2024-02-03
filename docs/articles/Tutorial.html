@@ -88,41 +88,140 @@
     
     
 <div class="section level2">
-<h2 id="manual-to-work-with-meteor">Manual to work with MeTEor<a class="anchor" aria-label="anchor" href="#manual-to-work-with-meteor"></a>
+<h2 id="meteor-tutorial">MeTEor Tutorial<a class="anchor" aria-label="anchor" href="#meteor-tutorial"></a>
 </h2>
-<div class="float">
-<img src="../images/Import.png" alt="Import the data"><div class="figcaption">Import the data</div>
-</div>
-<div class="float">
-<img src="../images/sample_data.png" alt="You can one of the two sample datasets or import your own files by clicking on External File"><div class="figcaption">You can one of the two sample datasets or import
-your own files by clicking on External File</div>
-</div>
-<div class="float">
-<img src="../images/PCA.png" alt="an image caption Source: Ultimate Funny Dog Videos Compilation 2013."><div class="figcaption">an image caption Source: Ultimate Funny Dog
-Videos Compilation 2013.</div>
-</div>
-<div class="float">
-<img src="../images/TCAM.png" alt="an image caption Source: Ultimate Funny Dog Videos Compilation 2013."><div class="figcaption">an image caption Source: Ultimate Funny Dog
-Videos Compilation 2013.</div>
-</div>
-<div class="float">
-<img src="../images/XGB.png" alt="an image caption Source: Ultimate Funny Dog Videos Compilation 2013."><div class="figcaption">an image caption Source: Ultimate Funny Dog
-Videos Compilation 2013.</div>
-</div>
-<div class="float">
-<img src="../images/rANOVA.png" alt="an image caption Source: Ultimate Funny Dog Videos Compilation 2013."><div class="figcaption">an image caption Source: Ultimate Funny Dog
-Videos Compilation 2013.</div>
-</div>
-<div class="float">
-<img src="../images/Ridge.png" alt="an image caption Source: Ultimate Funny Dog Videos Compilation 2013."><div class="figcaption">an image caption Source: Ultimate Funny Dog
-Videos Compilation 2013.</div>
-</div>
-<div class="float">
-<img src="../images/line_plot.png" alt="an image caption Source: Ultimate Funny Dog Videos Compilation 2013."><div class="figcaption">an image caption Source: Ultimate Funny Dog
-Videos Compilation 2013.</div>
+<div class="section level3">
+<h3 id="load-data">Load Data<a class="anchor" aria-label="anchor" href="#load-data"></a>
+</h3>
+<p><img src="../reference/figures/Import.png"></p>
+<p>With the import module you can easily load your data into MeTEor.
+Just press the button ‘Click for data importing’.</p>
+<p><img src="../reference/figures/sample_data.png"></p>
+<p>Example data can be easily selected via Environment &gt; Select a
+data.frame &gt; “covid_data” or “example_data”. Under external file you
+can load your own data.</p>
+<div class="section level4">
+<h4 id="configurator">Configurator<a class="anchor" aria-label="anchor" href="#configurator"></a>
+</h4>
+<p><img src="../reference/figures/Configurator.png" width="500"></p>
+<p>The covid_data is loaded in MeTEor. In the Configurator you can
+select a subset of the data for further analysis.</p>
+<p>You can select the</p>
+<ul>
+<li>timepoint</li>
+<li>categorical variable
+<ul>
+<li>categorical variable levels</li>
+</ul>
+</li>
+<li>metabolites</li>
+</ul>
 </div>
 </div>
-  </main>
+<div class="section level3">
+<h3 id="statistical-analysis">Statistical Analysis<a class="anchor" aria-label="anchor" href="#statistical-analysis"></a>
+</h3>
+<div class="section level4">
+<h4 id="pca">PCA<a class="anchor" aria-label="anchor" href="#pca"></a>
+</h4>
+<p><img src="../reference/figures/PCA.png"></p>
+<p>A principal component analysis is performed for the selected time
+point. The eigenvalues of the principal components are shown in the
+diagram in the upper left corner. A scatter plot with the observations
+colored by the selected grouping variable is displayed in the upper
+right corner. The contributions of the variables to the principal
+components and a biplot are displayed at the bottom. A 3D scatterplot
+can also be created in the bottom panel. The principal components can be
+selected by dropdown menu for the different dimensions.</p>
+</div>
+<div class="section level4">
+<h4 id="tcam">TCAM<a class="anchor" aria-label="anchor" href="#tcam"></a>
+</h4>
+<p><img src="../reference/figures/TCAM.png"></p>
+<p>TCAM is an unsupervised tensor factorization method for the analysis
+of multiway data such as longitudinal omics data.</p>
+</div>
+<div class="section level4">
+<h4 id="prediction">Prediction<a class="anchor" aria-label="anchor" href="#prediction"></a>
+</h4>
+<p><img src="../reference/figures/XGB.png"></p>
+<p>You can perform binary classification using three different
+algorithms: logistic regression (LR), random forest (RF), and XGBoost
+(XGB). Multiple sizes of the test set and the type of cross-validation
+to be used, either stratified 5-fold cross-validation or leave-one-out
+cross-validation (LOOCV). In instances where the test set size is set to
+0%, the application will not compute an ROC curve. This section further
+provides a metabolite selection feature that allows you to load the ten
+most important features. The number can be less if features are not used
+by the model.</p>
+</div>
+<div class="section level4">
+<h4 id="ranova">rANOVA<a class="anchor" aria-label="anchor" href="#ranova"></a>
+</h4>
+<p><img src="../reference/figures/rANOVA.png"></p>
+<p>Repeated measures ANOVA can be used for feature selection by
+analyzing how different features impact the outcome variable across
+multiple measurements or conditions within the same subjects. It helps
+identify significant features while considering within-subject
+correlations or dependencies, aiding in the selection of relevant
+predictors for the outcome variable.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
+</h3>
+<div class="section level4">
+<h4 id="ridge-plots">Ridge Plots<a class="anchor" aria-label="anchor" href="#ridge-plots"></a>
+</h4>
+<p><img src="../reference/figures/Ridge.png"></p>
+<p>This section presents ridge plots contrasting the distribution of
+selected metabolites (see: Select Metabolites:) at different measurement
+time points. The measurement times to be compared can be selected in the
+menu below this box.</p>
+</div>
+<div class="section level4">
+<h4 id="line-plots">Line Plots<a class="anchor" aria-label="anchor" href="#line-plots"></a>
+</h4>
+<p><img src="../reference/figures/line_plot.png"></p>
+<p>Line plots to visualize the mean metabolite course of a category
+group. On the x-axis are the time points, for each metabolite. The lines
+are colored by the selected category.</p>
+</div>
+<div class="section level4">
+<h4 id="cluster-heatmap">Cluster Heatmap<a class="anchor" aria-label="anchor" href="#cluster-heatmap"></a>
+</h4>
+<p><img src="../reference/figures/heatmap.png"></p>
+<p>The Cluster Heatmap tool allows to visualize and cluster metabolite
+data across different time points for multiple metabolites. The tool
+generates a heatmap plot where each row represents a single observation,
+and each column represents the metabolites at the selected timepoint.
+The plot can be customized by changing the number of clusters for both
+rows and columns and be downloaded as a PNG image by right-clicking on
+it.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="functional-analysis">Functional Analysis<a class="anchor" aria-label="anchor" href="#functional-analysis"></a>
+</h3>
+<div class="section level4">
+<h4 id="pathway-enrichment">Pathway Enrichment<a class="anchor" aria-label="anchor" href="#pathway-enrichment"></a>
+</h4>
+<p><img src="../reference/figures/Enrichment.png"></p>
+<p>The enrichment analysis allows users to perform database queries for
+the selected metabolites. The top table displays the names of the chosen
+metabolites, which can be edited directly within the table. To initiate
+the analysis, users can send a query to the MetaboAnalyst API, which
+will generate a list of different identifiers for each metabolite,
+including HMDB, PubChem, ChEBI, KEGG, METLIN, and SMILES. Next, users
+can leverage the HMDB identifier to perform pathway enrichment analysis
+using the Relational Database of Metabolomics Pathways (RaMP). This
+analysis will return information about the pathways that involve the
+selected metabolites.</p>
+</div>
+</div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
