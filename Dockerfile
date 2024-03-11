@@ -62,7 +62,7 @@ RUN conda --version
 
 RUN pip3 install pandas==1.5.2 --upgrade
 RUN conda install -c conda-forge -y mprod-package
-RUN pip3 install numpy==1.23.0 --upgrade
+# RUN pip3 install numpy==1.23.0 --upgrade
 
 # run app on container start
 CMD ["Rscript", "-e", "MeTEor::meteor()"]
