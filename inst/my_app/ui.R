@@ -47,12 +47,16 @@ library(shinydashboard)
 library(shinycssloaders)
 library(shiny)
 library(shinyjs)
+library(rintrojs) # TODO add to references
 
 ##### UI #####
 
 ui <- dashboardPage(
+  #introjsUI(),
   dashboardHeader(title = "MeTEor"),
   dashboardSidebar(
+    introjsUI(),
+    introBox(
     sidebarMenu(
       menuItem("Introduction", tabName = "intro", icon = icon("fas fa-home")),
       menuItem("File", tabName = "file", icon = icon("fas fa-file")),
@@ -148,6 +152,9 @@ ui <- dashboardPage(
       menuItem("Volcano Plot", tabName = "volcano", icon = icon("fas fa-volcano")),
       menuItem("Enrichment", tabName = "export", icon = icon("fas fa-file-export")),
       menuItem("Packages & References", tabName = "packages", icon = icon("fas fa-box"))
+    ),
+    data.step = 2,
+    data.intro = "This is the sidebar. Look how intro elements can nest"
     )
   ),
   dashboardBody(
@@ -261,7 +268,14 @@ ui <- dashboardPage(
                                       position: top;"
               )
             )
-          )
+          ),
+          fluidRow(width = 4, align="center",
+           introBox(
+            actionButton("tutorial", "Start tutorial!", class = "btn-success"),
+            data.step = 1,
+            data.intro = "Let's start a MeTEor tutorial",
+            data.hint = "You can press me"
+          ))
         )
       ),
       tabItem(
