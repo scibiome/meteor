@@ -55,6 +55,8 @@ library(magrittr)
 library(limma)
 library(rmarkdown)
 library(markdown)
+library(rintrojs)
+library(data.table) # TODO add to references
 
 #### Python module ####
 

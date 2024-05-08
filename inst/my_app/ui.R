@@ -52,12 +52,10 @@ library(rintrojs) # TODO add to references
 ##### UI #####
 
 ui <- dashboardPage(
-  #introjsUI(),
   dashboardHeader(title = "MeTEor"),
   dashboardSidebar(
     introjsUI(),
-    introBox(
-    sidebarMenu(
+    sidebarMenu( id = "sidebar",
       menuItem("Introduction", tabName = "intro", icon = icon("fas fa-home")),
       menuItem("File", tabName = "file", icon = icon("fas fa-file")),
       menuItem("Time",
@@ -152,9 +150,6 @@ ui <- dashboardPage(
       menuItem("Volcano Plot", tabName = "volcano", icon = icon("fas fa-volcano")),
       menuItem("Enrichment", tabName = "export", icon = icon("fas fa-file-export")),
       menuItem("Packages & References", tabName = "packages", icon = icon("fas fa-box"))
-    ),
-    data.step = 2,
-    data.intro = "This is the sidebar. Look how intro elements can nest"
     )
   ),
   dashboardBody(
@@ -270,14 +265,9 @@ ui <- dashboardPage(
             )
           ),
           fluidRow(width = 4, align="center",
-           introBox(
-            actionButton("tutorial", "Start tutorial!", class = "btn-success"),
-            data.step = 1,
-            data.intro = "Let's start a MeTEor tutorial",
-            data.hint = "You can press me"
+            actionButton("tutorial_main", "Start tutorial!", class = "btn-info btn-lg btn-block")
           ))
-        )
-      ),
+        ),
       tabItem(
         tabName = "file",
         fluidRow(
@@ -288,14 +278,15 @@ ui <- dashboardPage(
               column(
                 width = 4,
                 actionButton("launch_modal", "Click for data importing")
+              ),
+              column(width =  4, actionButton("tutorial_file", "Click page tutorial!"))
               )
             ),
             column(
               width = 4,
               # sample_ui("sample_id")
             )
-          )
-        ),
+          ),
         fluidRow(column(width = 11, DT::dataTableOutput("datatable"))),
         fluidRow(column(width = 11, DT::dataTableOutput("datatable.wide")))
       ),

@@ -80,8 +80,10 @@ Imports:
     foreach, 
     xgboost,
     randomForest,
-    MLmetrics
+    MLmetrics,
+    rintrojs,
+    data.table
 Suggests: 
     tidyverse
-RoxygenNote: 7.3.0
+RoxygenNote: 7.3.1
 VignetteBuilder: knitr
