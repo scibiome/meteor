@@ -279,7 +279,7 @@ ui <- dashboardPage(
                 width = 4,
                 actionButton("launch_modal", "Click for data importing")
               ),
-              column(width =  4, actionButton("tutorial_file", "Click page tutorial!"))
+              column(width =  4, actionButton("tutorial_file", "Start page tutorial!", class =  "btn-info"))
               )
             ),
             column(
