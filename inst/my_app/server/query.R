@@ -1,5 +1,5 @@
 #### Metabolite query ####
-
+library(KEGGREST)
 output$info_box_enrichment <- renderUI({
 
   HTML("<p align = 'justify'>
@@ -72,7 +72,7 @@ output$export.dt <-   renderDT({
               #
               #
               # toSend = list(queryList = paste(name.vec, collapse = ";"), inputType = "name")
-              #
+
               # toSend =   list(queryList = "1,3-Diaminopropane;2-Ketobutyric acid;2-Hydroxybutyric acid;2-Methoxyestrone;",
               #   inputType= "name")
               #
@@ -88,8 +88,8 @@ output$export.dt <-   renderDT({
               # # Will show mapping to "hmdb_id", "kegg_id", "pubchem_id", "chebi_id", "metlin_id", "smiles"
               # query_results_text <- httr::content(query_results, "text", encoding = "UTF-8")
               # query_results_json <- jsonlite::fromJSON(query_results_text, flatten = TRUE)
-              #
-              #
+              # #
+              # #
               # query_results.df <- t(do.call(rbind.data.frame, query_results_json)) %>%
               #   as.data.frame()
               #
@@ -130,6 +130,7 @@ output$export.dt <-   renderDT({
               # browser()
               # body <- list(analytes = c("kegg:C00986", "kegg:C00109", "kegg:C05984","kegg:C05299", "kegg:C01089", "kegg:C00526", "kegg:C00083"))
               metabolites <- c("kegg:C00986", "kegg:C00109", "kegg:C05984", "kegg:C05299", "kegg:C01089", "kegg:C00526", "kegg:C00083")
+
               requests <- keggGet(metabolites)
 
 
@@ -176,31 +177,31 @@ output$export.dt <-   renderDT({
               #
               # # Use httr::POST to send the request to the MetaboAnalyst API
               # # The response will be saved in query_results
-              # # query_results <- httr::POST(call, body = body, encode = "json")
-              #
-              # # Check if response is ok (TRUE)
-              # # 200 is ok! 401 means an error has occurred on the user's end.
-              # # query_results$status_code == 200
-              #
-              # # Parse the response into a table
-              # # Will show mapping to "hmdb_id", "kegg_id", "pubchem_id", "chebi_id", "metlin_id", "smiles"
+              # query_results <- httr::POST(call, body = body, encode = "json")
+              # #
+              # # # Check if response is ok (TRUE)
+              # # # 200 is ok! 401 means an error has occurred on the user's end.
+              # query_results$status_code == 200
+              # #
+              # # # Parse the response into a table
+              # # # Will show mapping to "hmdb_id", "kegg_id", "pubchem_id", "chebi_id", "metlin_id", "smiles"
               # query_results_json <- httr::content(query_results, "text", encoding = "UTF-8")
               # query_results_parsed <- jsonlite::fromJSON(query_results_json, flatten = TRUE)
-
-
-
-              if (length(query_results_parsed$data) == 0) {
-                show_alert(
-                  title = NULL,
-                  text = tags$span(
-                    tags$h3("Error",
-                            style = "color: steelblue;"),
-                    "No matches found. Please edit metabolite names in the datatable."
-                  ),
-                  html = TRUE
-                )
-                return()
-              }
+              #
+              #
+              #
+              # if (length(query_results_parsed$data) == 0) {
+              #   show_alert(
+              #     title = NULL,
+              #     text = tags$span(
+              #       tags$h3("Error",
+              #               style = "color: steelblue;"),
+              #       "No matches found. Please edit metabolite names in the datatable."
+              #     ),
+              #     html = TRUE
+              #   )
+              #   return()
+#               }
               # library(dplyr)
               # query_results_parsed$data <- subset(query_results_parsed$data, grepl("kegg", pathwaySource, ignore.case = TRUE))
 
