@@ -142,11 +142,17 @@ observeEvent(
 
 helptext_pca <- reactive(data.table::data.table(
   tab = c("tutorial_pca"),
-  step = c(1,2,3,4),
+  step = c(1,2,3,
+           4,5,6,
+           7,8),
   element = c("#sidebarItemExpanded > ul > li:nth-child(3) > a",
               "#shiny-tab-pca > div:nth-child(2) > div > div > div.box-body",
               "#eigenPCA > div > div > svg:nth-child(1) > g.draglayer.cursor-crosshair > g > rect.nsewdrag.drag",
-              "#indPCA > div > div > svg:nth-child(1) > g.draglayer.cursor-crosshair > g > rect.nsewdrag.drag"),
+              "#indPCA > div > div > svg:nth-child(1) > g.draglayer.cursor-crosshair > g > rect.nsewdrag.drag",
+              "#sidebarItemExpanded > ul > li:nth-child(4) > a",
+              "#shiny-tab-pca > div:nth-child(4) > div:nth-child(1)",
+              "#biplotPCA > img",
+              "#add_graph_pc_cross_3d"),
   intro = c("The principal component analysis is calculated for the selected time points. If the time point is changed, the analysis is also recalculated. ",
             "Here you can select which principal components are to be displayed.",
             "Using a scree plot, you can heuristically determine the optimal number of principal components that explain most of the variance in your data.
@@ -156,8 +162,19 @@ helptext_pca <- reactive(data.table::data.table(
             "The PCA scatter plot visualizes the results of Principal Component Analysis by projecting data onto a lower-dimensional space using the principal components.
              Each axis represents a principal component, and each point represents an observation in the dataset.
              This plot helps identify clusters, trends, and outliers, revealing patterns and structures within the data that are not easily seen in higher dimensions.
-             The grouping is done based on the selected categorical variable."),
-  position = c("auto", "auto", "auto", "auto")
+             The grouping is done based on the selected categorical variable.",
+            "Here you can select the categorical variable for displaying the groups.",
+            "Here you can see the contribution of the metabolites to the respective principal component. The metabolites are listed in descending order of their contribution.",
+            "This biplot is used to visualise variables in principal component space. It displays the variables as vectors,
+             with the length of each vector representing the significance of the respective variable in the principal component.
+             Longer vectors indicate variables with greater influence. The angles between the vectors indicate the correlations between the variables:
+             smaller angles indicate higher positive correlations, while angles close to 180 degrees indicate negative correlations.
+             In addition, the angle of the variables to the axes indicates their correlation with each principal component axis.
+             This visualisation helps to understand the relative contributions of the variables to the principal components and their correlations with the axes.",
+            "If you click on this button, you can create a 3D PCA plot."),
+  position = c("auto", "auto", "auto",
+               "auto", "auto", "auto",
+               "auto", "auto")
 ))
 
 
