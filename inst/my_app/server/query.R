@@ -214,6 +214,7 @@ output$export.dt <-   renderDT({
                 group_by(pathwayId, pathwayName) %>%
                 summarize(num_hits = n(), inputIds = paste(inputId, collapse = ", "))
 
+              browser()
               # Order the pathways by the number of hits
               query_results_table_sorted <- query_results_table_summary[order(-query_results_table_summary$num_hits),]
 
@@ -266,15 +267,10 @@ output$export.dt <-   renderDT({
                 query_results_table_sorted$inputIds[i] <- paste(inputIds, collapse = ", ")
               }
               # browser()
+
               merged_df <- merge(query_results_table_sorted, urls_df, by = "pathwayId", all.x = TRUE)
               query_results_table_sorted <- merged_df
               colnames(query_results_table_sorted) <- c('pathwayID', 'pathwayName', 'num_hits', 'Matches', 'url')
-
-              # query_results_table_sorted <- mutate(query_results_table_sorted,
-              #                                      url = urls[match(pathwayID, names(urls))])
-              # urls <- as.vector(urls)
-              # query_results_table_sorted <- mutate(query_results_table_sorted,
-              #                                      url = urls[match(query_results_table_sorted$pathwayId, urls)])
 
               query_results_table_sorted$url <- sprintf('<a href="%s" target="_blank">%s</a>', query_results_table_sorted$url, "KEGG")
 
