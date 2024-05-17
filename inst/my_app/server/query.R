@@ -65,72 +65,68 @@ output$export.dt <-   renderDT({
               # The items in the list MUST be queryList and inputType
               # Valid input types are: "name", "hmdb", "kegg", "pubchem", "chebi", "metlin"
 
-              raw_list <-  raw_list.event()
+              # raw_list <-  raw_list.event()
               browser()
-              name.vec <- as.vector(raw_list$metabolites)
-
-
-
-              toSend = list(queryList = paste(name.vec, collapse = ";"), inputType = "name")
-
-              toSend =   list(queryList = "1,3-Diaminopropane;2-Ketobutyric acid;2-Hydroxybutyric acid;2-Methoxyestrone;",
-                inputType= "name")
-
-
-              # The MetaboAnalyst API url
-              call <- "https://rest.xialab.ca/api/mapcompounds"
-
-              # Use httr::POST to send the request to the MetaboAnalyst API
-              # The response will be saved in query_results
-              query_results <- httr::POST(call, body = toSend, encode = "json")
-
-              # Check if response is ok (TRUE)
-              # 200 is ok! 401 means an error has occured on the user's end.
-              # query_results$status_code==200
-
-              # Parse the response into a table
-              # Will show mapping to "hmdb_id", "kegg_id", "pubchem_id", "chebi_id", "metlin_id", "smiles"
-              query_results_text <- httr::content(query_results, "text", encoding = "UTF-8")
-              query_results_json <- jsonlite::fromJSON(query_results_text, flatten = TRUE)
-
-
-              query_results.df <- t(do.call(rbind.data.frame, query_results_json)) %>%
-                as.data.frame()
-
-              # dummy_data <- data.frame(
-              #   Query = c("1,3-Diaminopropane", "2-Ketobutyric acid", "2-Hydroxybutyric acid",
-              #             "2-Methoxyestrone", "(R)-3-Hydroxybutyric acid", "Deoxyuridine",
-              #             "Cortexolone", "Deoxycorticosteron", "Ketoisovaleric acid", "No Match"),
-              #   Match = c("1,3-Diaminopropane", "2-Ketobutyric acid", "2-Hydroxybutyric acid",
-              #             "2-Methoxyestrone", "3-Hydroxybutyric acid", "Deoxyuridine",
-              #             "Cortexolone", NA, NA, NA),
-              #   HMDB = c("HMDB0000002", "HMDB0000005", "HMDB0000008", "HMDB0000010",
-              #            "HMDB0000011", "HMDB0000012", "HMDB0000015", NA, NA, NA),
-              #   PubChem = c("428", "58", "440864", "440624", "441", "13712", "440707", NA, NA, NA),
-              #   ChEBI = c("15725", "30831", "50613", "1189", "17066", "16450", "28324", NA, NA, NA),
-              #   KEGG = c("C00986", "C00109", "C05984", "C05299", "C01089", "C00526", "C05488", NA, NA, NA),
-              #   METLIN = c("5081", NA, "3783", "2578", NA, "5086", "5088", NA, NA, NA),
-              #   SMILES = c("NCCCN", "CCC(=O)C(O)=O", "CC[C@H](O)C(O)=O",
-              #              "[H][C@@]12CCC(=O)[C@@]1(C)CC[C@]1([H])C3=C(CC[C@@]21[H])C=C(O)C(OC)=C3",
-              #              "C[C@@H](O)CC(O)=O", "OC[C@H]1O[C@H](C[C@@H]1O)N1C=CC(=O)NC1=O",
-              #              "[H][C@@]12CC[C@](O)(C(=O)CO)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CCC2=CC(=O)CC[C@]12C",
-              #              NA, NA, NA),
-              #   Comment = c("1", "1", "1", "1", "1", "1", "1", "0", "0", "0")
-              # )
-              # query_results.df <- dummy_data
-
-              ### testing the pathview
-
-              dummy_data$KEGG
-              # https://www.genome.jp/kegg/webapp/color_url.html
-
-
-              rownames(query_results.df) <- NULL
-              colnames(query_results.df) <- names(query_results_json)
-
-              body <- list(analytes = paste0("hmdb:", query_results.df$HMDB))
-              # Define the body
-              body <- list(analytes = c("hmdb:HMDB0000641", "hmdb:HMDB0000067", "hmdb:HMDB0000161"))
+              # name.vec <- as.vector(raw_list$metabolites)
+              #
+              #
+              #
+              # toSend = list(queryList = paste(name.vec, collapse = ";"), inputType = "name")
+              #
+              # toSend =   list(queryList = "1,3-Diaminopropane;2-Ketobutyric acid;2-Hydroxybutyric acid;2-Methoxyestrone;",
+              #   inputType= "name")
+              #
+              #
+              # # The MetaboAnalyst API url
+              # call <- "https://rest.xialab.ca/api/mapcompounds"
+              #
+              # # Use httr::POST to send the request to the MetaboAnalyst API
+              # # The response will be saved in query_results
+              # query_results <- httr::POST(call, body = toSend, encode = "json")
+              #
+              # # Parse the response into a table
+              # # Will show mapping to "hmdb_id", "kegg_id", "pubchem_id", "chebi_id", "metlin_id", "smiles"
+              # query_results_text <- httr::content(query_results, "text", encoding = "UTF-8")
+              # query_results_json <- jsonlite::fromJSON(query_results_text, flatten = TRUE)
+              #
+              #
+              # query_results.df <- t(do.call(rbind.data.frame, query_results_json)) %>%
+              #   as.data.frame()
+              #
+              # # dummy_data <- data.frame(
+              # #   Query = c("1,3-Diaminopropane", "2-Ketobutyric acid", "2-Hydroxybutyric acid",
+              # #             "2-Methoxyestrone", "(R)-3-Hydroxybutyric acid", "Deoxyuridine",
+              # #             "Cortexolone", "Deoxycorticosteron", "Ketoisovaleric acid", "No Match"),
+              # #   Match = c("1,3-Diaminopropane", "2-Ketobutyric acid", "2-Hydroxybutyric acid",
+              # #             "2-Methoxyestrone", "3-Hydroxybutyric acid", "Deoxyuridine",
+              # #             "Cortexolone", NA, NA, NA),
+              # #   HMDB = c("HMDB0000002", "HMDB0000005", "HMDB0000008", "HMDB0000010",
+              # #            "HMDB0000011", "HMDB0000012", "HMDB0000015", NA, NA, NA),
+              # #   PubChem = c("428", "58", "440864", "440624", "441", "13712", "440707", NA, NA, NA),
+              # #   ChEBI = c("15725", "30831", "50613", "1189", "17066", "16450", "28324", NA, NA, NA),
+              # #   KEGG = c("C00986", "C00109", "C05984", "C05299", "C01089", "C00526", "C05488", NA, NA, NA),
+              # #   METLIN = c("5081", NA, "3783", "2578", NA, "5086", "5088", NA, NA, NA),
+              # #   SMILES = c("NCCCN", "CCC(=O)C(O)=O", "CC[C@H](O)C(O)=O",
+              # #              "[H][C@@]12CCC(=O)[C@@]1(C)CC[C@]1([H])C3=C(CC[C@@]21[H])C=C(O)C(OC)=C3",
+              # #              "C[C@@H](O)CC(O)=O", "OC[C@H]1O[C@H](C[C@@H]1O)N1C=CC(=O)NC1=O",
+              # #              "[H][C@@]12CC[C@](O)(C(=O)CO)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CCC2=CC(=O)CC[C@]12C",
+              # #              NA, NA, NA),
+              # #   Comment = c("1", "1", "1", "1", "1", "1", "1", "0", "0", "0")
+              # # )
+              # # query_results.df <- dummy_data
+              #
+              # ### testing the pathview
+              #
+              # # dummy_data$KEGG
+              # # https://www.genome.jp/kegg/webapp/color_url.html
+              #
+              #
+              # rownames(query_results.df) <- NULL
+              # colnames(query_results.df) <- names(query_results_json)
+              #
+              # body <- list(analytes = paste0("hmdb:", query_results.df$HMDB))
+              # # Define the body
+              # body <- list(analytes = c("hmdb:HMDB0000641", "hmdb:HMDB0000067", "hmdb:HMDB0000161"))
 
               body <- list(analytes = c("kegg:C00986", "kegg:C00109", "kegg:C05984","kegg:C05299", "kegg:C01089", "kegg:C00526", "kegg:C00083"))
 
@@ -143,7 +139,7 @@ output$export.dt <-   renderDT({
 
               # Check if response is ok (TRUE)
               # 200 is ok! 401 means an error has occurred on the user's end.
-              query_results$status_code == 200
+              # query_results$status_code == 200
 
               # Parse the response into a table
               # Will show mapping to "hmdb_id", "kegg_id", "pubchem_id", "chebi_id", "metlin_id", "smiles"
@@ -177,31 +173,29 @@ output$export.dt <-   renderDT({
 
               # Order the pathways by the number of hits
               query_results_table_sorted <- query_results_table_summary[order(-query_results_table_summary$num_hits),]
-              query_results_table_sorted2 <- subset(query_results_table_sorted, grepl("map", pathwayId, ignore.case = TRUE))
+              query_results_table_sorted <- subset(query_results_table_sorted, grepl("map", pathwayId, ignore.case = TRUE))
 
-              # https://www.kegg.jp/kegg-bin/show_pathway?map00010/3.1.3.9/C00986%20%23ff0000/4.1.2.13%20%2Cpurple/C00109%20skyblue%2Cblue /5.3.1.1%20skyblue%20pink
-              # https://www.kegg.jp/kegg-bin/show_pathway?map00640/3.1.3.9/C00083%20%23ff0000/4.1.2.13%20%2Cpurple/C00109%20skyblue%2Cblue
-              # https://www.kegg.jp/kegg-bin/show_pathway?map00640/C00083/red/C00109/red/C05984/red
+
               generate_kegg_url <- function(pathwayId, inputIds) {
                 # Remove "kegg:" prefix and split compound IDs
                 compound_ids <- unlist(strsplit(gsub("kegg:", "", inputIds), ", "))
 
-                # Define colors for compounds
-                # colors <- c("red", "blue", "green", "purple", "yellow", "orange", "pink", "cyan")
-
                 # Generate color-coded compound IDs
-                colored_compound_ids <- paste0(compound_ids, "/", "red")
+                colored_compound_ids <- paste0(compound_ids, "%20red%20red")
 
                 # Construct the URL template with colored compound IDs
                 url_template <- paste0("https://www.kegg.jp/kegg-bin/show_pathway?", pathwayId, "/", paste(colored_compound_ids, collapse = "/"))
 
-                # Return the generated URL
                 return(url_template)
               }
 
               # Apply the function to each row in the dataframe
-              urls <- mapply(generate_kegg_url, query_results_table_sorted2$pathwayId, query_results_table_sorted2$inputIds)
+              urls <- mapply(generate_kegg_url, query_results_table_sorted$pathwayId, query_results_table_sorted$inputIds)
+              pathwayIDs <- gsub(" .*", "", names(urls))
+              urls <- unname(urls)
 
+              # Create a dataframe
+              urls_df <- data.frame(pathwayId = pathwayIDs, url = urls)
               # Print the generated URLs
               print(urls)
 
@@ -210,10 +204,11 @@ output$export.dt <-   renderDT({
               # head(query_results_table_sorted %>%
               #        mutate(inputIds = str_remove(inputIds, "hmdb:")), n = 10)
               query_results_table_sorted <- query_results_table_sorted %>%
-                mutate(inputIds = gsub("hmdb:", "", inputIds))
+                mutate(inputIds = gsub("kegg:", "", inputIds))
 
 
-              dict <- setNames(query_results.df$Match, query_results.df$HMDB)
+
+              dict1 <- setNames(query_results.df$Match, query_results.df$KEGG)
 
               # loop through each row of the table
               for (i in seq_len(nrow(query_results_table_sorted))) {
@@ -222,14 +217,20 @@ output$export.dt <-   renderDT({
                 inputIds <- strsplit(query_results_table_sorted$inputIds[i], ", ")[[1]]
 
                 # replace each HMDB code with the corresponding value from the dictionary
-                inputIds <- sapply(inputIds, function(x) ifelse(x %in% names(dict), dict[x], x))
+                inputIds <- sapply(inputIds, function(x) ifelse(x %in% names(dict1), dict1[x], x))
 
                 # combine the modified inputIds back into a comma-separated string
                 query_results_table_sorted$inputIds[i] <- paste(inputIds, collapse = ", ")
               }
+              merged_df <- merge(query_results_table_sorted, urls_df, by = "pathwayId", all.x = TRUE)
+              query_results_table_sorted <- merged_df
+              colnames(query_results_table_sorted) <- c('pathwayID', 'pathwayName', 'num_hits', 'Matches', 'url')
 
-
-              colnames(query_results_table_sorted) <- c('pathwayID', 'pathwayName', 'num_hits', 'Matches')
+              # query_results_table_sorted <- mutate(query_results_table_sorted,
+              #                                      url = urls[match(pathwayID, names(urls))])
+              # urls <- as.vector(urls)
+              # query_results_table_sorted <- mutate(query_results_table_sorted,
+              #                                      url = urls[match(query_results_table_sorted$pathwayId, urls)])
 
               DT_pathways(datatable(query_results_table_sorted, editable = TRUE,
                         extensions = "Buttons",
