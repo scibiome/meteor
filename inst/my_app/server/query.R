@@ -66,7 +66,7 @@ output$export.dt <-   renderDT({
               # Valid input types are: "name", "hmdb", "kegg", "pubchem", "chebi", "metlin"
 
               # raw_list <-  raw_list.event()
-              browser()
+              # browser()
               # name.vec <- as.vector(raw_list$metabolites)
               #
               #
@@ -127,24 +127,65 @@ output$export.dt <-   renderDT({
               # body <- list(analytes = paste0("hmdb:", query_results.df$HMDB))
               # # Define the body
               # body <- list(analytes = c("hmdb:HMDB0000641", "hmdb:HMDB0000067", "hmdb:HMDB0000161"))
+              # browser()
+              # body <- list(analytes = c("kegg:C00986", "kegg:C00109", "kegg:C05984","kegg:C05299", "kegg:C01089", "kegg:C00526", "kegg:C00083"))
+              metabolites <- c("kegg:C00986", "kegg:C00109", "kegg:C05984", "kegg:C05299", "kegg:C01089", "kegg:C00526", "kegg:C00083")
+              requests <- keggGet(metabolites)
 
-              body <- list(analytes = c("kegg:C00986", "kegg:C00109", "kegg:C05984","kegg:C05299", "kegg:C01089", "kegg:C00526", "kegg:C00083"))
 
-              # The MetaboAnalyst API url
-              call <- "https://rampdb.nih.gov/api/pathways-from-analytes"
+              # Initialize empty lists to store data
+              pathway_list <- c()
+              pathway_name_list <- c()
+              name_list <- c()
+              entry_list <- c()
 
-              # Use httr::POST to send the request to the MetaboAnalyst API
-              # The response will be saved in query_results
-              query_results <- httr::POST(call, body = body, encode = "json")
+              # Iterate through each request
+              for (req in requests) {
+                # Iterate through each entry in PATHWAY of the current request
+                for (i in seq_along(req$PATHWAY)) {
+                  # Extract pathway and pathway name
+                  pathway <- names(req$PATHWAY)[i]
+                  pathway_name <- req$PATHWAY[[i]]
 
-              # Check if response is ok (TRUE)
-              # 200 is ok! 401 means an error has occurred on the user's end.
-              # query_results$status_code == 200
+                  # Append to lists
+                  pathway_list <- c(pathway_list, pathway)
+                  pathway_name_list <- c(pathway_name_list, pathway_name)
 
-              # Parse the response into a table
-              # Will show mapping to "hmdb_id", "kegg_id", "pubchem_id", "chebi_id", "metlin_id", "smiles"
-              query_results_json <- httr::content(query_results, "text", encoding = "UTF-8")
-              query_results_parsed <- jsonlite::fromJSON(query_results_json, flatten = TRUE)
+                  # Append Name and Entry from the current request
+                  name_list <- c(name_list, gsub(";", "", req$NAME[1]))
+                  entry_list <- c(entry_list, req$ENTRY[1])
+                }
+              }
+
+              # Create a data frame
+              retrieved_pathways_df <- data.frame(
+                pathwayId = pathway_list,
+                pathwayName = pathway_name_list,
+                commonName = name_list,
+                inputId = entry_list
+              )
+
+              # Print the data frame
+              # print(result_df)
+
+              #
+              # # browser()
+              # # body <- list(analytes = c("kegg:C01089", "kegg:C00526", "kegg:C00083"))
+              # # The MetaboAnalyst API url
+              # call <- "https://rampdb.nih.gov/api/pathways-from-analytes"
+              #
+              # # Use httr::POST to send the request to the MetaboAnalyst API
+              # # The response will be saved in query_results
+              # # query_results <- httr::POST(call, body = body, encode = "json")
+              #
+              # # Check if response is ok (TRUE)
+              # # 200 is ok! 401 means an error has occurred on the user's end.
+              # # query_results$status_code == 200
+              #
+              # # Parse the response into a table
+              # # Will show mapping to "hmdb_id", "kegg_id", "pubchem_id", "chebi_id", "metlin_id", "smiles"
+              # query_results_json <- httr::content(query_results, "text", encoding = "UTF-8")
+              # query_results_parsed <- jsonlite::fromJSON(query_results_json, flatten = TRUE)
 
 
 
@@ -160,9 +201,11 @@ output$export.dt <-   renderDT({
                 )
                 return()
               }
+              # library(dplyr)
+              # query_results_parsed$data <- subset(query_results_parsed$data, grepl("kegg", pathwaySource, ignore.case = TRUE))
 
               # Group the data by pathway name and input ID, and count the number of hits
-              query_results_table <- query_results_parsed$data %>%
+              query_results_table <- retrieved_pathways_df %>%
                 group_by(pathwayId, pathwayName, inputId) %>%
                 summarize(num_hits = n())
 
@@ -173,7 +216,7 @@ output$export.dt <-   renderDT({
 
               # Order the pathways by the number of hits
               query_results_table_sorted <- query_results_table_summary[order(-query_results_table_summary$num_hits),]
-              query_results_table_sorted <- subset(query_results_table_sorted, grepl("map", pathwayId, ignore.case = TRUE))
+
 
 
               generate_kegg_url <- function(pathwayId, inputIds) {
@@ -197,7 +240,7 @@ output$export.dt <-   renderDT({
               # Create a dataframe
               urls_df <- data.frame(pathwayId = pathwayIDs, url = urls)
               # Print the generated URLs
-              print(urls)
+              # print(urls)
 
               # browser()
               # Print the top 10 pathways with the most hits, along with the number of input IDs and the input IDs themselves
@@ -208,7 +251,7 @@ output$export.dt <-   renderDT({
 
 
 
-              dict1 <- setNames(query_results.df$Match, query_results.df$KEGG)
+              dict1 <- setNames(retrieved_pathways_df$commonName, retrieved_pathways_df$inputId)
 
               # loop through each row of the table
               for (i in seq_len(nrow(query_results_table_sorted))) {
@@ -222,6 +265,7 @@ output$export.dt <-   renderDT({
                 # combine the modified inputIds back into a comma-separated string
                 query_results_table_sorted$inputIds[i] <- paste(inputIds, collapse = ", ")
               }
+              # browser()
               merged_df <- merge(query_results_table_sorted, urls_df, by = "pathwayId", all.x = TRUE)
               query_results_table_sorted <- merged_df
               colnames(query_results_table_sorted) <- c('pathwayID', 'pathwayName', 'num_hits', 'Matches', 'url')
@@ -232,6 +276,8 @@ output$export.dt <-   renderDT({
               # query_results_table_sorted <- mutate(query_results_table_sorted,
               #                                      url = urls[match(query_results_table_sorted$pathwayId, urls)])
 
+              query_results_table_sorted$url <- sprintf('<a href="%s" target="_blank">%s</a>', query_results_table_sorted$url, "KEGG")
+
               DT_pathways(datatable(query_results_table_sorted, editable = TRUE,
                         extensions = "Buttons",
                         options = list(paging = TRUE,
@@ -240,11 +286,12 @@ output$export.dt <-   renderDT({
                                        ordering = TRUE,
                                        dom = 'Bfrtip',
                                        buttons = c("copy", "print", "csv", "excel")
-                        )))
+                        ), escape = FALSE
+                        ))
 
 
 
-              datatable(query_results.df, editable = TRUE,
+              datatable(retrieved_pathways_df, editable = TRUE,
                         extensions = "Buttons",
                         options = list(paging = TRUE,
                                        scrollX=TRUE,
@@ -257,4 +304,5 @@ output$export.dt <-   renderDT({
 
 })
 
-output$pathways.dt <-   renderDT({DT_pathways()})
+output$pathways.dt <-   renderDT({DT_pathways()
+  })
