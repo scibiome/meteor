@@ -117,7 +117,8 @@ helptext_file <- reactive(data.table::data.table(
   tab = c("tutorial_file"),
   step = c(1),
   element = c("#launch_modal"),
-  intro = c("bla"),
+  intro = c("Data can be imported here. To import your own data, click on <b>External file</b>.
+            To import example data, click on <b>Environment</b> and select one of the two sample data sets and then click on <b>Import data</b>. "),
   position = c("auto")
 ))
 
@@ -135,3 +136,48 @@ observeEvent(
     )
   }
 )
+
+###### Tutorial PCA ------
+
+
+helptext_pca <- reactive(data.table::data.table(
+  tab = c("tutorial_pca"),
+  step = c(1,2,3,4),
+  element = c("#sidebarItemExpanded > ul > li:nth-child(3) > a",
+              "#shiny-tab-pca > div:nth-child(2) > div > div > div.box-body",
+              "#eigenPCA > div > div > svg:nth-child(1) > g.draglayer.cursor-crosshair > g > rect.nsewdrag.drag",
+              "#indPCA > div > div > svg:nth-child(1) > g.draglayer.cursor-crosshair > g > rect.nsewdrag.drag"),
+  intro = c("The principal component analysis is calculated for the selected time points. If the time point is changed, the analysis is also recalculated. ",
+            "Here you can select which principal components are to be displayed.",
+            "Using a scree plot, you can heuristically determine the optimal number of principal components that explain most of the variance in your data.
+             The x-axis displays the principal components in order,
+             while the y-axis shows the eigenvalues, representing the proportion of variance each principal component explains.
+             The scree plot helps identify an 'elbow' point, after which adding more principal components contributes minimally to the explained variance.",
+            "The PCA scatter plot visualizes the results of Principal Component Analysis by projecting data onto a lower-dimensional space using the principal components.
+             Each axis represents a principal component, and each point represents an observation in the dataset.
+             This plot helps identify clusters, trends, and outliers, revealing patterns and structures within the data that are not easily seen in higher dimensions.
+             The grouping is done based on the selected categorical variable."),
+  position = c("auto", "auto", "auto", "auto")
+))
+
+
+observeEvent(
+  eventExpr = input$tutorial_pca,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_pca()[tab == "tutorial_pca"]
+            )
+    )
+  }
+)
+
+
+
+
+
+
+

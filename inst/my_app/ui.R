@@ -297,7 +297,9 @@ ui <- dashboardPage(
           title = "Principal Component Analysis (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_pca")
+          htmlOutput("info_box_pca"),
+          column(width =  4, actionButton("tutorial_pca", "Start page tutorial!", class =  "btn-info"))
+
         )),
         fluidRow(box(
           title = "Select the principal components for dimensions 1-3.",
