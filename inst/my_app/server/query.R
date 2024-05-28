@@ -93,27 +93,27 @@ output$export.dt <-   renderDT({
               # query_results.df <- t(do.call(rbind.data.frame, query_results_json)) %>%
               #   as.data.frame()
               #
-              # # dummy_data <- data.frame(
-              # #   Query = c("1,3-Diaminopropane", "2-Ketobutyric acid", "2-Hydroxybutyric acid",
-              # #             "2-Methoxyestrone", "(R)-3-Hydroxybutyric acid", "Deoxyuridine",
-              # #             "Cortexolone", "Deoxycorticosteron", "Ketoisovaleric acid", "No Match"),
-              # #   Match = c("1,3-Diaminopropane", "2-Ketobutyric acid", "2-Hydroxybutyric acid",
-              # #             "2-Methoxyestrone", "3-Hydroxybutyric acid", "Deoxyuridine",
-              # #             "Cortexolone", NA, NA, NA),
-              # #   HMDB = c("HMDB0000002", "HMDB0000005", "HMDB0000008", "HMDB0000010",
-              # #            "HMDB0000011", "HMDB0000012", "HMDB0000015", NA, NA, NA),
-              # #   PubChem = c("428", "58", "440864", "440624", "441", "13712", "440707", NA, NA, NA),
-              # #   ChEBI = c("15725", "30831", "50613", "1189", "17066", "16450", "28324", NA, NA, NA),
-              # #   KEGG = c("C00986", "C00109", "C05984", "C05299", "C01089", "C00526", "C05488", NA, NA, NA),
-              # #   METLIN = c("5081", NA, "3783", "2578", NA, "5086", "5088", NA, NA, NA),
-              # #   SMILES = c("NCCCN", "CCC(=O)C(O)=O", "CC[C@H](O)C(O)=O",
-              # #              "[H][C@@]12CCC(=O)[C@@]1(C)CC[C@]1([H])C3=C(CC[C@@]21[H])C=C(O)C(OC)=C3",
-              # #              "C[C@@H](O)CC(O)=O", "OC[C@H]1O[C@H](C[C@@H]1O)N1C=CC(=O)NC1=O",
-              # #              "[H][C@@]12CC[C@](O)(C(=O)CO)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CCC2=CC(=O)CC[C@]12C",
-              # #              NA, NA, NA),
-              # #   Comment = c("1", "1", "1", "1", "1", "1", "1", "0", "0", "0")
-              # # )
-              # # query_results.df <- dummy_data
+              dummy_data <- data.frame(
+                Query = c("1,3-Diaminopropane", "2-Ketobutyric acid", "2-Hydroxybutyric acid",
+                          "2-Methoxyestrone", "(R)-3-Hydroxybutyric acid", "Deoxyuridine",
+                          "Cortexolone", "Deoxycorticosteron", "Ketoisovaleric acid", "No Match"),
+                Match = c("1,3-Diaminopropane", "2-Ketobutyric acid", "2-Hydroxybutyric acid",
+                          "2-Methoxyestrone", "3-Hydroxybutyric acid", "Deoxyuridine",
+                          "Cortexolone", NA, NA, NA),
+                HMDB = c("HMDB0000002", "HMDB0000005", "HMDB0000008", "HMDB0000010",
+                         "HMDB0000011", "HMDB0000012", "HMDB0000015", NA, NA, NA),
+                PubChem = c("428", "58", "440864", "440624", "441", "13712", "440707", NA, NA, NA),
+                ChEBI = c("15725", "30831", "50613", "1189", "17066", "16450", "28324", NA, NA, NA),
+                KEGG = c("C00986", "C00109", "C05984", "C05299", "C01089", "C00526", "C05488", NA, NA, NA),
+                METLIN = c("5081", NA, "3783", "2578", NA, "5086", "5088", NA, NA, NA),
+                SMILES = c("NCCCN", "CCC(=O)C(O)=O", "CC[C@H](O)C(O)=O",
+                           "[H][C@@]12CCC(=O)[C@@]1(C)CC[C@]1([H])C3=C(CC[C@@]21[H])C=C(O)C(OC)=C3",
+                           "C[C@@H](O)CC(O)=O", "OC[C@H]1O[C@H](C[C@@H]1O)N1C=CC(=O)NC1=O",
+                           "[H][C@@]12CC[C@](O)(C(=O)CO)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CCC2=CC(=O)CC[C@]12C",
+                           NA, NA, NA),
+                Comment = c("1", "1", "1", "1", "1", "1", "1", "0", "0", "0")
+              )
+              query_results.df <- dummy_data
               #
               # ### testing the pathview
               #
@@ -129,9 +129,24 @@ output$export.dt <-   renderDT({
               # body <- list(analytes = c("hmdb:HMDB0000641", "hmdb:HMDB0000067", "hmdb:HMDB0000161"))
               # browser()
               # body <- list(analytes = c("kegg:C00986", "kegg:C00109", "kegg:C05984","kegg:C05299", "kegg:C01089", "kegg:C00526", "kegg:C00083"))
-              metabolites <- c("kegg:C00986", "kegg:C00109", "kegg:C05984", "kegg:C05299", "kegg:C01089", "kegg:C00526", "kegg:C00083")
+              # metabolites <- c("kegg:C00986", "kegg:C00109", "kegg:C05984", "kegg:C05299", "kegg:C01089", "kegg:C00526", "kegg:C00083")
 
-              requests <- keggGet(metabolites)
+              # browser()
+
+              add_kegg_prefix <- function(metabolite) {
+                if (!is.na(metabolite)) {
+                  return(paste0("kegg:", metabolite))
+                } else {
+                  return(NA)
+                }
+              }
+
+              # Apply the function to each element in the list
+              prefixed_metabolites <- sapply(query_results.df$KEGG, add_kegg_prefix)
+
+
+              metabolites <- query_results.df$KEGG
+              requests <- keggGet(sapply(query_results.df$KEGG, add_kegg_prefix))
 
 
               # Initialize empty lists to store data
@@ -217,7 +232,7 @@ output$export.dt <-   renderDT({
 
               browser()
               # Order the pathways by the number of hits
-              query_results_table_sorted <- query_results_table_summary[order(-query_results_table_summary$num_hits),]
+              enriched_kegg_pathways <- query_results_table_summary[order(-query_results_table_summary$num_hits),]
 
 
 
@@ -235,7 +250,7 @@ output$export.dt <-   renderDT({
               }
 
               # Apply the function to each row in the dataframe
-              urls <- mapply(generate_kegg_url, query_results_table_sorted$pathwayId, query_results_table_sorted$inputIds)
+              urls <- mapply(generate_kegg_url, enriched_kegg_pathways$pathwayId, enriched_kegg_pathways$inputIds)
               pathwayIDs <- gsub(" .*", "", names(urls))
               urls <- unname(urls)
 
@@ -246,9 +261,9 @@ output$export.dt <-   renderDT({
 
               # browser()
               # Print the top 10 pathways with the most hits, along with the number of input IDs and the input IDs themselves
-              # head(query_results_table_sorted %>%
+              # head(enriched_kegg_pathways %>%
               #        mutate(inputIds = str_remove(inputIds, "hmdb:")), n = 10)
-              query_results_table_sorted <- query_results_table_sorted %>%
+              enriched_kegg_pathways <- enriched_kegg_pathways %>%
                 mutate(inputIds = gsub("kegg:", "", inputIds))
 
 
@@ -256,26 +271,26 @@ output$export.dt <-   renderDT({
               dict1 <- setNames(retrieved_pathways_df$commonName, retrieved_pathways_df$inputId)
 
               # loop through each row of the table
-              for (i in seq_len(nrow(query_results_table_sorted))) {
+              for (i in seq_len(nrow(enriched_kegg_pathways))) {
 
                 # split the inputIds column by comma
-                inputIds <- strsplit(query_results_table_sorted$inputIds[i], ", ")[[1]]
+                inputIds <- strsplit(enriched_kegg_pathways$inputIds[i], ", ")[[1]]
 
                 # replace each HMDB code with the corresponding value from the dictionary
                 inputIds <- sapply(inputIds, function(x) ifelse(x %in% names(dict1), dict1[x], x))
 
                 # combine the modified inputIds back into a comma-separated string
-                query_results_table_sorted$inputIds[i] <- paste(inputIds, collapse = ", ")
+                enriched_kegg_pathways$inputIds[i] <- paste(inputIds, collapse = ", ")
               }
               # browser()
 
-              merged_df <- merge(query_results_table_sorted, urls_df, by = "pathwayId", all.x = TRUE)
-              query_results_table_sorted <- merged_df
-              colnames(query_results_table_sorted) <- c('pathwayID', 'pathwayName', 'num_hits', 'Matches', 'url')
+              merged_df <- merge(enriched_kegg_pathways, urls_df, by = "pathwayId", all.x = TRUE)
+              enriched_kegg_pathways <- merged_df
+              colnames(enriched_kegg_pathways) <- c('pathwayID', 'pathwayName', 'num_hits', 'Matches', 'url')
 
-              query_results_table_sorted$url <- sprintf('<a href="%s" target="_blank">%s</a>', query_results_table_sorted$url, "KEGG")
+              enriched_kegg_pathways$url <- sprintf('<a href="%s" target="_blank">%s</a>', enriched_kegg_pathways$url, "KEGG")
 
-              DT_pathways(datatable(query_results_table_sorted, editable = TRUE,
+              DT_pathways(datatable(enriched_kegg_pathways, editable = TRUE,
                         extensions = "Buttons",
                         options = list(paging = TRUE,
                                        scrollX=TRUE,
@@ -288,7 +303,21 @@ output$export.dt <-   renderDT({
 
 
 
-              datatable(retrieved_pathways_df, editable = TRUE,
+              # Function to generate URLs
+              generate_url <- function(kegg_id) {
+                if (!is.na(kegg_id)) {
+                  return(sprintf('<a href="https://www.genome.jp/dbget-bin/www_bget?cpd:%s" target="_blank">%s</a>', kegg_id, kegg_id))
+                } else {
+                  return("-")
+                }
+              }
+
+              # Apply the function to the KEGG column
+              dummy_data$url <- sapply(dummy_data$KEGG, generate_url)
+              enriched_kegg_pathways$url
+              # https://www.genome.jp/dbget-bin/www_bget?cpd+C00041
+
+              datatable(dummy_data, editable = TRUE,
                         extensions = "Buttons",
                         options = list(paging = TRUE,
                                        scrollX=TRUE,
@@ -296,7 +325,7 @@ output$export.dt <-   renderDT({
                                        ordering = TRUE,
                                        dom = 'Bfrtip',
                                        buttons = c("copy", "print", "csv", "excel")
-                        ))
+                        ), escape = FALSE)
 
 
 })

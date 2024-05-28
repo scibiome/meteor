@@ -121,7 +121,7 @@ server <- function(input, output, session) {
   data("example_data", package = "MeTEor")
 
   #### Source: tcam_shiny.py ----
-  reticulate::source_python("tcam_shiny.py")
+  # reticulate::source_python("tcam_shiny.py")
 
   #### source: launch_modal.R ====
   source(file.path("server", "launch_modal.R"), local = TRUE)$value
