@@ -1134,32 +1134,29 @@ ui <- dashboardPage(
         fluidRow(
           column(
             width = 12,
-            actionButton("api.go", "Make API request"),
-          )
-        ),
-        fluidRow(
-          column(
-            width = 12,
             # Define an editable text area input field
-            textAreaInput("editableField", "Editable Field:", value = "Type or edit text here...")
+            textAreaInput("editableField", "1. Copy Metabolites and go to MetaboAnalyst to map the compounds", value = "")
           )
         ),
         fluidRow(
-          column(
-            width = 12,
-            # Button to copy the content of the editable field
-            actionButton("copyButton", "Copy Content")
+          column(12,
+                 tags$a(href="https://www.metaboanalyst.ca/MetaboAnalyst/upload/ConvertView.xhtml", "MetaboAnalyst", target="_blank")
           )
         ),
+
         fluidRow(
           column(
             width = 12,
             # Text input for pasting JSON data
-            textInput("jsonInput", "Paste JSON Here:", placeholder = "Paste JSON data here...")
+            textInput("jsonInput", "2. Paste MetaboAnalyst Mapping", placeholder = "")
           )
         ),
-
-
+        fluidRow(
+          column(
+            width = 12,
+            actionButton("api.go", "3. Get enriched pathways"),
+          )
+        ),
         fluidRow(column(width = 12, DTOutput("export.dt"))),
         fluidRow(column(width = 12, DTOutput("pathways.dt")))
       ),

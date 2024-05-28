@@ -87,7 +87,7 @@ output$export.dt <-   renderDT({
 
               # Apply the function to each element in the list
               prefixed_metabolites <- sapply(query_results.df$KEGG, add_kegg_prefix)
-              browser()
+
 
               metabolites <- query_results.df$KEGG
               requests <- keggGet(sapply(query_results.df$KEGG, add_kegg_prefix))
