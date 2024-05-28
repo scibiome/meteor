@@ -26,13 +26,13 @@ output$info_box_enrichment <- renderUI({
 
 raw_list <- reactiveValues(data = NULL)
 
-observeEvent(input$metabolite_Picker, {
-  raw_list$data <- data.frame(metabolites = input$metabolite_Picker, row =row_number(input$metabolite_Picker)  )
-})
+# observeEvent(input$metabolite_Picker, {
+#   raw_list$data <- data.frame(metabolites = input$metabolite_Picker, row =row_number(input$metabolite_Picker)  )
+# })
 
 
 
-
+# here
 observeEvent(input$metabolite_Picker, {
 
   output$raw_list.dt <- renderDT({
@@ -40,6 +40,8 @@ observeEvent(input$metabolite_Picker, {
     d <- data.frame(metabolites = raw_list$data$metabolites)
 
     d <- datatable(d, editable = TRUE)
+
+
 
   })   })
 
@@ -54,9 +56,73 @@ observeEvent(input$raw_list.dt_cell_edit, {
 
 raw_list.event <- eventReactive(input$api.go, {
 
-  raw_list <- data.frame(metabolites = raw_list$data$metabolites)})
+  # raw_list <- data.frame(metabolites = raw_list$data$metabolites)
+  raw_list <- data.frame(metabolites = input$jsonInput)
+#   json_data <- input$jsonInput
+
+#   raw_list$data <- json_data
+
+#   data.frame(metabolites = raw_list$data$metabolites)})
+  # if (!is.null(json_data) && nchar(json_data) > 0) {
+  #   # Parse JSON into R object
+  #   parsed_json <- tryCatch({
+  #     jsonlite::fromJSON(json_data)
+  #   }, error = function(e) {
+  #     # If there's an error in parsing, return NA
+  #     return(NA)
+  #   })
+  # }
+
+
+
+
+  })
 
 DT_pathways <- reactiveVal()
+
+observeEvent(input$metabolite_Picker, {
+
+    updateTextAreaInput(session, "editableField", value = paste(raw_list$data$metabolites, collapse = "\n"))
+  })
+
+
+
+# observeEvent(input$copyButton, {
+#   # Select the editable field content
+#   browser()
+#   rclipboard::write_clip(input$editableField)
+# })
+
+# library(rclipboard)
+# output$copyButton <- renderUI({
+#   rclipButton(
+#     inputId = "copyButton",
+#     label = "rclipButton Copy",
+#     clipText = input$copytext,
+#     icon = icon("clipboard"),
+#     tooltip = "Click me to copy the content of the text field to the clipboard!",
+#     options = list(delay = list(show = 800, hide = 100), trigger = "hover")
+#   )
+# })
+
+# rclipButton(input$copyButton, input$editableField)
+
+# observeEvent(input$jsonInput, {
+#   # Read JSON from input field
+#   json_data <- input$jsonInput
+# #
+# #   # Check if JSON is not empty
+#   if (!is.null(json_data) && nchar(json_data) > 0) {
+#     # Parse JSON into R object
+#     parsed_json <- tryCatch({
+#       jsonlite::fromJSON(json_data)
+#     }, error = function(e) {
+#       # If there's an error in parsing, return NA
+#       return(NA)
+#     })
+#   }
+#   browser()
+# })
 
 output$export.dt <-   renderDT({
 
@@ -65,9 +131,12 @@ output$export.dt <-   renderDT({
               # The items in the list MUST be queryList and inputType
               # Valid input types are: "name", "hmdb", "kegg", "pubchem", "chebi", "metlin"
 
-              # raw_list <-  raw_list.event()
-              # browser()
-              # name.vec <- as.vector(raw_list$metabolites)
+              raw_list <-  raw_list.event()
+
+              query_results.df <- as.vector(raw_list$metabolites)
+              # query_results.df <- name.vec
+
+
               #
               #
               #
@@ -93,27 +162,27 @@ output$export.dt <-   renderDT({
               # query_results.df <- t(do.call(rbind.data.frame, query_results_json)) %>%
               #   as.data.frame()
               #
-              dummy_data <- data.frame(
-                Query = c("1,3-Diaminopropane", "2-Ketobutyric acid", "2-Hydroxybutyric acid",
-                          "2-Methoxyestrone", "(R)-3-Hydroxybutyric acid", "Deoxyuridine",
-                          "Cortexolone", "Deoxycorticosteron", "Ketoisovaleric acid", "No Match"),
-                Match = c("1,3-Diaminopropane", "2-Ketobutyric acid", "2-Hydroxybutyric acid",
-                          "2-Methoxyestrone", "3-Hydroxybutyric acid", "Deoxyuridine",
-                          "Cortexolone", NA, NA, NA),
-                HMDB = c("HMDB0000002", "HMDB0000005", "HMDB0000008", "HMDB0000010",
-                         "HMDB0000011", "HMDB0000012", "HMDB0000015", NA, NA, NA),
-                PubChem = c("428", "58", "440864", "440624", "441", "13712", "440707", NA, NA, NA),
-                ChEBI = c("15725", "30831", "50613", "1189", "17066", "16450", "28324", NA, NA, NA),
-                KEGG = c("C00986", "C00109", "C05984", "C05299", "C01089", "C00526", "C05488", NA, NA, NA),
-                METLIN = c("5081", NA, "3783", "2578", NA, "5086", "5088", NA, NA, NA),
-                SMILES = c("NCCCN", "CCC(=O)C(O)=O", "CC[C@H](O)C(O)=O",
-                           "[H][C@@]12CCC(=O)[C@@]1(C)CC[C@]1([H])C3=C(CC[C@@]21[H])C=C(O)C(OC)=C3",
-                           "C[C@@H](O)CC(O)=O", "OC[C@H]1O[C@H](C[C@@H]1O)N1C=CC(=O)NC1=O",
-                           "[H][C@@]12CC[C@](O)(C(=O)CO)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CCC2=CC(=O)CC[C@]12C",
-                           NA, NA, NA),
-                Comment = c("1", "1", "1", "1", "1", "1", "1", "0", "0", "0")
-              )
-              query_results.df <- dummy_data
+              # dummy_data <- data.frame(
+              #   Query = c("1,3-Diaminopropane", "2-Ketobutyric acid", "2-Hydroxybutyric acid",
+              #             "2-Methoxyestrone", "(R)-3-Hydroxybutyric acid", "Deoxyuridine",
+              #             "Cortexolone", "Deoxycorticosteron", "Ketoisovaleric acid", "No Match"),
+              #   Match = c("1,3-Diaminopropane", "2-Ketobutyric acid", "2-Hydroxybutyric acid",
+              #             "2-Methoxyestrone", "3-Hydroxybutyric acid", "Deoxyuridine",
+              #             "Cortexolone", NA, NA, NA),
+              #   HMDB = c("HMDB0000002", "HMDB0000005", "HMDB0000008", "HMDB0000010",
+              #            "HMDB0000011", "HMDB0000012", "HMDB0000015", NA, NA, NA),
+              #   PubChem = c("428", "58", "440864", "440624", "441", "13712", "440707", NA, NA, NA),
+              #   ChEBI = c("15725", "30831", "50613", "1189", "17066", "16450", "28324", NA, NA, NA),
+              #   KEGG = c("C00986", "C00109", "C05984", "C05299", "C01089", "C00526", "C05488", NA, NA, NA),
+              #   METLIN = c("5081", NA, "3783", "2578", NA, "5086", "5088", NA, NA, NA),
+              #   SMILES = c("NCCCN", "CCC(=O)C(O)=O", "CC[C@H](O)C(O)=O",
+              #              "[H][C@@]12CCC(=O)[C@@]1(C)CC[C@]1([H])C3=C(CC[C@@]21[H])C=C(O)C(OC)=C3",
+              #              "C[C@@H](O)CC(O)=O", "OC[C@H]1O[C@H](C[C@@H]1O)N1C=CC(=O)NC1=O",
+              #              "[H][C@@]12CC[C@](O)(C(=O)CO)[C@@]1(C)CC[C@@]1([H])[C@@]2([H])CCC2=CC(=O)CC[C@]12C",
+              #              NA, NA, NA),
+              #   Comment = c("1", "1", "1", "1", "1", "1", "1", "0", "0", "0")
+              # )
+              # query_results.df <- dummy_data
               #
               # ### testing the pathview
               #
@@ -133,6 +202,13 @@ output$export.dt <-   renderDT({
 
               # browser()
 
+              # Step 2: Replace spaces with newlines to separate rows
+              # Find where each new line should be inserted by locating the pattern that marks the start of a new row
+              # assuming there's no space within the "Query" values themselves.
+              data_string <- gsub("\" \"", "\"\n\"", query_results.df)
+              # browser()
+              query_results.df <- read.csv(textConnection(data_string), stringsAsFactors = FALSE)
+
               add_kegg_prefix <- function(metabolite) {
                 if (!is.na(metabolite)) {
                   return(paste0("kegg:", metabolite))
@@ -143,7 +219,7 @@ output$export.dt <-   renderDT({
 
               # Apply the function to each element in the list
               prefixed_metabolites <- sapply(query_results.df$KEGG, add_kegg_prefix)
-
+              browser()
 
               metabolites <- query_results.df$KEGG
               requests <- keggGet(sapply(query_results.df$KEGG, add_kegg_prefix))
@@ -184,8 +260,7 @@ output$export.dt <-   renderDT({
               # Print the data frame
               # print(result_df)
 
-              #
-              # # browser()
+
               # # body <- list(analytes = c("kegg:C01089", "kegg:C00526", "kegg:C00083"))
               # # The MetaboAnalyst API url
               # call <- "https://rampdb.nih.gov/api/pathways-from-analytes"
@@ -230,11 +305,9 @@ output$export.dt <-   renderDT({
                 group_by(pathwayId, pathwayName) %>%
                 summarize(num_hits = n(), inputIds = paste(inputId, collapse = ", "))
 
-              browser()
+
               # Order the pathways by the number of hits
               enriched_kegg_pathways <- query_results_table_summary[order(-query_results_table_summary$num_hits),]
-
-
 
               generate_kegg_url <- function(pathwayId, inputIds) {
                 # Remove "kegg:" prefix and split compound IDs
@@ -249,24 +322,14 @@ output$export.dt <-   renderDT({
                 return(url_template)
               }
 
-              # Apply the function to each row in the dataframe
               urls <- mapply(generate_kegg_url, enriched_kegg_pathways$pathwayId, enriched_kegg_pathways$inputIds)
               pathwayIDs <- gsub(" .*", "", names(urls))
               urls <- unname(urls)
 
-              # Create a dataframe
               urls_df <- data.frame(pathwayId = pathwayIDs, url = urls)
-              # Print the generated URLs
-              # print(urls)
 
-              # browser()
-              # Print the top 10 pathways with the most hits, along with the number of input IDs and the input IDs themselves
-              # head(enriched_kegg_pathways %>%
-              #        mutate(inputIds = str_remove(inputIds, "hmdb:")), n = 10)
               enriched_kegg_pathways <- enriched_kegg_pathways %>%
                 mutate(inputIds = gsub("kegg:", "", inputIds))
-
-
 
               dict1 <- setNames(retrieved_pathways_df$commonName, retrieved_pathways_df$inputId)
 
@@ -282,7 +345,6 @@ output$export.dt <-   renderDT({
                 # combine the modified inputIds back into a comma-separated string
                 enriched_kegg_pathways$inputIds[i] <- paste(inputIds, collapse = ", ")
               }
-              # browser()
 
               merged_df <- merge(enriched_kegg_pathways, urls_df, by = "pathwayId", all.x = TRUE)
               enriched_kegg_pathways <- merged_df
@@ -303,6 +365,9 @@ output$export.dt <-   renderDT({
 
 
 
+
+
+
               # Function to generate URLs
               generate_url <- function(kegg_id) {
                 if (!is.na(kegg_id)) {
@@ -311,13 +376,10 @@ output$export.dt <-   renderDT({
                   return("-")
                 }
               }
+              query_results.df$url <- sapply(query_results.df$KEGG, generate_url)
 
-              # Apply the function to the KEGG column
-              dummy_data$url <- sapply(dummy_data$KEGG, generate_url)
-              enriched_kegg_pathways$url
-              # https://www.genome.jp/dbget-bin/www_bget?cpd+C00041
 
-              datatable(dummy_data, editable = TRUE,
+              datatable(query_results.df, editable = TRUE,
                         extensions = "Buttons",
                         options = list(paging = TRUE,
                                        scrollX=TRUE,

@@ -1137,6 +1137,29 @@ ui <- dashboardPage(
             actionButton("api.go", "Make API request"),
           )
         ),
+        fluidRow(
+          column(
+            width = 12,
+            # Define an editable text area input field
+            textAreaInput("editableField", "Editable Field:", value = "Type or edit text here...")
+          )
+        ),
+        fluidRow(
+          column(
+            width = 12,
+            # Button to copy the content of the editable field
+            actionButton("copyButton", "Copy Content")
+          )
+        ),
+        fluidRow(
+          column(
+            width = 12,
+            # Text input for pasting JSON data
+            textInput("jsonInput", "Paste JSON Here:", placeholder = "Paste JSON data here...")
+          )
+        ),
+
+
         fluidRow(column(width = 12, DTOutput("export.dt"))),
         fluidRow(column(width = 12, DTOutput("pathways.dt")))
       ),
