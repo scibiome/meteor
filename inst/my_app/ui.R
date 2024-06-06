@@ -347,7 +347,8 @@ ui <- dashboardPage(
           title = "Modern Tensor Factorization (TCAM) & Principal Component Analysis (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_tcam")
+          htmlOutput("info_box_tcam"),
+          column(width =  4, actionButton("tutorial_tcam", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(
           box(

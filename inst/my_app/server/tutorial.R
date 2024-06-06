@@ -193,6 +193,52 @@ observeEvent(
 )
 
 
+###### Tutorial TCAM ------
+
+
+helptext_pca <- reactive(data.table::data.table(
+  tab = c("tutorial_tcam"),
+  step = c(1,2,3,
+           4,5,6,
+           7,8,9),
+  element = c("#ind_pca_long > div > div > svg:nth-child(1) > g.draglayer.cursor-crosshair > g > rect.nsewdrag.drag",
+              "#ind_FC > div > div > svg:nth-child(1) > g.draglayer.cursor-crosshair > g > rect.nsewdrag.drag",
+              "#shiny-tab-tcam > div:nth-child(2) > div:nth-child(1)",
+              "#shiny-tab-tcam > div:nth-child(2) > div:nth-child(2)",
+              "#sidebarItemExpanded > ul > li:nth-child(4) > a",
+              "#pca_loadings_long > div > div",
+              "#fc_loadings_long > div > div",
+              "#add_graph_pc_3d",
+              "#add_graph_fc_3d"),
+  intro = c("Here, principal component analysis is performed on the data, including all time points of the measurement.",
+            "Here TCAM is applied to the data including all time points of measurement.",
+            "Here you can select which principal components are to be displayed. (PCA)",
+            "Here you can select which factors are to be displayes. (TCAM)",
+            "Here you can select the categorical variable for displaying the groups.",
+            "Here you can see the contribution of the metabolites to the respective principal component. The metabolites are listed in descending order of their contribution.",
+            "Here you can see the contribution of the metabolites to the respective factors. Positive and negative factor loadings are displayed for the most important metabolites.",
+            "If you click on this button, you can create a 3D PCA plot.",
+            "If you click on this button, you can create a 3D TCAM plot."),
+  position = c("auto", "auto", "auto",
+               "auto", "auto", "auto",
+               "auto", "auto", "auto")
+))
+
+
+observeEvent(
+  eventExpr = input$tutorial_tcam,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_pca()[tab == "tutorial_tcam"]
+            )
+    )
+  }
+)
+
 
 
 
