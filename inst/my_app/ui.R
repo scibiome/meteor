@@ -429,7 +429,8 @@ ui <- dashboardPage(
           title = "Ridge Plot (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_ridge1")
+          htmlOutput("info_box_ridge1"),
+          column(width =  4, actionButton("tutorial_rp", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(box(
           title = "Select time points:",
@@ -457,7 +458,8 @@ ui <- dashboardPage(
           title = "Ridge Plot (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_ridge2")
+          htmlOutput("info_box_ridge2"),
+          column(width =  4, actionButton("tutorial_rp2", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(column(width = 12, actionButton(
           "rp_compute2",

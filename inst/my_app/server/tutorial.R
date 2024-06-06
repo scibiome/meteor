@@ -196,7 +196,7 @@ observeEvent(
 ###### Tutorial TCAM ------
 
 
-helptext_pca <- reactive(data.table::data.table(
+helptext_tcam<- reactive(data.table::data.table(
   tab = c("tutorial_tcam"),
   step = c(1,2,3,
            4,5,6,
@@ -233,13 +233,76 @@ observeEvent(
               "nextLabel" = "Next",
               "prevLabel" = "Back",
               "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
-              steps = helptext_pca()[tab == "tutorial_tcam"]
+              steps = helptext_tcam()[tab == "tutorial_tcam"]
             )
     )
   }
 )
 
 
+###### Tutorial Ridge plot (comparing time points) ------
+
+
+helptext_rp <- reactive(data.table::data.table(
+  tab = c("tutorial_rp"),
+  step = c(1,2,3),
+  element = c("#sidebarItemExpanded > ul > div.form-group.shiny-input-container",
+              "#shiny-tab-op1 > div:nth-child(2) > div > div > div.box-body > div > div > div",
+              "#rp_compute"),
+  intro = c("Here you can select one or more metabolites to visualize.",
+            "Here you can select the time points you want to compare.",
+            "Click here to generate a ridge plot showing the density distribution for the selected metabolites grouped by time points."),
+  position = c("auto", "auto", "auto")
+))
+
+
+observeEvent(
+  eventExpr = input$tutorial_rp,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_rp()[tab == "tutorial_rp"]
+            )
+    )
+  }
+)
+
+###### Tutorial Ridge plot (Compare groups) ------
+
+
+helptext_rp2 <- reactive(data.table::data.table(
+  tab = c("tutorial_rp2"),
+  step = c(1,2,3,
+           4),
+  element = c("#sidebarItemExpanded > ul > div.form-group.shiny-input-container",
+              "#sidebarItemExpanded > ul > li:nth-child(3) > a",
+              "#sidebarItemExpanded > ul > li:nth-child(4) > a",
+              "#rp_compute2"),
+  intro = c("Here you can select one or more metabolites to visualize.",
+            "Here you can select the time point for which you want to create the ridge plot.",
+            "Here you the categorical variable for which you want to compare the groups",
+            "Click here to generate a ridge plot showing the density distribution for the selected metabolites grouped by the categorical variable."),
+  position = c("auto", "auto", "auto",
+               "auto")
+))
+
+
+observeEvent(
+  eventExpr = input$tutorial_rp2,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_rp2()[tab == "tutorial_rp2"]
+            )
+    )
+  }
+)
 
 
 
