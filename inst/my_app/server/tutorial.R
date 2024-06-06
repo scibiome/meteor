@@ -306,4 +306,33 @@ observeEvent(
 
 
 
+###### Tutorial Friedman test ------
+
+
+helptext_fried <- reactive(data.table::data.table(
+  tab = c("tutorial_fried"),
+  step = c(1, 2),
+  element = c("#shiny-tab-fried > div:nth-child(2) > div > div > div > div > div.selectize-input.items.has-options.full.has-items",
+              "#act_fried"),
+  intro = c("Here you can select a metabolite for which you want to perform the Friedman test.",
+            "Click here to compute the Friedman test."),
+  position = c("auto", "auto")
+))
+
+
+observeEvent(
+  eventExpr = input$tutorial_fried,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_fried()[tab == "tutorial_fried"]
+            )
+    )
+  }
+)
+
+
 

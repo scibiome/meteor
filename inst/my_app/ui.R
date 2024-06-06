@@ -544,7 +544,8 @@ ui <- dashboardPage(
             title = "Friedman test (Info)",
             status = "info", solidHeader = TRUE,
             collapsible = TRUE, collapsed = TRUE,
-            htmlOutput("info_box_friedman")
+            htmlOutput("info_box_friedman"),
+            column(width =  4, actionButton("tutorial_fried", "Start page tutorial!", class =  "btn-info"))
           )
         ),
         fluidRow(
