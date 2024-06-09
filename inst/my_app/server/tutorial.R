@@ -406,3 +406,81 @@ observeEvent(
     )
   }
 )
+
+###### Tutorial Linear mixed model ------
+
+
+helptext_lmm <- reactive(data.table::data.table(
+  tab = c("tutorial_lmm"),
+  step = c(1, 2, 3,
+           4, 5, 6),
+  element = c("#shiny-tab-lmm > div > ul > li.active",
+              "#sidebarItemExpanded > ul > li:nth-child(4) > a",
+              "#id9-label",
+              "#lmm_select-label",
+              "#act_lmm",
+              "#tab-8227-1 > div:nth-child(4) > div > div > div > div.box-header > h3",
+              "#tab-8227-1 > div:nth-child(5) > div > div > div > div.box-header > h3"),
+  intro = c("Here you can calculate a mixed ANOVA for a single selected metabolite.",
+            "Here you can select a categorical variable to be used as a fixed factor in the analysis.",
+            "Here you can select the metabolite for which you want to perform the analysis.",
+            "Here, you can choose between different types of models: random intercept, random slope, or random intercept and random slope.",
+            "If you click on this button, the linear mixed model is calculated.",
+            "This box shows you the model formula used for computing the linear mixed model.",
+            "This box shows you the model summary including estimates for fixed and random effects."),
+  position = c("auto", "auto", "auto",
+               "auto", "auto", "auto")
+))
+
+
+observeEvent(
+  eventExpr = input$tutorial_lmm,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_lmm()[tab == "tutorial_lmm"]
+            )
+    )
+  }
+)
+
+###### Tutorial Linear mixed model (comparison) ------
+
+
+helptext_lmm_comp <- reactive(data.table::data.table(
+  tab = c("tutorial_lmm_comp"),
+  step = c(1, 2, 3,
+           4, 5),
+  element = c("#shiny-tab-lmm > div > ul > li.active",
+              "#sidebarItemExpanded > ul > li:nth-child(4) > a",
+              "#act_lmm2",
+              "#tab-1982-2 > div:nth-child(3) > div > div > div > div.box-header > h3",
+              "#tab-1982-2 > div:nth-child(4) > div > div > div > div.box-header > h3"),
+  intro = c("Here you can perform a model comparion between the different types of the linear mixed model.",
+            "Here you can select a categorical variable to be used as a fixed factor in the analysis.",
+            "If you click on this button, the different linear mixed modesl are calculated",
+            "This box shows you the model summary including estimates for fixed and random effects for the different models.",
+            "This box displays a model comparison using ANOVA: for linear mixed models (LMM), ANOVA evaluates whether adding fixed or random effects significantly improves model fit by comparing nested models and providing statistics such as AIC, BIC, log-likelihood, chi-square, and p-values."),
+  position = c("auto", "auto", "auto",
+               "auto", "auto")
+))
+
+
+observeEvent(
+  eventExpr = input$tutorial_lmm_comp,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_lmm_comp()[tab == "tutorial_lmm_comp"]
+            )
+    )
+  }
+)
+
+

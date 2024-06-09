@@ -708,11 +708,6 @@ ui <- dashboardPage(
             fluidRow(column(width = 4, DTOutput("repeated.ranking.sorted"))),
           )
         )
-
-
-
-
-        # fluidRow(column(width = 12, actionButton("load_top_features_anova", "Add top features to selection")))
       ),
       tabItem(
         tabName = "lmm",
@@ -723,7 +718,8 @@ ui <- dashboardPage(
               title = "Linear Mixed Model (Info)",
               status = "info", solidHeader = TRUE,
               collapsible = TRUE, collapsed = TRUE,
-              htmlOutput("info_box_linear_mixed_model")
+              htmlOutput("info_box_linear_mixed_model"),
+              column(width =  4, actionButton("tutorial_lmm", "Start page tutorial!", class =  "btn-info"))
             )),
             fluidRow(
               column(
@@ -786,18 +782,13 @@ ui <- dashboardPage(
                 plotlyOutput("line_plot")
               )
             ),
-          #  fluidRow(
-          #    column(
-          #      width = 12, height = 12,
-          #      plotlyOutput("vis_grid")
-          #    )
-          #  ),
           ),
           tabPanel(
             "Model comparison",
             fluidRow(box(
               title = "Model comparison", status = "info", solidHeader = TRUE,
-              htmlOutput("info_box_linear_mixed_model_comp")
+              htmlOutput("info_box_linear_mixed_model_comp"),
+              column(width =  4, actionButton("tutorial_lmm_comp", "Start page tutorial!", class =  "btn-info"))
             )),
             fluidRow(
               column(
