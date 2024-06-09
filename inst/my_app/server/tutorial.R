@@ -334,5 +334,75 @@ observeEvent(
   }
 )
 
+###### Tutorial Mixed ANOVA ------
 
 
+helptext_mixedanova <- reactive(data.table::data.table(
+  tab = c("tutorial_mixanova"),
+  step = c(1, 2, 3,
+           4),
+  element = c("#shiny-tab-mixedanova > div > ul > li.active",
+              "#tab-3706-1 > div:nth-child(2) > div > div",
+              "#sidebarItemExpanded > ul > li:nth-child(4) > a",
+              "#act_mixed_anova"),
+  intro = c("Here you can calculate a mixed ANOVA for a single selected metabolite.",
+            "Here you can select the metabolite for which you want to perform the analysis.",
+            "Here you can select a categorical variable to be used as the between factor in the analysis.",
+            "If you click on this button, the mixed ANOVA is calculated."),
+  position = c("auto", "auto", "auto",
+               "auto")
+))
+
+
+observeEvent(
+  eventExpr = input$tutorial_mixanova,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_mixedanova()[tab == "tutorial_mixanova"]
+            )
+    )
+  }
+)
+
+
+###### Tutorial Mixed ANOVA for feature selection ------
+
+
+helptext_mixedanova_feat <- reactive(data.table::data.table(
+  tab = c("tutorial_mixanova_feat"),
+  step = c(1, 2, 3,
+           4, 5),
+  element = c("#shiny-tab-mixedanova > div > ul > li.active",
+              "#sidebarItemExpanded > ul > li:nth-child(4) > a",
+              "#tab-4431-2 > div:nth-child(2) > div > div",
+              "#act_mixed_anova_selection",
+              "#load_top_features_anova",
+              "#sidebarItemExpanded > ul > div.form-group.shiny-input-container"),
+  intro = c("Here, you can perform a mixed ANOVA for all metabolites. The metabolites will then be ranked based on their p-values for the given factor.",
+            "Here you can select a categorical variable to be used as the between factor in the analysis.",
+            "Here, you can select the within factor (time), the between factor (categorical variable), or the interaction between time and the categorical variable.",
+            "If you click on this button, the mixed ANOVA is calculated.",
+            "Here, you can select the top-ranked feature based on the lowest p-value for a given factor. The selected feature will be marked in the metabolite picker.",
+            "Selected metabolites can be found here."),
+  position = c("auto", "auto", "auto",
+               "auto", "auto")
+))
+
+
+observeEvent(
+  eventExpr = input$tutorial_mixanova_feat,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_mixedanova_feat()[tab == "tutorial_mixanova_feat"]
+            )
+    )
+  }
+)

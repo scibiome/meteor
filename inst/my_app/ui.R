@@ -579,7 +579,8 @@ ui <- dashboardPage(
               title = "Mixed ANOVA (Info)",
               status = "info", solidHeader = TRUE,
               collapsible = TRUE, collapsed = TRUE,
-              htmlOutput("info_box_mixed_anova")
+              htmlOutput("info_box_mixed_anova"),
+              column(width =  4, actionButton("tutorial_mixanova", "Start page tutorial!", class =  "btn-info"))
             )),
             fluidRow(
               column(
@@ -613,7 +614,8 @@ ui <- dashboardPage(
               title = "Mixed ANOVA for feature selection (Info)",
               status = "info", solidHeader = TRUE,
               collapsible = TRUE, collapsed = TRUE,
-              htmlOutput("info_box_mixed_anova_selection")
+              htmlOutput("info_box_mixed_anova_selection"),
+              column(width =  4, actionButton("tutorial_mixanova_feat", "Start page tutorial!", class =  "btn-info"))
             )),
             fluidRow(
               column(width = 3, selectInput("selectfactor", "Select factor:", c("Categorical", "Time", "Time x Categorical"), selected = "Time x Categorical"))
