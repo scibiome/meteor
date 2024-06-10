@@ -578,6 +578,93 @@ observeEvent(
 )
 
 
+###### Tutorial Line plot (by individuals) ------
+
+
+helptext_il<- reactive(data.table::data.table(
+  tab = c("tutorial_il"),
+  step = c(1, 2, 3),
+  element = c("#sidebarItemExpanded > ul > div.form-group.shiny-input-container",
+              "#sidebarItemExpanded > ul > li:nth-child(4) > a",
+              "#lp_compute2"),
+  intro = c("Here, you can select the metabolites to be displayed in a line plot. The lines represent the trajectories of individuals, color-coded by the categorical variable.",
+            "Here, you can select the categorical variable to color-code the individuals.",
+            "If you click here the line plots are generated."),
+  position = c("auto", "auto", "auto")
+))
+
+
+observeEvent(
+  eventExpr = input$tutorial_il,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_il()[tab == "tutorial_il"]
+            )
+    )
+  }
+)
+
+###### Tutorial Line plot (by groups) ------
+
+
+helptext_gl<- reactive(data.table::data.table(
+  tab = c("tutorial_gl"),
+  step = c(1, 2, 3),
+  element = c("#sidebarItemExpanded > ul > div.form-group.shiny-input-container",
+              "#sidebarItemExpanded > ul > li:nth-child(4) > a",
+              "#lp_compute3"),
+  intro = c("Here, you can select the metabolites to be displayed in a line plot. The lines represent the trajectories of group means, color-coded by the categorical variable.",
+            "Here, you can select the categorical variable to color-code the individuals.",
+            "If you click here the line plots are generated."),
+  position = c("auto", "auto", "auto")
+))
+
+
+observeEvent(
+  eventExpr = input$tutorial_gl,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_gl()[tab == "tutorial_gl"]
+            )
+    )
+  }
+)
+
+###### Tutorial mean line plot ------
+
+
+helptext_ml<- reactive(data.table::data.table(
+  tab = c("tutorial_ml"),
+  step = c(1, 2),
+  element = c("#sidebarItemExpanded > ul > div.form-group.shiny-input-container",
+              "#lp_compute4"),
+  intro = c("Here, you can select the metabolites to be displayed in a line plot. The lines represent the mean trajectories of the individual metabolites.",
+            "If you click here the line plots are generated."),
+  position = c("auto", "auto")
+))
+
+
+observeEvent(
+  eventExpr = input$tutorial_ml,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_ml()[tab == "tutorial_ml"]
+            )
+    )
+  }
+)
 
 
 

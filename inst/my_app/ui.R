@@ -986,7 +986,8 @@ ui <- dashboardPage(
           title = "Line Plot individuals (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_il")
+          htmlOutput("info_box_il"),
+          column(width =  4, actionButton("tutorial_il", "Start page tutorial!", class =  "btn-info"))
         )),
         tabName = "il",
         fluidRow(column(width = 12, actionButton(
@@ -1001,7 +1002,8 @@ ui <- dashboardPage(
           title = "Line Plot groups (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_gl")
+          htmlOutput("info_box_gl"),
+          column(width =  4, actionButton("tutorial_gl", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(column(width = 12, actionButton(
           "lp_compute3",
@@ -1015,7 +1017,8 @@ ui <- dashboardPage(
           title = "Line Plot Mean (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_ml")
+          htmlOutput("info_box_ml"),
+          column(width =  4, actionButton("tutorial_ml", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(column(width = 12, actionButton(
           "lp_compute4",
