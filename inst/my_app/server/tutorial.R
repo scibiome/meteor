@@ -483,4 +483,102 @@ observeEvent(
   }
 )
 
+###### Tutorial Network Diagram (Pearson Correlation Network) ------
+
+
+helptext_pcn <- reactive(data.table::data.table(
+  tab = c("tutorial_pcn"),
+  step = c(1, 2, 3,
+           4, 5, 6,
+           7, 8),
+  element = c("#sidebarItemExpanded > ul > li:nth-child(3) > a",
+              "#abscorr-label",
+              "#shiny-tab-pcn > div:nth-child(2) > div.col-sm-4",
+              "#nodeSelectnetwork",
+              "#selectedBynetwork",
+              "#graphnetwork > div.vis-network > div.vis-edit-mode > button",
+              "#shiny-tab-pcn > div:nth-child(4) > div",
+              "#shiny-tab-pcn > div:nth-child(6) > div"),
+  intro = c("Here you can select for which time point the correlation network should be calculated.",
+            "To make it easier to explore the network, you can filter by absolute correlation values here. Metabolites that are no longer linked to other metabolites are filtered out.",
+            "Here you can select between different network layouts.",
+            "Here you can select a single metabolite in the network.",
+            "Here you can select between detected communities in the network.",
+            "Here you can perform modifications to the graph.",
+            "To export the current network as an HTML file, first click on 'Store positions!' and then click on 'Download network'.",
+            "If you select one or multiple metabolites from the network (by pressing Ctrl/Cmd),
+             the table will display the correlations between the selected metabolites. Below the table, the associations between the metabolites will be shown in scatterplots."),
+  position = c("auto", "auto", "auto",
+               "auto", "auto", "auto",
+               "auto", "auto")
+))
+
+
+observeEvent(
+  eventExpr = input$tutorial_pcn,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_pcn()[tab == "tutorial_pcn"]
+            )
+    )
+  }
+)
+
+
+
+###### Tutorial Network Diagram (Gaussian Graphical Model) ------
+
+
+helptext_ggm <- reactive(data.table::data.table(
+  tab = c("tutorial_ggm"),
+  step = c(1, 2, 3,
+           4, 5, 6,
+           7, 8, 9),
+  element = c("#sidebarItemExpanded > ul > li:nth-child(3) > a",
+              "#abscorr_ggm-label",
+              "#ggm_compute",
+              "#shiny-tab-ggm > div:nth-child(2) > div.col-sm-4",
+              "#nodeSelectnetwork_ggm",
+              "#selectedBynetwork_ggm",
+              "#graphnetwork_ggm > div.vis-network > div.vis-edit-mode > button",
+              "#shiny-tab-ggm > div:nth-child(5) > div",
+              "#shiny-tab-ggm > div:nth-child(7) > div"),
+  intro = c("Here you can select for which time point the correlation network should be calculated.",
+            "To make it easier to explore the network, you can filter by absolute partial correlation values here. Metabolites that are no longer linked to other metabolites are filtered out.",
+            "If you click here the gaussian graphical model is computed. This can take a moment.",
+            "Here you can select between different network layouts.",
+            "Here you can select a single metabolite in the network.",
+            "Here you can select between detected communities in the network.",
+            "Here you can perform modifications to the graph.",
+            "To export the current network as an HTML file, first click on 'Store positions!' and then click on 'Download network'.",
+            "If you select one or multiple metabolites from the network (by pressing Ctrl/Cmd),
+             the table will display the partial correlations between the selected metabolites. Below the table, the associations between the metabolites will be shown in scatterplots."),
+  position = c("auto", "auto", "auto",
+               "auto", "auto", "auto",
+               "auto", "auto", "auto")
+))
+
+
+observeEvent(
+  eventExpr = input$tutorial_ggm,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_ggm()[tab == "tutorial_ggm"]
+            )
+    )
+  }
+)
+
+
+
+
+
 

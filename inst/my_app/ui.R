@@ -841,7 +841,8 @@ ui <- dashboardPage(
           title = "Pearson Correlation Network (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_pcn")
+          htmlOutput("info_box_pcn"),
+          column(width =  4, actionButton("tutorial_pcn", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(
           column(width = 3, sliderInput(
@@ -910,7 +911,8 @@ ui <- dashboardPage(
           title = "Gaussian Graphical Model Network (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_ggm")
+          htmlOutput("info_box_ggm"),
+          column(width =  4, actionButton("tutorial_ggm", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(
           column(width = 3, sliderInput(
