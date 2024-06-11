@@ -1077,15 +1077,14 @@ ui <- dashboardPage(
         ),
         plotlyOutput("clustheatmap2", height = "1000px")
       ),
-
-      # fluidRow(column(width = 12, plotlyOutput("clustheatmap2")))),
       tabItem(
         tabName = "volcano",
         fluidRow(box(
           title = "Volcano (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_volcano")
+          htmlOutput("info_box_volcano"),
+          column(width =  4, actionButton("tutorial_volcano", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(
           tags$style("#categorytext {font-size:20px;
