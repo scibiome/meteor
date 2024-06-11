@@ -766,3 +766,85 @@ observeEvent(
     )
   }
 )
+
+
+###### Tutorial single metabolite heatmap  ------
+
+
+helptext_sm <- reactive(data.table::data.table(
+  tab = c("tutorial_sm"),
+  step = c(1, 2, 3),
+  element = c(
+    "#shiny-tab-sm > div.form-group.shiny-input-container",
+    "#shiny-tab-sm > div:nth-child(3) > div:nth-child(1) > div",
+    "#shiny-tab-sm > div:nth-child(3) > div:nth-child(2) > div"
+  ),
+  intro = c(
+    "Here, you can select the metabolite for which you want to generate the heatmap.",
+    "Here, you can separate individuals into distinct clusters using a hierarchical clustering solution.",
+    "Here, you can separate time points into distinct clusters using a hierarchical clustering solution."
+  ),
+  position = c("auto", "auto", "auto")
+))
+
+
+observeEvent(
+  eventExpr = input$tutorial_sm,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_sm()[tab == "tutorial_sm"]
+            )
+    )
+  }
+)
+
+
+###### Tutorial by timepoint heatmap  ------
+
+
+helptext_bt <- reactive(data.table::data.table(
+  tab = c("tutorial_bt"),
+  step = c(1, 2, 3,
+           4, 5),
+  element = c(
+        "#sidebarItemExpanded > ul > li:nth-child(3) > a",
+        "#sidebarItemExpanded > ul > div.form-group.shiny-input-container",
+        "#heatmap_compute",
+        "#shiny-tab-bt > div:nth-child(3) > div:nth-child(1)",
+        "#shiny-tab-bt > div:nth-child(3) > div:nth-child(2)"
+  ),
+  intro = c(
+    "Here, you can select a time point for which you want to generate the heatmap.",
+    "Here, you can select multiple metabolites to be used in the heatmap.",
+    "If you click here the heatmap generated.",
+    "Here, you can separate individuals into distinct clusters using a hierarchical clustering solution.",
+    "Here, you can separate metabolites into distinct clusters using a hierarchical clustering solution."
+  ),
+  position = c("auto", "auto", "auto",
+               "auto", "auto")
+))
+
+
+observeEvent(
+  eventExpr = input$tutorial_bt,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_bt()[tab == "tutorial_bt"]
+            )
+    )
+  }
+)
+
+
+
+
+
+

@@ -1033,7 +1033,8 @@ ui <- dashboardPage(
           title = "Single Metabolite Heatmap (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_sm")
+          htmlOutput("info_box_sm"),
+          column(width =  4, actionButton("tutorial_sm", "Start page tutorial!", class =  "btn-info"))
         )),
         selectInput(
           inputId = "id6", label = "Metabolites :",
@@ -1059,7 +1060,8 @@ ui <- dashboardPage(
           title = "By Timepoint Heatmap (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_tb")
+          htmlOutput("info_box_tb"),
+          column(width =  4, actionButton("tutorial_bt", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(column(width = 12, actionButton(
           "heatmap_compute",
