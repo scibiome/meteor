@@ -464,6 +464,54 @@ observeEvent(
   }
 )
 
+
+###### Tutorial repeated measures ANOVA ------
+
+
+
+helptext_repanova <- reactive(data.table::data.table(
+  tab = c("tutorial_repanova"),
+  step = c(
+    1, 2, 3,
+    4
+  ),
+  element = c(
+    "#tab-8017-1 > div:nth-child(2) > div > div"
+  ),
+  intro = c(
+    "Here, you can select a single metabolite for the analysis.",
+  ),
+  position = c(
+    "auto", "auto", "auto",
+    "auto"
+  )
+))
+
+
+observeEvent(
+  eventExpr = input$tutorial_repanova,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_repanova()[tab == "tutorial_repanova"]
+            )
+    )
+  }
+)
+
+
+
+
+
+
+
+
+
+
+
 ###### Tutorial Linear mixed model ------
 
 
@@ -889,6 +937,10 @@ observeEvent(
     )
   }
 )
+
+
+
+
 
 
 
