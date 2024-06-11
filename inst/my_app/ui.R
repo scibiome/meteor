@@ -635,7 +635,8 @@ ui <- dashboardPage(
               title = "Repeated Measures ANOVA (Info)",
               status = "info", solidHeader = TRUE,
               collapsible = TRUE, collapsed = TRUE,
-              htmlOutput("info_box_repeated_anova")
+              htmlOutput("info_box_repeated_anova"),
+              column(width =  4, actionButton("tutorial_repanova", "Start page tutorial!", class =  "btn-info"))
             )),
             fluidRow(
               column(
