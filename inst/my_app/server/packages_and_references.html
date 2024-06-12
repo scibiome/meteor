@@ -62,225 +62,322 @@ library(foreach)
 library(xgboost)
 library(randomForest)
 library(MLmetrics)
-library(tidyverse)</code></pre>
+library(tidyverse)
+library(rintrojs)</code></pre>
 </div>
 <div id="references" class="section level3 unnumbered">
 <h3 class="unnumbered">References</h3>
 <div id="refs" class="references csl-bib-body">
 <div id="ref-R-Biobase" class="csl-entry">
-1. Gentleman R, Carey V, Morgan M, Falcon S. <a href="https://bioconductor.org/packages/Biobase">Biobase: Base functions
-for bioconductor</a>. 2022.
+1. Gentleman R, Carey V, Morgan M, Falcon S. <a href="https://doi.org/10.18129/B9.bioc.Biobase">Biobase: Base functions
+for bioconductor</a>. 2024.
 </div>
 <div id="ref-R-caret" class="csl-entry">
 2. Kuhn M. <a href="https://github.com/topepo/caret/">Caret:
 Classification and regression training</a>. 2023.
 </div>
 <div id="ref-R-corrr" class="csl-entry">
-3. Kuhn M, Jackson S, Cimentada J. <a href="https://CRAN.R-project.org/package=corrr">Corrr: Correlations in
-r</a>. 2022.
+3. Kuhn M, Jackson S, Cimentada J. <a href="https://github.com/tidymodels/corrr">Corrr: Correlations in r</a>.
+2022.
 </div>
 <div id="ref-R-datamods" class="csl-entry">
 4. Perrier V, Meyer F, Goumri S, Abeer ZS. <a href="https://github.com/dreamRs/datamods">Datamods: Modules to import
-and manipulate data in shiny</a>. 2022.
+and manipulate data in shiny</a>. 2024.
 </div>
 <div id="ref-R-dendextend" class="csl-entry">
-5. Galili T, Jefferis G. <a href="https://CRAN.R-project.org/package=dendextend">Dendextend:
-Extending dendrogram functionality in r</a>. 2023.
+5. Galili T, Jefferis G. <a href="http://talgalili.github.io/dendextend/">Dendextend: Extending
+dendrogram functionality in r</a>. 2023.
+</div>
+<div id="ref-R-doParallel" class="csl-entry">
+6. Corporation M, Weston S. <a href="https://github.com/RevolutionAnalytics/doparallel">doParallel:
+Foreach parallel adaptor for the parallel package</a>. 2022.
 </div>
 <div id="ref-R-dplyr" class="csl-entry">
-6. Wickham H, François R, Henry L, Müller K, Vaughan D. <a href="https://CRAN.R-project.org/package=dplyr">Dplyr: A grammar of data
+7. Wickham H, François R, Henry L, Müller K, Vaughan D. <a href="https://dplyr.tidyverse.org">Dplyr: A grammar of data
 manipulation</a>. 2023.
 </div>
 <div id="ref-R-DT" class="csl-entry">
-7. Xie Y, Cheng J, Tan X. <a href="https://github.com/rstudio/DT">DT: A
-wrapper of the JavaScript library DataTables</a>. 2023.
+8. Xie Y, Cheng J, Tan X. <a href="https://github.com/rstudio/DT">DT: A
+wrapper of the JavaScript library DataTables</a>. 2024.
 </div>
 <div id="ref-R-EnhancedVolcano" class="csl-entry">
-8. Blighe K, Rana S, Lewis M. <a href="https://github.com/kevinblighe/EnhancedVolcano">EnhancedVolcano:
+9. Blighe K, Rana S, Lewis M. <a href="https://doi.org/10.18129/B9.bioc.EnhancedVolcano">EnhancedVolcano:
 Publication-ready volcano plots with enhanced colouring and
-labeling</a>. 2022.
+labeling</a>. 2024.
+</div>
+<div id="ref-R-factoextra" class="csl-entry">
+10. Kassambara A, Mundt F. <a href="http://www.sthda.com/english/rpkgs/factoextra">Factoextra: Extract
+and visualize the results of multivariate data analyses</a>. 2020.
 </div>
 <div id="ref-R-FactoMineR" class="csl-entry">
-9. Husson F, Josse J, Le S, Mazet J. <a href="http://factominer.free.fr">FactoMineR: Multivariate exploratory
-data analysis and data mining</a>. 2023.
+11. Husson F, Josse J, Le S, Mazet J. <a href="http://factominer.free.fr">FactoMineR: Multivariate exploratory
+data analysis and data mining</a>. 2024.
+</div>
+<div id="ref-R-foreach" class="csl-entry">
+12. Revolution Analytics, Weston S. Foreach: Provides foreach looping
+construct.
 </div>
 <div id="ref-R-ggplot2" class="csl-entry">
-10. Wickham H, Chang W, Henry L, Pedersen TL, Takahashi K, Wilke C, et
-al. <a href="https://CRAN.R-project.org/package=ggplot2">ggplot2: Create
-elegant data visualisations using the grammar of graphics</a>. 2023.
+13. Wickham H, Chang W, Henry L, Pedersen TL, Takahashi K, Wilke C, et
+al. <a href="https://ggplot2.tidyverse.org">ggplot2: Create elegant data
+visualisations using the grammar of graphics</a>. 2024.
 </div>
 <div id="ref-R-ggpubr" class="csl-entry">
-11. Kassambara A. <a href="https://rpkgs.datanovia.com/ggpubr/">Ggpubr:
+14. Kassambara A. <a href="https://rpkgs.datanovia.com/ggpubr/">Ggpubr:
 ggplot2 based publication ready plots</a>. 2023.
 </div>
 <div id="ref-R-ggrepel" class="csl-entry">
-12. Slowikowski K. <a href="https://github.com/slowkow/ggrepel">Ggrepel:
+15. Slowikowski K. <a href="https://ggrepel.slowkow.com/">Ggrepel:
 Automatically position non-overlapping text labels with ggplot2</a>.
-2023.
+2024.
 </div>
 <div id="ref-R-ggridges" class="csl-entry">
-13. Wilke CO. <a href="https://wilkelab.org/ggridges/">Ggridges:
-Ridgeline plots in ggplot2</a>. 2022.
+16. Wilke CO. <a href="https://wilkelab.org/ggridges/">Ggridges:
+Ridgeline plots in ggplot2</a>. 2024.
 </div>
 <div id="ref-R-heatmaply" class="csl-entry">
-14. Galili T, O’Callaghan A. <a href="https://CRAN.R-project.org/package=heatmaply">Heatmaply:
-Interactive cluster heat maps using plotly and ggplot2</a>. 2023.
-</div>
-<div id="ref-R-htmlTable" class="csl-entry">
-15. Gordon M, Gragg S, Konings P. <a href="https://gforge.se/packages/">htmlTable: Advanced tables for
-markdown/HTML</a>. 2022.
+17. Galili T, O’Callaghan A. <a href="https://talgalili.github.io/heatmaply/">Heatmaply: Interactive
+cluster heat maps using plotly and ggplot2</a>. 2023.
 </div>
 <div id="ref-R-httr" class="csl-entry">
-16. Wickham H. <a href="https://CRAN.R-project.org/package=httr">Httr:
-Tools for working with URLs and HTTP</a>. 2023.
+18. Wickham H. <a href="https://httr.r-lib.org/">Httr: Tools for working
+with URLs and HTTP</a>. 2023.
 </div>
 <div id="ref-R-igraph" class="csl-entry">
-17. file. SA. <a href="https://CRAN.R-project.org/package=igraph">Igraph: Network
-analysis and visualization</a>. 2023.
+19. Csárdi G, Nepusz T, Traag V, Horvát S, Zanini F, Noom D, et al. <a href="https://r.igraph.org/">Igraph: Network analysis and
+visualization</a>. 2024.
 </div>
 <div id="ref-R-jsonlite" class="csl-entry">
-18. Ooms J. <a href="https://CRAN.R-project.org/package=jsonlite">Jsonlite: A simple
-and robust JSON parser and generator for r</a>. 2022.
+20. Ooms J. <a href="https://jeroen.r-universe.dev/jsonlite">Jsonlite: A
+simple and robust JSON parser and generator for r</a>. 2023.
 </div>
 <div id="ref-R-jtools" class="csl-entry">
-19. Long JA. <a href="https://jtools.jacob-long.com">Jtools: Analysis
-and presentation of social scientific data</a>. 2022.
+21. Long JA. <a href="https://jtools.jacob-long.com">Jtools: Analysis
+and presentation of social scientific data</a>. 2023.
+</div>
+<div id="ref-R-knitr" class="csl-entry">
+22. Xie Y. <a href="https://yihui.org/knitr/">Knitr: A general-purpose
+package for dynamic report generation in r</a>. 2024.
+</div>
+<div id="ref-R-limma" class="csl-entry">
+23. Smyth G, Hu Y, Ritchie M, Silver J, Wettenhall J, McCarthy D, et al.
+<a href="https://doi.org/10.18129/B9.bioc.limma">Limma: Linear models
+for microarray data</a>. 2024.
 </div>
 <div id="ref-R-lme4" class="csl-entry">
-20. Bates D, Maechler M, Bolker B, Walker S. <a href="https://github.com/lme4/lme4/">lme4: Linear mixed-effects models
-using eigen and S4</a>. 2023.
+24. Bates D, Maechler M, Bolker B, Walker S. <a href="https://github.com/lme4/lme4/">lme4: Linear mixed-effects models
+using eigen and S4</a>. 2024.
 </div>
-<div id="ref-R-metabolomics" class="csl-entry">
-21. De Livera AM, Bowne JB. <a href="https://CRAN.R-project.org/package=metabolomics">Metabolomics:
-Analysis of metabolomics data</a>. 2014.
+<div id="ref-R-markdown" class="csl-entry">
+25. Xie Y, Allaire J, Horner J. <a href="https://github.com/rstudio/markdown">Markdown: Render markdown
+with commonmark</a>. 2023.
 </div>
 <div id="ref-R-mgm" class="csl-entry">
-22. Haslbeck J. <a href="https://www.jstatsoft.org/article/view/v093i08">Mgm: Estimating
-time-varying k-order mixed graphical models</a>. 2022.
+26. Haslbeck J. <a href="https://www.jstatsoft.org/article/view/v093i08">Mgm: Estimating
+time-varying k-order mixed graphical models</a>. 2023.
+</div>
+<div id="ref-R-MLmetrics" class="csl-entry">
+27. Yan Y. <a href="https://github.com/yanyachen/MLmetrics">MLmetrics:
+Machine learning evaluation metrics</a>. 2024.
 </div>
 <div id="ref-R-pheatmap" class="csl-entry">
-23. Kolde R. <a href="https://CRAN.R-project.org/package=pheatmap">Pheatmap: Pretty
+28. Kolde R. <a href="https://CRAN.R-project.org/package=pheatmap">Pheatmap: Pretty
 heatmaps</a>. 2019.
 </div>
 <div id="ref-R-plotly" class="csl-entry">
-24. Sievert C, Parmer C, Hocking T, Chamberlain S, Ram K, Corvellec M,
-et al. <a href="https://CRAN.R-project.org/package=plotly">Plotly:
-Create interactive web graphics via plotly.js</a>. 2022.
+29. Sievert C, Parmer C, Hocking T, Chamberlain S, Ram K, Corvellec M,
+et al. <a href="https://plotly-r.com">Plotly: Create interactive web
+graphics via plotly.js</a>. 2024.
 </div>
 <div id="ref-R-plotROC" class="csl-entry">
-25. Sachs MC. <a href="https://sachsmc.github.io/plotROC/">plotROC:
+30. Sachs MC. <a href="https://sachsmc.github.io/plotROC/">plotROC:
 Generate useful ROC curve charts for print and interactive use</a>.
-2022.
+2023.
+</div>
+<div id="ref-R-pROC" class="csl-entry">
+31. Robin X, Turck N, Hainard A, Tiberti N, Lisacek F, Sanchez J-C, et
+al. <a href="https://xrobin.github.io/pROC/">pROC: Display and analyze
+ROC curves</a>. 2023.
+</div>
+<div id="ref-R-randomForest" class="csl-entry">
+32. Breiman L, Cutler A, Liaw A, Wiener M. <a href="https://www.stat.berkeley.edu/~breiman/RandomForests/">randomForest:
+Breiman and cutler’s random forests for classification and
+regression</a>. 2022.
 </div>
 <div id="ref-R-readr" class="csl-entry">
-26. Wickham H, Hester J, Bryan J. <a href="https://CRAN.R-project.org/package=readr">Readr: Read rectangular
-text data</a>. 2023.
+33. Wickham H, Hester J, Bryan J. <a href="https://readr.tidyverse.org">Readr: Read rectangular text
+data</a>. 2024.
+</div>
+<div id="ref-R-remotes" class="csl-entry">
+34. Csárdi G, Hester J, Wickham H, Chang W, Morgan M, Tenenbaum D. <a href="https://remotes.r-lib.org">Remotes: R package installation from
+remote repositories, including GitHub</a>. 2024.
 </div>
 <div id="ref-R-reticulate" class="csl-entry">
-27. Ushey K, Allaire J, Tang Y. <a href="https://CRAN.R-project.org/package=reticulate">Reticulate:
-Interface to python</a>. 2023.
+35. Ushey K, Allaire J, Tang Y. <a href="https://rstudio.github.io/reticulate/">Reticulate: Interface to
+python</a>. 2024.
+</div>
+<div id="ref-R-rintrojs" class="csl-entry">
+36. Ganz C. <a href="https://github.com/carlganz/rintrojs">Rintrojs:
+Wrapper for the intro.js library</a>. 2024.
 </div>
 <div id="ref-R-rlang" class="csl-entry">
-28. Henry L, Wickham H. <a href="https://CRAN.R-project.org/package=rlang">Rlang: Functions for
-base types and core r and tidyverse features</a>. 2023.
+37. Henry L, Wickham H. <a href="https://rlang.r-lib.org">Rlang:
+Functions for base types and core r and tidyverse features</a>. 2024.
+</div>
+<div id="ref-R-rmarkdown" class="csl-entry">
+38. Allaire J, Xie Y, Dervieux C, McPherson J, Luraschi J, Ushey K, et
+al. <a href="https://github.com/rstudio/rmarkdown">Rmarkdown: Dynamic
+documents for r</a>. 2024.
 </div>
 <div id="ref-R-rstatix" class="csl-entry">
-29. Kassambara A. <a href="https://rpkgs.datanovia.com/rstatix/">Rstatix: Pipe-friendly
+39. Kassambara A. <a href="https://rpkgs.datanovia.com/rstatix/">Rstatix: Pipe-friendly
 framework for basic statistical tests</a>. 2023.
 </div>
 <div id="ref-R-shiny" class="csl-entry">
-30. Chang W, Cheng J, Allaire J, Sievert C, Schloerke B, Xie Y, et al.
-<a href="https://shiny.rstudio.com/">Shiny: Web application framework
-for r</a>. 2022.
+40. Chang W, Cheng J, Allaire J, Sievert C, Schloerke B, Xie Y, et al.
+<a href="https://shiny.posit.co/">Shiny: Web application framework for
+r</a>. 2024.
 </div>
 <div id="ref-R-shinycssloaders" class="csl-entry">
-31. Sali A, Attali D. <a href="https://github.com/daattali/shinycssloaders">Shinycssloaders: Add
+41. Sali A, Attali D. <a href="https://github.com/daattali/shinycssloaders">Shinycssloaders: Add
 loading animations to a shiny output while it’s recalculating</a>. 2020.
 </div>
 <div id="ref-R-shinydashboard" class="csl-entry">
-32. Chang W, Borges Ribeiro B. <a href="http://rstudio.github.io/shinydashboard/">Shinydashboard: Create
+42. Chang W, Borges Ribeiro B. <a href="http://rstudio.github.io/shinydashboard/">Shinydashboard: Create
 dashboards with shiny</a>. 2021.
 </div>
 <div id="ref-R-shinyjs" class="csl-entry">
-33. Attali D. <a href="https://deanattali.com/shinyjs/">Shinyjs: Easily
+43. Attali D. <a href="https://deanattali.com/shinyjs/">Shinyjs: Easily
 improve the user experience of your shiny apps in seconds</a>. 2021.
 </div>
 <div id="ref-R-shinyWidgets" class="csl-entry">
-34. Perrier V, Meyer F, Granjon D. <a href="https://CRAN.R-project.org/package=shinyWidgets">shinyWidgets:
-Custom inputs widgets for shiny</a>. 2023.
+44. Perrier V, Meyer F, Granjon D. <a href="https://github.com/dreamRs/shinyWidgets">shinyWidgets: Custom
+inputs widgets for shiny</a>. 2024.
+</div>
+<div id="ref-R-sjPlot" class="csl-entry">
+45. Lüdecke D. <a href="https://strengejacke.github.io/sjPlot/">sjPlot:
+Data visualization for statistics in social science</a>. 2024.
 </div>
 <div id="ref-R-stringr" class="csl-entry">
-35. Wickham H. <a href="https://CRAN.R-project.org/package=stringr">Stringr: Simple,
-consistent wrappers for common string operations</a>. 2022.
+46. Wickham H. <a href="https://stringr.tidyverse.org">Stringr: Simple,
+consistent wrappers for common string operations</a>. 2023.
 </div>
 <div id="ref-R-tibble" class="csl-entry">
-36. Müller K, Wickham H. <a href="https://CRAN.R-project.org/package=tibble">Tibble: Simple data
-frames</a>. 2023.
+47. Müller K, Wickham H. <a href="https://tibble.tidyverse.org/">Tibble:
+Simple data frames</a>. 2023.
 </div>
 <div id="ref-R-tidyr" class="csl-entry">
-37. Wickham H, Vaughan D, Girlich M. <a href="https://CRAN.R-project.org/package=tidyr">Tidyr: Tidy messy
-data</a>. 2023.
+48. Wickham H, Vaughan D, Girlich M. <a href="https://tidyr.tidyverse.org">Tidyr: Tidy messy data</a>. 2024.
+</div>
+<div id="ref-R-tidyverse" class="csl-entry">
+49. Wickham H. <a href="https://tidyverse.tidyverse.org">Tidyverse:
+Easily install and load the tidyverse</a>. 2023.
 </div>
 <div id="ref-R-visNetwork" class="csl-entry">
-38. Almende B.V. and Contributors, Thieurmel B. <a href="https://datastorm-open.github.io/visNetwork/">visNetwork: Network
+50. Almende B.V. and Contributors, Thieurmel B. <a href="https://datastorm-open.github.io/visNetwork/">visNetwork: Network
 visualization using vis.js library</a>. 2022.
 </div>
+<div id="ref-R-xgboost" class="csl-entry">
+51. Chen T, He T, Benesty M, Khotilovich V, Tang Y, Cho H, et al. <a href="https://github.com/dmlc/xgboost">Xgboost: Extreme gradient
+boosting</a>. 2024.
+</div>
 <div id="ref-Biobase2015" class="csl-entry">
-39. Huber W, Carey VJ, Gentleman R, Anders S, Carlson M, Carvalho BS, et
+52. Huber W, Carey VJ, Gentleman R, Anders S, Carlson M, Carvalho BS, et
 al. <a href="http://www.nature.com/nmeth/journal/v12/n2/full/nmeth.3252.html"><span>O</span>rchestrating
 high-throughput genomic analysis with <span>B</span>ioconductor</a>.
 Nature Methods. 2015;12:115–21.
 </div>
 <div id="ref-caret2008" class="csl-entry">
-40. Kuhn, Max. <a href="https://doi.org/10.18637/jss.v028.i05">Building
+53. Kuhn, Max. <a href="https://doi.org/10.18637/jss.v028.i05">Building
 predictive models in r using the caret package</a>. Journal of
 Statistical Software. 2008;28:1–26.
 </div>
 <div id="ref-dendextend2015" class="csl-entry">
-41. Galili T. Dendextend: An r package for visualizing, adjusting, and
+54. Galili T. Dendextend: An r package for visualizing, adjusting, and
 comparing trees of hierarchical clustering. Bioinformatics. 2015. <a href="https://doi.org/10.1093/bioinformatics/btv428">https://doi.org/10.1093/bioinformatics/btv428</a>.
 </div>
 <div id="ref-FactoMineR2008" class="csl-entry">
-42. Lê S, Josse J, Husson F. <a href="https://doi.org/10.18637/jss.v025.i01"><span>FactoMineR</span>: A
+55. Lê S, Josse J, Husson F. <a href="https://doi.org/10.18637/jss.v025.i01"><span>FactoMineR</span>: A
 package for multivariate analysis</a>. Journal of Statistical Software.
 2008;25:1–18.
 </div>
 <div id="ref-ggplot22016" class="csl-entry">
-43. Wickham H. <a href="https://ggplot2.tidyverse.org">ggplot2: Elegant
+56. Wickham H. <a href="https://ggplot2.tidyverse.org">ggplot2: Elegant
 graphics for data analysis</a>. Springer-Verlag New York; 2016.
 </div>
 <div id="ref-heatmaply2017" class="csl-entry">
-44. Galili, Tal, O’Callaghan, Alan, Sidi, Jonathan, et al. Heatmaply: An
+57. Galili, Tal, O’Callaghan, Alan, Sidi, Jonathan, et al. Heatmaply: An
 r package for creating interactive cluster heatmaps for online
 publishing. Bioinformatics. 2017. <a href="https://doi.org/10.1093/bioinformatics/btx657">https://doi.org/10.1093/bioinformatics/btx657</a>.
 </div>
 <div id="ref-igraph2006" class="csl-entry">
-45. Csardi G, Nepusz T. <a href="https://igraph.org">The igraph software
+58. Csardi G, Nepusz T. <a href="https://igraph.org">The igraph software
 package for complex network research</a>. InterJournal. 2006;Complex
 Systems:1695.
 </div>
 <div id="ref-jsonlite2014" class="csl-entry">
-46. Ooms J. <a href="https://arxiv.org/abs/1403.2805">The jsonlite
+59. Ooms J. <a href="https://arxiv.org/abs/1403.2805">The jsonlite
 package: A practical and consistent mapping between JSON data and r
 objects</a>. arXiv:14032805 [statCO]. 2014.
 </div>
+<div id="ref-knitr2015" class="csl-entry">
+60. Xie Y. <a href="https://yihui.org/knitr/">Dynamic documents with
+<span>R</span> and knitr</a>. 2nd edition. Boca Raton, Florida: Chapman;
+Hall/CRC; 2015.
+</div>
+<div id="ref-knitr2014" class="csl-entry">
+61. Xie Y. Knitr: A comprehensive tool for reproducible research in
+<span>R</span>. In: Stodden V, Leisch F, Peng RD, editors. Implementing
+reproducible computational research. Chapman; Hall/CRC; 2014.
+</div>
+<div id="ref-limma2015" class="csl-entry">
+62. Ritchie ME, Phipson B, Wu D, Hu Y, Law CW, Shi W, et al. <a href="https://doi.org/10.1093/nar/gkv007"><span class="nocase">limma</span> powers differential expression analyses for
+<span>RNA</span>-sequencing and microarray studies</a>. Nucleic Acids
+Research. 2015;43:e47.
+</div>
 <div id="ref-lme42015" class="csl-entry">
-47. Bates D, Mächler M, Bolker B, Walker S. <a href="https://doi.org/10.18637/jss.v067.i01">Fitting linear
+63. Bates D, Mächler M, Bolker B, Walker S. <a href="https://doi.org/10.18637/jss.v067.i01">Fitting linear
 mixed-effects models using <span class="nocase">lme4</span></a>. Journal
 of Statistical Software. 2015;67:1–48.
 </div>
 <div id="ref-mgm2020" class="csl-entry">
-48. Haslbeck JMB, Waldorp LJ. <a href="https://doi.org/10.18637/jss.v093.i08"><span class="nocase">mgm</span>: Estimating time-varying mixed graphical
+64. Haslbeck JMB, Waldorp LJ. <a href="https://doi.org/10.18637/jss.v093.i08"><span class="nocase">mgm</span>: Estimating time-varying mixed graphical
 models in high-dimensional data</a>. Journal of Statistical Software.
 2020;93:1–46.
 </div>
 <div id="ref-plotly2020" class="csl-entry">
-49. Sievert C. <a href="https://plotly-r.com">Interactive web-based data
+65. Sievert C. <a href="https://plotly-r.com">Interactive web-based data
 visualization with r, plotly, and shiny</a>. Chapman; Hall/CRC; 2020.
 </div>
 <div id="ref-plotROC2017" class="csl-entry">
-50. Sachs MC. <a href="https://doi.org/10.18637/jss.v079.c02"><span class="nocase">plotROC</span>: A tool for plotting ROC curves</a>.
+66. Sachs MC. <a href="https://doi.org/10.18637/jss.v079.c02"><span class="nocase">plotROC</span>: A tool for plotting ROC curves</a>.
 Journal of Statistical Software, Code Snippets. 2017;79:1–19.
+</div>
+<div id="ref-pROC2011" class="csl-entry">
+67. Robin X, Turck N, Hainard A, Tiberti N, Lisacek F, Sanchez J-C, et
+al. pROC: An open-source package for r and s+ to analyze and compare ROC
+curves. BMC Bioinformatics. 2011;12:77.
+</div>
+<div id="ref-randomForest2002" class="csl-entry">
+68. Liaw A, Wiener M. <a href="https://CRAN.R-project.org/doc/Rnews/">Classification and
+regression by randomForest</a>. R News. 2002;2:18–22.
+</div>
+<div id="ref-rintrojs2016" class="csl-entry">
+69. Ganz C. <a href="https://dx.doi.org/10.21105/joss.00063"><span class="nocase">rintrojs</span>: A wrapper for the intro.js library</a>.
+Journal of Open Source Software. 2016;1.
+</div>
+<div id="ref-rmarkdown2018" class="csl-entry">
+70. Xie Y, Allaire JJ, Grolemund G. <a href="https://bookdown.org/yihui/rmarkdown">R markdown: The definitive
+guide</a>. Boca Raton, Florida: Chapman; Hall/CRC; 2018.
+</div>
+<div id="ref-rmarkdown2020" class="csl-entry">
+71. Xie Y, Dervieux C, Riederer E. <a href="https://bookdown.org/yihui/rmarkdown-cookbook">R markdown
+cookbook</a>. Boca Raton, Florida: Chapman; Hall/CRC; 2020.
+</div>
+<div id="ref-tidyverse2019" class="csl-entry">
+72. Wickham H, Averick M, Bryan J, Chang W, McGowan LD, François R, et
+al. <a href="https://doi.org/10.21105/joss.01686">Welcome to the <span class="nocase">tidyverse</span></a>. Journal of Open Source Software.
+2019;4:1686.
 </div>
 </div>
 </div>
