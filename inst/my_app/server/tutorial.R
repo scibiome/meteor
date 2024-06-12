@@ -342,6 +342,48 @@ observeEvent(
 )
 
 
+###### Tutorial Binary Prediction ------
+
+
+
+helptext_pred <- reactive(data.table::data.table(
+  tab = c("tutorial_pred"),
+  step = c(1, 2, 3),
+  element = c(
+    "#sidebarItemExpanded > ul > li:nth-child(3) > a",
+    "#sidebarItemExpanded > ul > li:nth-child(4) > a",
+    "#prediction_method-label"
+  ),
+  intro = c(
+    "Here, you can select for which time point you want to perform the analysis.",
+    "Here, you can select a categorical variable you want to predict. Note: For now only binary prediction is possible.",
+    "Here, you can select between machine learning models."
+
+  ),
+  position = c("auto", "auto", "auto")
+))
+
+
+observeEvent(
+  eventExpr = input$tutorial_pred,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_pred()[tab == "tutorial_pred"]
+            )
+    )
+  }
+)
+
+
+
+
+
+
+
 
 ###### Tutorial Friedman test ------
 

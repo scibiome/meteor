@@ -473,7 +473,8 @@ ui <- dashboardPage(
           title = "Binary Prediction (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_pred")
+          htmlOutput("info_box_pred"),
+          column(width =  4, actionButton("tutorial_pred", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(
           column(
