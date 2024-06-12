@@ -476,10 +476,17 @@ helptext_repanova <- reactive(data.table::data.table(
     4
   ),
   element = c(
-    "#tab-8017-1 > div:nth-child(2) > div > div"
+    "#tab-7745-1 > div:nth-child(2) > div > div",
+    "#sidebarItemExpanded > ul > li:nth-child(4) > a",
+    "#tab-7745-1 > div:nth-child(3) > div > div",
+    "#act_repeated_anova"
   ),
   intro = c(
     "Here, you can select a single metabolite for the analysis.",
+    "Here, you can select a categorical variable.
+     In the next stept you can select a subgroup for which you want to perform the analysis.",
+    "Here, you can select a subgroup for which you want to perform the analysis.",
+    "If you click here the repeated measures ANOVA is performed."
   ),
   position = c(
     "auto", "auto", "auto",
@@ -502,11 +509,54 @@ observeEvent(
   }
 )
 
+###### Tutorial repeated measures ANOVA for feature selection ------
+
+# TODO Infotext missing
 
 
 
+helptext_repanova_sel <- reactive(data.table::data.table(
+  tab = c("tutorial_repanova_sel"),
+  step = c(
+    1, 2, 3,
+    4, 5
+  ),
+  element = c(
+   "#sidebarItemExpanded > ul > li:nth-child(4) > a",
+   "#tab-1436-2 > div:nth-child(2) > div > div",
+   "#act_repeated_anova_selection",
+   "#load_top_features_repeated_anova",
+   "#sidebarItemExpanded > ul > div.form-group.shiny-input-container"
+  ),
+  intro = c(
+    "Here, you can select a categorical variable.
+     In the next stept you can select a subgroup for which you want to perform the analysis.",
+    "Here, you can select a subgroup for which you want to perform the analysis.",
+    "If you click here the repeated measures ANOVA is performed.",
+    "Here, you can select the top-ranked feature based on the lowest p-value for the time factor.
+    The selected feature will be marked in the metabolite picker.",
+    "Selected metabolites can be found here."
+  ),
+  position = c(
+    "auto", "auto", "auto",
+    "auto", "auto"
+  )
+))
 
 
+observeEvent(
+  eventExpr = input$tutorial_repanova_sel,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_repanova_sel()[tab == "tutorial_repanova_sel"]
+            )
+    )
+  }
+)
 
 
 
