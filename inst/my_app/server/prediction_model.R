@@ -3,13 +3,22 @@
 ##### logistic regression ----
 
 output$info_box_pred <- renderUI({
-  HTML("<p align = 'justify'> In this section you can perform binary classification using three different algorithms:
-       logistic regression (LR), random forest (RF), and XGBoost (XGB). Multiple sizes of the test set
-       and the type of cross-validation to be used, either stratified 5-fold cross-validation or leave-one-out cross-validation (LOOCV).
-       In instances where the test set size is set to 0%, the application will not compute an ROC curve.
-       This section further provides a metabolite selection feature that allows you to load the ten most important features.
-       The number can be less if features are not used by the model. <p>")
+  HTML("<p align='justify'>
+        In this section, you can perform binary classification using three different algorithms:
+        logistic regression (LR), random forest (RF), and XGBoost (XGB), all provided by the caret package.
+        To prevent overfitting and test the generalizability of the learned model,
+        stratified 5-fold cross-validation or leave-one-out cross-validation (LOOCV) are available.
+        The ROC curve is computed on the test set. If the test set size is set to 0%, the application will not compute an ROC curve.
+        Additionally, this section includes a metabolite selection feature that allows you to load the ten most important features,
+        or fewer if the model uses less than ten features.
+        To learn more about the available algorithms and how to use them, see this
+
+        <a href='https://www.jstatsoft.org/index.php/jss/article/view/v028i05/265' target='_blank'>Kuhn, M. (2008). Building predictive models in R using the caret package. Journal of statistical software, 28, 1-26.</a>.
+        Further information about cross-validation and LOOCV can be found
+        <a href='https://ai.stanford.edu/~ang/papers/cv-final.pdf' target='_blank'>Ng, A. Y. (1997, July). Preventing\" overfitting\"of cross-validation data. In ICML (Vol. 97, pp. 245-253).</a>.
+      </p>")
 })
+
 
 # changes
 prediction_stored <- reactiveValues(prediction1 = 0, computation_done = FALSE, rfFit = NULL, auc = NULL)
