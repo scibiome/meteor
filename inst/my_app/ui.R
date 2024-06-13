@@ -1140,7 +1140,8 @@ ui <- dashboardPage(
         ),
         fluidRow(
           column(12,
-                 tags$a(href="https://www.metaboanalyst.ca/MetaboAnalyst/upload/ConvertView.xhtml", "MetaboAnalyst", target="_blank")
+                 tags$a(href="https://www.metaboanalyst.ca/MetaboAnalyst/upload/ConvertView.xhtml", "MetaboAnalyst", target="_blank"),
+                 br(), br()
           )
         ),
 
@@ -1154,7 +1155,8 @@ ui <- dashboardPage(
         fluidRow(
           column(
             width = 12,
-            actionButton("api.go", "3. Get enriched pathways"),
+            tags$h4("3. Enrichment Analysis", style = "font-weight: bold; font-size: 15px;"),
+            actionButton("api.go", "Get enriched pathways"),
           )
         ),
         fluidRow(column(width = 12, DTOutput("export.dt"))),

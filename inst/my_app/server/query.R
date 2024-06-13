@@ -180,14 +180,41 @@ output$export.dt <-   renderDT({
               enriched_kegg_pathways <- merged_df
               colnames(enriched_kegg_pathways) <- c('pathwayID', 'pathwayName', 'num_hits', 'Matches', 'url')
 
-              enriched_kegg_pathways$url <- sprintf('<a href="%s" target="_blank">%s</a>', enriched_kegg_pathways$url, "KEGG")
+              # browser()
 
+
+
+
+              body <- list(analytes = paste0("hmdb:", query_results.df$HMDB))
+              # Define the body
+              body <- list(analytes = c("hmdb:HMDB0000641", "hmdb:HMDB0000067", "hmdb:HMDB0000161"))
+
+              # The MetaboAnalyst API url
+              call <- "https://rampdb.nih.gov/api/pathways-from-analytes"
+
+              # Use httr::POST to send the request to the MetaboAnalyst API
+              # The response will be saved in query_results
+              query_results <- httr::POST(call, body = body, encode = "json")
+
+              # Parse the response into a table
+              # Will show mapping to "hmdb_id", "kegg_id", "pubchem_id", "chebi_id", "metlin_id", "smiles"
+              query_results_json <- httr::content(query_results, "text", encoding = "UTF-8")
+              query_results_parsed <- jsonlite::fromJSON(query_results_json, flatten = TRUE)
+
+              query_results_table <- query_results_parsed$data %>%
+                group_by(pathwayId, pathwayName, inputId) %>%
+                summarize(num_hits = n())
+
+
+
+              enriched_kegg_pathways$url <- sprintf('<a href="%s" target="_blank">%s</a>', enriched_kegg_pathways$url, "KEGG")
+              enriched_kegg_pathways <- enriched_kegg_pathways[order(enriched_kegg_pathways$num_hits, decreasing = TRUE), ]
               DT_pathways(datatable(enriched_kegg_pathways, editable = TRUE,
                         extensions = "Buttons",
                         options = list(paging = TRUE,
                                        scrollX=TRUE,
                                        searching = TRUE,
-                                       ordering = TRUE,
+                                       # ordering = TRUE,
                                        dom = 'Bfrtip',
                                        buttons = c("copy", "print", "csv", "excel")
                         ), escape = FALSE
@@ -206,7 +233,7 @@ output$export.dt <-   renderDT({
                   return("-")
                 }
               }
-              query_results.df$url <- sapply(query_results.df$KEGG, generate_url)
+              query_results.df$KEGG <- sapply(query_results.df$KEGG, generate_url)
 
 
               datatable(query_results.df, editable = TRUE,
