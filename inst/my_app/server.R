@@ -55,6 +55,8 @@ library(magrittr)
 library(limma)
 library(rmarkdown)
 library(markdown)
+library(KEGGREST)
+
 
 #### Python module ####
 
@@ -133,7 +135,7 @@ server <- function(input, output, session) {
   source(file.path("server", "pca.R"), local = TRUE)$value
 
   #### source: tcam.R ====
-  # source(file.path("server", "tcam.R"), local = TRUE)$value
+  source(file.path("server", "tcam.R"), local = TRUE)$value
 
   #### source: ridge_plot.R ====
   source(file.path("server", "ridge_plot.R"), local = TRUE)$value
