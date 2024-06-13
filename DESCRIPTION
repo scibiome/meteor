@@ -82,8 +82,9 @@ Imports:
     randomForest,
     MLmetrics,
     rintrojs,
+    KEGGREST,
     data.table
 Suggests: 
     tidyverse
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.0
 VignetteBuilder: knitr
