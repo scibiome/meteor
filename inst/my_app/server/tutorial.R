@@ -89,7 +89,7 @@ helptext_main <- reactive(data.table::data.table(
              Using the HMDB identifier a pathway enrichment analysis using the Relational Database of Metabolomics Pathways (RaMP) is performed,
              which provides information on metabolic pathways involving the selected metabolites. Further information can be found on the respective page.",
     "Here you can find an overview of the packages used in MeTEor and the corresponding references.",
-    "On the individual pages you will find additional tutorials on the individual analyses and visualizations."
+    "On the individual pages (infobox) you will find additional tutorials on the individual analyses and visualizations."
   ),
   position = c(
     "auto", "auto", "auto",
@@ -348,19 +348,42 @@ observeEvent(
 
 helptext_pred <- reactive(data.table::data.table(
   tab = c("tutorial_pred"),
-  step = c(1, 2, 3),
+  step = c(1, 2, 3,
+           4, 5, 6,
+           7, 8, 9,
+           10, 11, 12),
   element = c(
     "#sidebarItemExpanded > ul > li:nth-child(3) > a",
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
-    "#prediction_method-label"
+    "#prediction_method-label",
+    "#prediction_method > div > div:nth-child(1) > label",
+    "#prediction_method > div > div:nth-child(2) > label",
+    "#prediction_method > div > div:nth-child(3) > label",
+    "#valitation_method-label",
+    "#valitation_method > div > div:nth-child(1) > label",
+    "#valitation_method > div > div:nth-child(2) > label",
+    "#shiny-tab-pred > div:nth-child(3) > div.col-sm-2 > div > div > div > div.selectize-input.items.full.has-options.has-items",
+    "#rf_prediction",
+    "#load_top_features"
   ),
   intro = c(
     "Here, you can select for which time point you want to perform the analysis.",
     "Here, you can select a categorical variable you want to predict. Note: For now only binary prediction is possible.",
-    "Here, you can select between machine learning models."
-
+    "Here, you can select between machine learning models.",
+    "If you choose this option a random forest is used for prediction.",
+    "If you choose this option a logistic regression is used for prediction.",
+    "If you choose this option Extrem Gradient Boosting (XGBoost) is used fo prediciton.",
+    "Here, you can select between two different validation methods.",
+    "If you choose this option cross-validation is applied.",
+    "If you choose this option leave-one-out cross-validation is applied.",
+    "Here, you can choose the percentage of your data to use as test data. Ensure that your dataset is sufficiently large to allow for splitting the data.",
+    "If you click on this button the model is computed.",
+    "Here, you can add the most predictive features to the selection."
   ),
-  position = c("auto", "auto", "auto")
+  position = c("auto", "auto", "auto",
+               "auto", "auto", "auto",
+               "auto", "auto", "auto",
+               "auto")
 ))
 
 
@@ -428,7 +451,7 @@ helptext_mixedanova <- reactive(data.table::data.table(
   ),
   element = c(
     "#shiny-tab-mixedanova > div > ul > li.active",
-    "#tab-3706-1 > div:nth-child(2) > div > div",
+    "#tab-6394-1 > div:nth-child(2) > div > div",
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
     "#act_mixed_anova"
   ),
@@ -472,7 +495,7 @@ helptext_mixedanova_feat <- reactive(data.table::data.table(
   element = c(
     "#shiny-tab-mixedanova > div > ul > li.active",
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
-    "#tab-4431-2 > div:nth-child(2) > div > div",
+    "#tab-6394-2 > div:nth-child(2) > div > div",
     "#act_mixed_anova_selection",
     "#load_top_features_anova",
     "#sidebarItemExpanded > ul > div.form-group.shiny-input-container"
@@ -518,9 +541,9 @@ helptext_repanova <- reactive(data.table::data.table(
     4
   ),
   element = c(
-    "#tab-7745-1 > div:nth-child(2) > div > div",
+    "#repeated_anova_metabolite-label",
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
-    "#tab-7745-1 > div:nth-child(3) > div > div",
+    "#repeated_anova_category-label",
     "#act_repeated_anova"
   ),
   intro = c(
@@ -565,7 +588,7 @@ helptext_repanova_sel <- reactive(data.table::data.table(
   ),
   element = c(
    "#sidebarItemExpanded > ul > li:nth-child(4) > a",
-   "#tab-1436-2 > div:nth-child(2) > div > div",
+   "#repeated_category-label",
    "#act_repeated_anova_selection",
    "#load_top_features_repeated_anova",
    "#sidebarItemExpanded > ul > div.form-group.shiny-input-container"
