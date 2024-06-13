@@ -4,26 +4,26 @@
 
 output$info_box_pred <- renderUI({
   HTML("<p align='justify'>
-        In this section, you can perform binary classification using logistic regression (LR), random forest (RF), and XGBoost (XGB).
-        To prevent overfitting and test the generalizability of the learned model, stratified 5-fold cross-validation or leave-one-out cross-validation (LOOCV) are available.
+        In this section, you can perform binary classification using logistic regression (LR), random forest (RF), or XGBoost (XGB).
+        To prevent overfitting and test the generalizability of the learned model, stratified 5-fold cross-validation or leave-one-out cross-validation (LOOCV) are available.<br><br>
 
         <u>When to use</u>:<br>
-        If you want to classify between two groups of your categoriacal variable, for example female and male, and find out which metabolites are most predictive.
+        This tool is ideal if you need to classify between two groups of your categorical variable, such as different patient groups, and determine which metabolites are most predictive.<br><br>
 
-
+        <u>Additional Information:</u><br>
+        This tool is designed for users interested in binary classification scenarios, such as distinguishing between two classes using predictive algorithms and cross-validation methods.
         The ROC curve is computed on the test set. If the test set size is set to 0%, the application will not compute an ROC curve.
-        Additionally, this section includes a metabolite selection feature that allows you to load the ten most important features,
-        or fewer if the model uses less than ten features.<br>
+        It utilizes all available metabolites in the dataset for prediction and shows the feature importance of the most predictive ones.
+        Additionally, the tool allows you to select the ten most predictive metabolites for further analysis.<br><br>
 
-
-        <u>Additional Information:</u>:<br>
-        This tool is ideal for users interested in exploring binary classification scenarios, such as distinguishing between two classes based on various predictive algorithms and cross-validation methods.
-        To delve deeper into the algorithms used and their applications, refer to the
-        <a href='https://www.jstatsoft.org/article/view/v028i05' target='_blank'>paper</a>.
+        To learn more about the algorithms used and their applications, refer to
+        Kuhn, M. <a href='https://www.jstatsoft.org/article/view/v028i05' target='_blank'>Building predictive models in R using the caret package</a> 2008.<br>
         For detailed information on cross-validation (CV) and leave-one-out cross-validation (LOOCV), visit
-        <a href='https://ai.stanford.edu/~ang/papers/cv-final.pdf' target='_blank'>here</a>.
+        Ng, A. Y. <a href='https://ai.stanford.edu/~ang/papers/cv-final.pdf' target='_blank'>Preventing \"overfitting\" of cross-validation data</a> 1997.
       </p>")
 })
+
+
 
 
 # changes

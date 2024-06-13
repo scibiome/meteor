@@ -507,7 +507,7 @@ ui <- dashboardPage(
         fluidRow(
           column(width = 1, actionButton(
             "rf_prediction",
-            "compute"
+            "Compute"
           )),
           column(width = 6, actionButton(
             "load_top_features",
@@ -599,7 +599,7 @@ ui <- dashboardPage(
             ),
             fluidRow(column(
               width = 4,
-              actionButton("act_mixed_anova", "Compute!")
+              actionButton("act_mixed_anova", "Compute")
             )),
             fluidRow(column(width = 12, DT::DTOutput("summary_stats_mixed_anova"))),
             fluidRow(column(width = 12, box(
@@ -623,7 +623,7 @@ ui <- dashboardPage(
               column(width = 3, selectInput("selectfactor", "Select factor:", c("Categorical", "Time", "Time x Categorical"), selected = "Time x Categorical"))
             ),
             fluidRow(
-              column(width = 1, actionButton("act_mixed_anova_selection", "Compute!")),
+              column(width = 1, actionButton("act_mixed_anova_selection", "Compute")),
               column(width = 2, actionButton("load_top_features_anova", "Add top features to selection"))
             ),
             fluidRow(column(width = 4, DTOutput("ranking.sorted"))),
@@ -670,7 +670,7 @@ ui <- dashboardPage(
 
             fluidRow(column(
               width = 4,
-              actionButton("act_repeated_anova", "Compute!")
+              actionButton("act_repeated_anova", "Compute")
             )),
             fluidRow(column(width = 12, DT::DTOutput("summary_stats_repeated_anova"))),
             fluidRow(column(width = 12, box(
@@ -706,7 +706,7 @@ ui <- dashboardPage(
               )
             ),
             fluidRow(
-              column(width = 1, actionButton("act_repeated_anova_selection", "Compute!")),
+              column(width = 1, actionButton("act_repeated_anova_selection", "Compute")),
               column(width = 2, actionButton("load_top_features_repeated_anova", "Add top features to selection"))
             ),
             fluidRow(column(width = 4, DTOutput("repeated.ranking.sorted"))),
@@ -752,7 +752,7 @@ ui <- dashboardPage(
             fluidRow(
               column(
                 width = 4,
-                actionButton("act_lmm", "Compute!"),
+                actionButton("act_lmm", "Compute"),
                 style = "padding-bottom:17px",
               )
             ),
@@ -798,7 +798,7 @@ ui <- dashboardPage(
               column(
                 # align="center",
                 width = 4,
-                actionButton("act_lmm2", "Compute!"),
+                actionButton("act_lmm2", "Compute"),
                 style = "padding-bottom:17px",
               )
             ),
