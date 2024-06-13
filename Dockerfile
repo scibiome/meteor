@@ -39,6 +39,7 @@ RUN wget https://github.com/jgm/pandoc/releases/download/2.17.1/pandoc-2.17.1-li
 # Install MeTEor
 
 RUN Rscript -e 'install.packages("remotes")'
+RUN R -e 'if (!require("BiocManager", quietly = TRUE)) install.packages("BiocManager"); BiocManager::install("KEGGREST")'
 RUN Rscript -e 'remotes::install_github("scibiome/meteor")'
 
 # expose port
