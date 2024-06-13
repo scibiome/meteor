@@ -47,6 +47,7 @@ library(shinydashboard)
 library(shinycssloaders)
 library(shiny)
 library(shinyjs)
+library(data.table) # TODO add to references
 library(rintrojs) # TODO add to references
 
 ##### UI #####

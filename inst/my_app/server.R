@@ -55,6 +55,7 @@ library(magrittr)
 library(limma)
 library(rmarkdown)
 library(markdown)
+library(KEGGREST)
 library(rintrojs)
 library(data.table) # TODO add to references
 
@@ -123,7 +124,7 @@ server <- function(input, output, session) {
   data("example_data", package = "MeTEor")
 
   #### Source: tcam_shiny.py ----
-  # reticulate::source_python("tcam_shiny.py")
+  reticulate::source_python("tcam_shiny.py")
 
   #### source: tutorial.R ====
   source(file.path("server", "tutorial.R"), local = TRUE)$value
