@@ -53,6 +53,8 @@
 #' @importFrom parallel stopCluster detectCores makeCluster clusterEvalQ
 #' @importFrom foreach foreach %dopar%
 #' @importFrom magrittr %>%
+#' @importFrom data.table data.table
+#' @importFrom rintrojs introjsUI introjs
 #' @export meteor
 #'
 

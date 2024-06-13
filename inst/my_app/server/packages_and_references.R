@@ -13,21 +13,14 @@ output$markdown <- renderUI({
 
 #### Create references ####
 
-# package_list <- c("Biobase", "DT",
-#                   "EnhancedVolcano", "FactoMineR",
-#                   "caret", "corrr", "datamods",
-#                   "dendextend", "dplyr", "ggplot2",
-#                   "ggpubr", "ggridges", "ggrepel",
-#                   "graphics", "grid", "htmlTable",
-#                   "heatmaply", "httr", "igraph",
-#                   "jtools", "jsonlite", "lme4",
-#                   "metabolomics", "mgm", "pheatmap",
-#                   "plotROC", "plotly", "rstatix",
-#                   "readr", "reticulate",
-#                   "shiny", "shinyWidgets",
-#                   "shinydashboard", "shinycssloaders",
-#                   "shinyjs", "stats", "stringr",
-#                   "tidyr", "tibble", "utils",
-#                   "visNetwork", "rlang")
-#
+# package_list <- c(
+# "remotes", "httr", "dendextend", "stats", "dplyr", "ggplot2", "tidyr", "DT", "ggpubr",
+# "plotly", "graphics", "visNetwork", "utils", "tibble", "stringr", "shinyWidgets",
+# "shiny", "readr", "pheatmap", "mgm", "jtools", "grid", "heatmaply", "grDevices",
+# "ggridges", "ggrepel", "FactoMineR", "factoextra", "datamods", "corrr", "reticulate",
+# "igraph", "caret", "shinyjs", "jsonlite", "sjPlot", "pROC", "plotROC", "shinydashboard",
+# "shinycssloaders", "rlang", "lme4", "Biobase", "rstatix", "EnhancedVolcano", "limma",
+# "knitr", "rmarkdown", "markdown", "doParallel", "parallel", "foreach", "xgboost",
+# "randomForest", "MLmetrics", "tidyverse", "rintrojs"
+# )
 # knitr::write_bib(package_list, "packages.bib")

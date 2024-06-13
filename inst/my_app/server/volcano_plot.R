@@ -103,6 +103,7 @@ observeEvent(input$act_volc, {
 
   fit.res <- eBayes(fit)
 
+  # TODO display all metabolites
   fit.res.tab <- topTable(fit.res, sort.by = "none", coef = cate.name, number = nrow(data.pre))
 
   fit.res.tab.show <- fit.res.tab %>%

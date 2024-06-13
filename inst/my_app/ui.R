@@ -47,13 +47,15 @@ library(shinydashboard)
 library(shinycssloaders)
 library(shiny)
 library(shinyjs)
+library(rintrojs) # TODO add to references
 
 ##### UI #####
 
 ui <- dashboardPage(
   dashboardHeader(title = "MeTEor"),
   dashboardSidebar(
-    sidebarMenu(
+    introjsUI(),
+    sidebarMenu( id = "sidebar",
       menuItem("Introduction", tabName = "intro", icon = icon("fas fa-home")),
       menuItem("File", tabName = "file", icon = icon("fas fa-file")),
       menuItem("Time",
@@ -261,9 +263,11 @@ ui <- dashboardPage(
                                       position: top;"
               )
             )
-          )
-        )
-      ),
+          ),
+          fluidRow(width = 4, align="center",
+            actionButton("tutorial_main", "Start tutorial!", class = "btn-info btn-lg btn-block")
+          ))
+        ),
       tabItem(
         tabName = "file",
         fluidRow(
@@ -274,14 +278,15 @@ ui <- dashboardPage(
               column(
                 width = 4,
                 actionButton("launch_modal", "Click for data importing")
+              ),
+              column(width =  4, actionButton("tutorial_file", "Start page tutorial!", class =  "btn-info"))
               )
             ),
             column(
               width = 4,
               # sample_ui("sample_id")
             )
-          )
-        ),
+          ),
         fluidRow(column(width = 11, DT::dataTableOutput("datatable"))),
         fluidRow(column(width = 11, DT::dataTableOutput("datatable.wide")))
       ),
@@ -292,7 +297,9 @@ ui <- dashboardPage(
           title = "Principal Component Analysis (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_pca")
+          htmlOutput("info_box_pca"),
+          column(width =  4, actionButton("tutorial_pca", "Start page tutorial!", class =  "btn-info"))
+
         )),
         fluidRow(box(
           title = "Select the principal components for dimensions 1-3.",
@@ -340,7 +347,8 @@ ui <- dashboardPage(
           title = "Modern Tensor Factorization (TCAM) & Principal Component Analysis (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_tcam")
+          htmlOutput("info_box_tcam"),
+          column(width =  4, actionButton("tutorial_tcam", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(
           box(
@@ -421,7 +429,8 @@ ui <- dashboardPage(
           title = "Ridge Plot (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_ridge1")
+          htmlOutput("info_box_ridge1"),
+          column(width =  4, actionButton("tutorial_rp", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(box(
           title = "Select time points:",
@@ -449,7 +458,8 @@ ui <- dashboardPage(
           title = "Ridge Plot (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_ridge2")
+          htmlOutput("info_box_ridge2"),
+          column(width =  4, actionButton("tutorial_rp2", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(column(width = 12, actionButton(
           "rp_compute2",
@@ -463,7 +473,8 @@ ui <- dashboardPage(
           title = "Binary Prediction (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_pred")
+          htmlOutput("info_box_pred"),
+          column(width =  4, actionButton("tutorial_pred", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(
           column(
@@ -534,7 +545,8 @@ ui <- dashboardPage(
             title = "Friedman test (Info)",
             status = "info", solidHeader = TRUE,
             collapsible = TRUE, collapsed = TRUE,
-            htmlOutput("info_box_friedman")
+            htmlOutput("info_box_friedman"),
+            column(width =  4, actionButton("tutorial_fried", "Start page tutorial!", class =  "btn-info"))
           )
         ),
         fluidRow(
@@ -568,7 +580,8 @@ ui <- dashboardPage(
               title = "Mixed ANOVA (Info)",
               status = "info", solidHeader = TRUE,
               collapsible = TRUE, collapsed = TRUE,
-              htmlOutput("info_box_mixed_anova")
+              htmlOutput("info_box_mixed_anova"),
+              column(width =  4, actionButton("tutorial_mixanova", "Start page tutorial!", class =  "btn-info"))
             )),
             fluidRow(
               column(
@@ -602,7 +615,8 @@ ui <- dashboardPage(
               title = "Mixed ANOVA for feature selection (Info)",
               status = "info", solidHeader = TRUE,
               collapsible = TRUE, collapsed = TRUE,
-              htmlOutput("info_box_mixed_anova_selection")
+              htmlOutput("info_box_mixed_anova_selection"),
+              column(width =  4, actionButton("tutorial_mixanova_feat", "Start page tutorial!", class =  "btn-info"))
             )),
             fluidRow(
               column(width = 3, selectInput("selectfactor", "Select factor:", c("Categorical", "Time", "Time x Categorical"), selected = "Time x Categorical"))
@@ -622,7 +636,8 @@ ui <- dashboardPage(
               title = "Repeated Measures ANOVA (Info)",
               status = "info", solidHeader = TRUE,
               collapsible = TRUE, collapsed = TRUE,
-              htmlOutput("info_box_repeated_anova")
+              htmlOutput("info_box_repeated_anova"),
+              column(width =  4, actionButton("tutorial_repanova", "Start page tutorial!", class =  "btn-info"))
             )),
             fluidRow(
               column(
@@ -672,7 +687,8 @@ ui <- dashboardPage(
               title = "Repeated ANOVA (Info)",
               status = "info", solidHeader = TRUE,
               collapsible = TRUE, collapsed = TRUE,
-              htmlOutput("info_box_repeated_anova_selection")
+              htmlOutput("info_box_repeated_anova_selection"),
+              column(width =  4, actionButton("tutorial_repanova_sel", "Start page tutorial!", class =  "btn-info"))
             )),
 
             fluidRow(
@@ -695,11 +711,6 @@ ui <- dashboardPage(
             fluidRow(column(width = 4, DTOutput("repeated.ranking.sorted"))),
           )
         )
-
-
-
-
-        # fluidRow(column(width = 12, actionButton("load_top_features_anova", "Add top features to selection")))
       ),
       tabItem(
         tabName = "lmm",
@@ -710,7 +721,8 @@ ui <- dashboardPage(
               title = "Linear Mixed Model (Info)",
               status = "info", solidHeader = TRUE,
               collapsible = TRUE, collapsed = TRUE,
-              htmlOutput("info_box_linear_mixed_model")
+              htmlOutput("info_box_linear_mixed_model"),
+              column(width =  4, actionButton("tutorial_lmm", "Start page tutorial!", class =  "btn-info"))
             )),
             fluidRow(
               column(
@@ -773,18 +785,13 @@ ui <- dashboardPage(
                 plotlyOutput("line_plot")
               )
             ),
-          #  fluidRow(
-          #    column(
-          #      width = 12, height = 12,
-          #      plotlyOutput("vis_grid")
-          #    )
-          #  ),
           ),
           tabPanel(
             "Model comparison",
             fluidRow(box(
               title = "Model comparison", status = "info", solidHeader = TRUE,
-              htmlOutput("info_box_linear_mixed_model_comp")
+              htmlOutput("info_box_linear_mixed_model_comp"),
+              column(width =  4, actionButton("tutorial_lmm_comp", "Start page tutorial!", class =  "btn-info"))
             )),
             fluidRow(
               column(
@@ -837,7 +844,8 @@ ui <- dashboardPage(
           title = "Pearson Correlation Network (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_pcn")
+          htmlOutput("info_box_pcn"),
+          column(width =  4, actionButton("tutorial_pcn", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(
           column(width = 3, sliderInput(
@@ -906,7 +914,8 @@ ui <- dashboardPage(
           title = "Gaussian Graphical Model Network (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_ggm")
+          htmlOutput("info_box_ggm"),
+          column(width =  4, actionButton("tutorial_ggm", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(
           column(width = 3, sliderInput(
@@ -980,7 +989,8 @@ ui <- dashboardPage(
           title = "Line Plot individuals (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_il")
+          htmlOutput("info_box_il"),
+          column(width =  4, actionButton("tutorial_il", "Start page tutorial!", class =  "btn-info"))
         )),
         tabName = "il",
         fluidRow(column(width = 12, actionButton(
@@ -995,7 +1005,8 @@ ui <- dashboardPage(
           title = "Line Plot groups (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_gl")
+          htmlOutput("info_box_gl"),
+          column(width =  4, actionButton("tutorial_gl", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(column(width = 12, actionButton(
           "lp_compute3",
@@ -1009,7 +1020,8 @@ ui <- dashboardPage(
           title = "Line Plot Mean (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_ml")
+          htmlOutput("info_box_ml"),
+          column(width =  4, actionButton("tutorial_ml", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(column(width = 12, actionButton(
           "lp_compute4",
@@ -1024,7 +1036,8 @@ ui <- dashboardPage(
           title = "Single Metabolite Heatmap (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_sm")
+          htmlOutput("info_box_sm"),
+          column(width =  4, actionButton("tutorial_sm", "Start page tutorial!", class =  "btn-info"))
         )),
         selectInput(
           inputId = "id6", label = "Metabolites :",
@@ -1050,7 +1063,8 @@ ui <- dashboardPage(
           title = "By Timepoint Heatmap (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_tb")
+          htmlOutput("info_box_tb"),
+          column(width =  4, actionButton("tutorial_bt", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(column(width = 12, actionButton(
           "heatmap_compute",
@@ -1066,15 +1080,14 @@ ui <- dashboardPage(
         ),
         plotlyOutput("clustheatmap2", height = "1000px")
       ),
-
-      # fluidRow(column(width = 12, plotlyOutput("clustheatmap2")))),
       tabItem(
         tabName = "volcano",
         fluidRow(box(
           title = "Volcano (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_volcano")
+          htmlOutput("info_box_volcano"),
+          column(width =  4, actionButton("tutorial_volcano", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(
           tags$style("#categorytext {font-size:20px;

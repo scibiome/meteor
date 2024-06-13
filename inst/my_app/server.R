@@ -55,6 +55,8 @@ library(magrittr)
 library(limma)
 library(rmarkdown)
 library(markdown)
+library(rintrojs)
+library(data.table) # TODO add to references
 
 #### Python module ####
 
@@ -122,6 +124,9 @@ server <- function(input, output, session) {
 
   #### Source: tcam_shiny.py ----
   # reticulate::source_python("tcam_shiny.py")
+
+  #### source: tutorial.R ====
+  source(file.path("server", "tutorial.R"), local = TRUE)$value
 
   #### source: launch_modal.R ====
   source(file.path("server", "launch_modal.R"), local = TRUE)$value
