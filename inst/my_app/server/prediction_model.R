@@ -11,11 +11,12 @@ output$info_box_pred <- renderUI({
         The ROC curve is computed on the test set. If the test set size is set to 0%, the application will not compute an ROC curve.
         Additionally, this section includes a metabolite selection feature that allows you to load the ten most important features,
         or fewer if the model uses less than ten features.
-        To learn more about the available algorithms and how to use them, see this
-
-        <a href='https://www.jstatsoft.org/index.php/jss/article/view/v028i05/265' target='_blank'>Kuhn, M. (2008). Building predictive models in R using the caret package. Journal of statistical software, 28, 1-26.</a>.
-        Further information about cross-validation and LOOCV can be found
-        <a href='https://ai.stanford.edu/~ang/papers/cv-final.pdf' target='_blank'>Ng, A. Y. (1997, July). Preventing\" overfitting\"of cross-validation data. In ICML (Vol. 97, pp. 245-253).</a>.
+        <u>When to use</u>:
+        This tool is ideal for users interested in exploring binary classification scenarios, such as distinguishing between two classes based on various predictive algorithms and cross-validation methods.
+        To delve deeper into the algorithms used and their applications, refer to the
+        <a href='https://www.jstatsoft.org/article/view/v028i05' target='_blank'>paper</a>.
+        For detailed information on cross-validation (CV) and leave-one-out cross-validation (LOOCV), visit
+        <a href='https://ai.stanford.edu/~ang/papers/cv-final.pdf' target='_blank'>here</a>.
       </p>")
 })
 

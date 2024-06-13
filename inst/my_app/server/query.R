@@ -1,4 +1,5 @@
 #### Metabolite query ####
+library(KEGGREST)
 output$info_box_enrichment <- renderUI({
 
   HTML("<p align = 'justify'>
