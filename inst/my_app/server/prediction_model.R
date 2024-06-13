@@ -4,14 +4,19 @@
 
 output$info_box_pred <- renderUI({
   HTML("<p align='justify'>
-        In this section, you can perform binary classification using three different algorithms:
-        logistic regression (LR), random forest (RF), and XGBoost (XGB), all provided by the caret package.
-        To prevent overfitting and test the generalizability of the learned model,
-        stratified 5-fold cross-validation or leave-one-out cross-validation (LOOCV) are available.
+        In this section, you can perform binary classification using logistic regression (LR), random forest (RF), and XGBoost (XGB).
+        To prevent overfitting and test the generalizability of the learned model, stratified 5-fold cross-validation or leave-one-out cross-validation (LOOCV) are available.
+
+        <u>When to use</u>:<br>
+        If you want to classify between two groups of your categoriacal variable, for example female and male, and find out which metabolites are most predictive.
+
+
         The ROC curve is computed on the test set. If the test set size is set to 0%, the application will not compute an ROC curve.
         Additionally, this section includes a metabolite selection feature that allows you to load the ten most important features,
-        or fewer if the model uses less than ten features.
-        <u>When to use</u>:
+        or fewer if the model uses less than ten features.<br>
+
+
+        <u>Additional Information:</u>:<br>
         This tool is ideal for users interested in exploring binary classification scenarios, such as distinguishing between two classes based on various predictive algorithms and cross-validation methods.
         To delve deeper into the algorithms used and their applications, refer to the
         <a href='https://www.jstatsoft.org/article/view/v028i05' target='_blank'>paper</a>.
