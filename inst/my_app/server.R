@@ -55,6 +55,7 @@ library(magrittr)
 library(limma)
 library(rmarkdown)
 library(markdown)
+library(data.table)
 library(KEGGREST)
 
 
