@@ -602,6 +602,9 @@ ui <- dashboardPage(
               actionButton("act_mixed_anova", "Compute!")
             )),
             fluidRow(column(width = 12, DT::DTOutput("summary_stats_mixed_anova"))),
+            fluidRow(column(width = 12, DT::DTOutput("outliers_mixed_anova"))),
+            fluidRow(column(width = 12, DT::DTOutput("normality_mixed_anova"))),
+            fluidRow(column(width = 12, DT::DTOutput("levene_mixed_anova"))),
             fluidRow(column(width = 12, box(
               title = "Mixed ANOVA results:",
               status = "info", solidHeader = TRUE,

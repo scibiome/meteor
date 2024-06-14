@@ -33,7 +33,10 @@ reactive_mixed_anova <- reactiveValues(
   res_mixed_anova = NULL,
   boxplot = NULL,
   pairwise = NULL,
-  pairwise.filtered = NULL
+  pairwise.filtered = NULL,
+  outliers = NULL,
+  shapiro = NULL,
+  levene = NULL,
 )
 
 
@@ -44,6 +47,44 @@ observeEvent(input$act_mixed_anova, {
     filter(metabolites %in% input$id10)
 
 
+  ##### Testing assumptions ######
+
+
+  ## outliers
+
+  a <- catv()
+
+  vars <- c("id", "time", a, "metabolites", "values")
+
+  outliers <- data.filtered %>%
+                select(all_of(vars)) %>%
+                group_by(time, input$catVars) %>%
+                rstatix::identify_outliers(values) %>%
+                mutate(across(where(is.numeric), ~round(.,3)))
+
+  colnames(outliers) <- c("Time", "Category", "ID", "Group", "Metabolites", "Values", "is.outlier", "is.extreme")
+
+  ## normality assumption
+  shapiro <- data.filtered %>%
+                group_by(time, input$catVars) %>%
+                rstatix::shapiro_test(values) %>%
+                mutate(across(where(is.numeric), ~round(.,3)))
+
+  colnames(shapiro) <- c("Category", "Time", "Variable", "statistic", "p")
+
+
+  # Construct the formula for Levene's test
+  form.levene <- as.formula(paste0("values ~ ", input$catVars))
+
+  # Perform Levene's test for homogeneity of variance
+  levene <- data.filtered %>%
+    mutate(!!sym(input$catVars) := factor(!!sym(input$catVars))) %>%
+    group_by(time) %>%
+    rstatix::levene_test(form.levene) %>%
+    mutate(across(where(is.numeric), ~round(.,3)))
+
+  colnames(levene) <- c("Time", "df1", "df2", "statistic", "p")
+
 
   summary_stats <- data.filtered %>%
     group_by(time, input$catVars) %>%
@@ -51,8 +92,6 @@ observeEvent(input$act_mixed_anova, {
 
 
   colnames(summary_stats) <- c("Time", "Category", "Variable", "N", "Mean", "SD")
-
-
 
 
 
@@ -97,6 +136,9 @@ observeEvent(input$act_mixed_anova, {
   reactive_mixed_anova$pairwise <- pairwise
   reactive_mixed_anova$pairwise.filtered <- pairwise.filtered
   reactive_mixed_anova$computation_done <- TRUE
+  reactive_mixed_anova$outliers <- outliers
+  reactive_mixed_anova$shapiro <- shapiro
+  reactive_mixed_anova$levene <- levene
 })
 
 
@@ -109,6 +151,41 @@ datatable(reactive_mixed_anova$summary_stats,
     paging = TRUE
   )
 ))
+
+
+
+output$outliers_mixed_anova <- renderDT(
+  datatable(reactive_mixed_anova$outliers,
+            caption = "Outlier detection (Univariate outlier detection using boxplot methods):",
+            options = list(
+              searching = FALSE,
+              lengthChange = FALSE,
+              paging = TRUE
+            )
+  ))
+
+
+output$normality_mixed_anova <- renderDT(
+  datatable(reactive_mixed_anova$shapiro,
+            caption = "Normality test (Shapiro-Wilk test for all possible combinations of factor levels):",
+            options = list(
+              searching = FALSE,
+              lengthChange = FALSE,
+              paging = TRUE
+            )
+  ))
+
+output$levene_mixed_anova <- renderDT(
+  datatable(reactive_mixed_anova$levene,
+            caption = "Homogeneity of variance (Levene's test checks for equal variances across groups):",
+            options = list(
+              searching = FALSE,
+              lengthChange = FALSE,
+              paging = TRUE
+            )
+  ))
+
+
 
 
 
