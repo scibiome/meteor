@@ -1,17 +1,62 @@
-
 output$info_box_repeated_anova <- renderUI({
-  HTML("<p align = 'justify'>
-This section enables you to perform a mixed ANOVA analysis for a specific metabolite,
-using a between-subjects factor (selected categorical variable) and a within-subjects factor (time).
-The first table presents summary statistics for each measurement time point,
-while the ANOVA results box provides information on the significance and
-effect size (generalized eta squared) of the between factor, within factor, and their interaction.
-<p></p>
-In addition, a box plot is displayed in the upper left corner to illustrate the results for the between-within factors interactions.
-The x-axis represents the measurement time point, and the color of the box plot indicates group membership.
-Between-group pairwise comparisons are conducted using t-tests for dependent samples,
-and multiple testing is corrected with Bonferroni.
-  ")
+  #   HTML("<p align = 'justify'>
+  # This section enables you to perform a mixed ANOVA analysis for a specific metabolite,
+  # using a between-subjects factor (selected categorical variable) and a within-subjects factor (time).
+  # The first table presents summary statistics for each measurement time point,
+  # while the ANOVA results box provides information on the significance and
+  # effect size (generalized eta squared) of the between factor, within factor, and their interaction.
+  # <p></p>
+  # In addition, a box plot is displayed in the upper left corner to illustrate the results for the between-within factors interactions.
+  # The x-axis represents the measurement time point, and the color of the box plot indicates group membership.
+  # Between-group pairwise comparisons are conducted using t-tests for dependent samples,
+  # and multiple testing is corrected with Bonferroni.
+  #   ")
+
+  HTML("
+    <p align='justify'>
+      This section enables you to perform a repeated measures ANOVA analysis on a specific metabolite, utilizing a within-subjects factor (time).
+    </p>
+    <h4>Summary Statistics</h4>
+    <p align='justify'>
+      The first table presents summary statistics for each measurement time point.
+    </p>
+    <h4>Outlier Analysis</h4>
+    <p align='justify'>
+      The second table shows results from outlier analysis. Outliers are detected using the boxplot method and marked as is.outlier and is.extreme.
+    </p>
+    <h4>Normality Test</h4>
+    <p align='justify'>
+      The third table provides results from the Shapiro-Wilk test for normality for every time point. A p-value < 0.05 indicates a violation of the normality assumption.
+    </p>
+    <h4>Repeated Measures ANOVA Results</h4>
+    <p align='justify'>
+      The 'Repeated Measures ANOVA results' box displays the repeated measures ANOVA results, providing information on the significance and effect size (generalized eta squared) for the within-subjects factor (time).
+    </p>
+    <h4>Visual Representation</h4>
+    <p align='justify'>
+      A box plot is displayed to illustrate the trend over different time points of measurement. Each box plot represents a distribution for a given time point, with the x-axis representing the measurement time points and the y-axis representing the metabolite abundance levels.
+    </p>
+    <h4>Pairwise Comparisons</h4>
+    <p align='justify'>
+      Pairwise comparisons between different time points are conducted to determine significant differences in metabolite levels. To account for multiple testing, Bonferroni correction is applied.
+    </p>
+     <br><br>
+    <u>When to Use:</u><br>
+    <p align='justify'>
+      Repeated measures ANOVA is suitable when:
+    </p>
+    <ul>
+      <li>Measurements are taken on the same subjects or units over multiple time points or conditions.</li>
+      <li>The focus is on detecting changes or differences within subjects over time or conditions.</li>
+      <li>There's a need to control for individual differences or variability among subjects.</li>
+    </ul>
+    <br><br>
+    <u>Used Packages and Additional Information:</u><br>
+    <ul>
+      <li>Kassambara A (2023). <em>rstatix: Pipe-Friendly Framework for Basic Statistical Tests</em>. R package version 0.7.2. Available at: <a href='https://CRAN.R-project.org/package=rstatix' target='_blank'>https://CRAN.R-project.org/package=rstatix</a></li>
+      <li><a href='https://www.datanovia.com/en/lessons/repeated-measures-anova-in-r/' target='_blank'>Tutorial on Repeated Measures ANOVA</a></li>
+    </ul>
+")
 })
 
 
@@ -32,7 +77,7 @@ observe({
   a <- input$catVars
   dat.nam <- dat.nam[a]
 
-  trt.names <- unique(dat.nam[,1]) %>% as.list()
+  trt.names <- unique(dat.nam[, 1]) %>% as.list()
 
   choices <- trt.names[!is.na(trt.names)]
 
@@ -55,14 +100,12 @@ reactive_repeated_anova <- reactiveValues(
 
 
 observeEvent(input$act_repeated_anova, {
-
   data.filtered <- data() %>%
-    filter(metabolites %in% input$repeated_anova_metabolite)  %>%
+    filter(metabolites %in% input$repeated_anova_metabolite) %>%
     filter(!!sym(input$catVars) %in% input$repeated_anova_category)
 
 
   ##### Testing assumptions ######
-
 
   ## outliers
 
@@ -74,17 +117,17 @@ observeEvent(input$act_repeated_anova, {
     select(all_of(vars)) %>%
     group_by(time) %>%
     rstatix::identify_outliers(values) %>%
-    mutate(across(where(is.numeric), ~round(.,3)))
+    mutate(across(where(is.numeric), ~ round(., 3)))
 
-  colnames(outliers) <- c("Time", "Category", "ID", "Group", "Metabolites", "Values", "is.outlier", "is.extreme")
+  colnames(outliers) <- c("Time", "ID", "Group", "Metabolites", "Values", "is.outlier", "is.extreme")
 
   ## normality assumption
   shapiro <- data.filtered %>%
     group_by(time) %>%
     rstatix::shapiro_test(values) %>%
-    mutate(across(where(is.numeric), ~round(.,3)))
+    mutate(across(where(is.numeric), ~ round(., 3)))
 
-  colnames(shapiro) <- c("Category", "Time", "Variable", "statistic", "p")
+  colnames(shapiro) <- c("Time", "Variable", "statistic", "p")
 
 
   summary_stats <- data.filtered %>%
@@ -102,7 +145,7 @@ observeEvent(input$act_repeated_anova, {
     # group_by(!!sym(input$catVars)) %>%
     rstatix::anova_test(
       data = ., dv = values, wid = id,
-      within = time#, detailed = TRUE
+      within = time # , detailed = TRUE
     ) %>%
     get_anova_table()
 
@@ -124,8 +167,8 @@ observeEvent(input$act_repeated_anova, {
     as.data.frame() %>%
     # mutate(catVars = as.factor(input$catVars)) %>%
     ggboxplot(.,
-              x = "time", y = "values",
-              color = "time", palette = "jco"
+      x = "time", y = "values",
+      color = "time", palette = "jco"
     ) +
     stat_pvalue_manual(pairwise.filtered, tip.length = 0, hide.ns = TRUE) +
     labs(
@@ -147,34 +190,37 @@ observeEvent(input$act_repeated_anova, {
 
 output$summary_stats_repeated_anova <- renderDT(
   datatable(reactive_repeated_anova$summary_stats,
-            caption = "Summary statistics",
-            options = list(
-              searching = FALSE,
-              lengthChange = FALSE,
-              paging = TRUE
-            )
-  ))
+    caption = "Summary statistics",
+    options = list(
+      searching = FALSE,
+      lengthChange = FALSE,
+      paging = TRUE
+    )
+  )
+)
 
 output$outliers_repeated_anova <- renderDT(
   datatable(reactive_repeated_anova$outliers,
-            caption = "Outlier detection (Univariate outlier detection using boxplot methods):",
-            options = list(
-              searching = FALSE,
-              lengthChange = FALSE,
-              paging = TRUE
-            )
-  ))
+    caption = "Outlier detection (Univariate outlier detection using boxplot methods):",
+    options = list(
+      searching = FALSE,
+      lengthChange = FALSE,
+      paging = TRUE
+    )
+  )
+)
 
 
 output$normality_repeated_anova <- renderDT(
   datatable(reactive_repeated_anova$shapiro,
-            caption = "Normality test (Shapiro-Wilk test for all time points.):",
-            options = list(
-              searching = FALSE,
-              lengthChange = FALSE,
-              paging = TRUE
-            )
-  ))
+    caption = "Normality test (Shapiro-Wilk test for all time points.):",
+    options = list(
+      searching = FALSE,
+      lengthChange = FALSE,
+      paging = TRUE
+    )
+  )
+)
 
 
 output$res_repeated_anova <- renderPrint({
@@ -196,40 +242,45 @@ reactive_repeated_anova_selection <- reactiveValues(
 repeated.anova.feat.selection <- reactiveValues(ranking = NULL, ranking.sorted = NULL)
 
 
-output$boxplot_repeated_anova <- renderPlot({
-  a <- 1
-  # TODO check if there are more than onvalue for colors
-  if (reactive_repeated_anova$computation_done){
-    boxplot <- reactive_repeated_anova$data.filtered %>%
-      as.data.frame() %>%
-      mutate(!!sym(input$catVars) := factor(!!sym(input$catVars))) %>%
-      ggboxplot(.,
-                x = "time", y = "values",
-                color = "time", palette = "jco", fill="#edeff4", size=2
-      ) +
-      stat_pvalue_manual(reactive_repeated_anova$pairwise.filtered, tip.length = 0, hide.ns = TRUE) +
-      labs(
-        subtitle = get_test_label(reactive_repeated_anova$res_mixed_anova, detailed = TRUE),
-        caption = get_pwc_label(reactive_repeated_anova$pairwise)
-      ) + theme(
-        text = element_text(size = 16),
-        panel.background = element_rect(fill = "#edeff4",
-                                        colour = NA_character_), # necessary to avoid drawing panel outline
-        panel.grid.major = element_blank(), # get rid of major grid
-        panel.grid.minor = element_blank(), # get rid of minor grid
-        plot.background = element_rect(fill = "#edeff4",
-                                       colour = NA_character_), # necessary to avoid drawing plot outline
-        legend.background = element_rect(fill = "#edeff4"),
-        # legend.box.background = element_rect(fill = "#edeff4"),
-        # legend.key = element_rect(fill = "#edeff4")
-      )
-    return(boxplot)
-  }
-
-}, bg = '#edeff4')
+output$boxplot_repeated_anova <- renderPlot(
+  {
+    a <- 1
+    # TODO check if there are more than onvalue for colors
+    if (reactive_repeated_anova$computation_done) {
+      boxplot <- reactive_repeated_anova$data.filtered %>%
+        as.data.frame() %>%
+        mutate(!!sym(input$catVars) := factor(!!sym(input$catVars))) %>%
+        ggboxplot(.,
+          x = "time", y = "values",
+          color = "time", palette = "jco", fill = "#edeff4", size = 2
+        ) +
+        stat_pvalue_manual(reactive_repeated_anova$pairwise.filtered, tip.length = 0, hide.ns = TRUE) +
+        labs(
+          subtitle = get_test_label(reactive_repeated_anova$res_mixed_anova, detailed = TRUE),
+          caption = get_pwc_label(reactive_repeated_anova$pairwise)
+        ) + theme(
+          text = element_text(size = 16),
+          panel.background = element_rect(
+            fill = "#edeff4",
+            colour = NA_character_
+          ), # necessary to avoid drawing panel outline
+          panel.grid.major = element_blank(), # get rid of major grid
+          panel.grid.minor = element_blank(), # get rid of minor grid
+          plot.background = element_rect(
+            fill = "#edeff4",
+            colour = NA_character_
+          ), # necessary to avoid drawing plot outline
+          legend.background = element_rect(fill = "#edeff4"),
+          # legend.box.background = element_rect(fill = "#edeff4"),
+          # legend.key = element_rect(fill = "#edeff4")
+        )
+      return(boxplot)
+    }
+  },
+  bg = "#edeff4"
+)
 
 observeEvent(input$act_repeated_anova_selection, {
-
   # Get unique metabolites
   req(data())
   dat.nam <- data()
@@ -265,12 +316,14 @@ observeEvent(input$act_repeated_anova_selection, {
         data = .,
         dv = values,
         wid = id,
-        within = time#,
-        #detailed = TRUE
+        within = time # ,
+        # detailed = TRUE
       ) %>%
       get_anova_table()
-    return(c(i,
-             anova.res[1, 5]))
+    return(c(
+      i,
+      anova.res[1, 5]
+    ))
   }
 
   # Apply the function to each metabolite in parallel
@@ -289,7 +342,7 @@ observeEvent(input$act_repeated_anova_selection, {
 
   unregister <- function() {
     env <- foreach:::.foreachGlobals
-    rm(list=ls(name=env), pos=env)
+    rm(list = ls(name = env), pos = env)
   }
   unregister()
 
@@ -299,36 +352,38 @@ observeEvent(input$act_repeated_anova_selection, {
     arrange(time.p.value)
 
   repeated.anova.feat.selection$ranking.sorted <- result_anova_sorted
-
 })
 
-observeEvent(input$load_top_features_repeated_anova, {
+observeEvent(input$load_top_features_repeated_anova,
+  {
+    # mobse
+    req(data())
+    dat.nam <- data()
+    metabolite.names <- unique(dat.nam[, 3]) %>% as.list()
 
-  # mobse
-  req(data())
-  dat.nam <- data()
-  metabolite.names <- unique(dat.nam[,3]) %>% as.list()
+    ui_metabolites$selection <- c(ui_metabolites$selection, head(repeated.anova.feat.selection$ranking.sorted$metabolites, 10))
 
-  ui_metabolites$selection <- c(ui_metabolites$selection, head(repeated.anova.feat.selection$ranking.sorted$metabolites, 10))
-
-  updatePickerInput(session, inputId = "metabolite_Picker", choices = metabolite.names, selected=ui_metabolites$selection,
-                    choicesOpt = list(
-                      style = c(rep("color: black;", length(metabolite.names))))
-  )
-
-}, ignoreInit = TRUE)
+    updatePickerInput(session,
+      inputId = "metabolite_Picker", choices = metabolite.names, selected = ui_metabolites$selection,
+      choicesOpt = list(
+        style = c(rep("color: black;", length(metabolite.names)))
+      )
+    )
+  },
+  ignoreInit = TRUE
+)
 
 
 output$repeated.ranking.sorted <- DT::renderDT(datatable(repeated.anova.feat.selection$ranking.sorted,
-                                                         caption = "Ranked metabolites by p-values",
-                                                         extensions = "Buttons",
-                                                         options = list(
-                                                           searching = FALSE,
-                                                           lengthChange = FALSE,
-                                                           paging = TRUE,
-                                                           dom = 'Bfrtip',
-                                                           buttons = c("copy", "print", "csv", "excel")
-                                                         )
+  caption = "Ranked metabolites by p-values",
+  extensions = "Buttons",
+  options = list(
+    searching = FALSE,
+    lengthChange = FALSE,
+    paging = TRUE,
+    dom = "Bfrtip",
+    buttons = c("copy", "print", "csv", "excel")
+  )
 ))
 
 
@@ -338,10 +393,41 @@ observeEvent(input$catVars, {
   a <- input$catVars
   dat.nam <- dat.nam[a]
 
-  trt.names <- unique(dat.nam[,1]) %>% as.list()
+  trt.names <- unique(dat.nam[, 1]) %>% as.list()
 
   choices <- trt.names[!is.na(trt.names)]
 
   updateSelectInput(session, "repeated_category", choices = choices, selected = choices)
 })
+
+
+
+output$info_box_repeated_anova_selection <- renderUI({
+  HTML("
+    <p align='justify'>
+      This section enables you to perform a repeated measures ANOVA analysis for all metabolites, providing insights for selecting metabolites for further analysis. Metabolites are ranked based on their p-values, with lower p-values indicating a higher rank.
+    </p>
+    <p align='justify'>
+      Users receive p-values for:
+      <ul>
+        <li>The within-subjects factor 'Time'</li>
+      </ul>
+    </p>
+    <p align='justify'>
+      <u>Used Packages and Additional Information:</u><br>
+      <ul>
+        <li>Kassambara A (2023). <em>rstatix: Pipe-Friendly Framework for Basic Statistical Tests</em>. R package version 0.7.2. Available at: <a href='https://CRAN.R-project.org/package=rstatix' target='_blank'>https://CRAN.R-project.org/package=rstatix</a></li>
+        <li><a href='https://www.datanovia.com/en/lessons/repeated-measures-anova-in-r/' target='_blank'>Tutorial on Repeated Measures ANOVA</a></li>
+      </ul>
+    </p>
+  ")
+})
+
+
+
+
+
+
+
+
 

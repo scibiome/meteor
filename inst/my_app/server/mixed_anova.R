@@ -2,38 +2,6 @@
 # https://www.datanovia.com/en/lessons/mixed-anova-in-r/
 
 
-# output$info_box_mixed_anova <- renderUI({
-#   HTML("<p align = 'justify'>
-# This section enables you to perform a mixed ANOVA analysis for a specific metabolite,
-# using a between-subjects factor (selected categorical variable) and a within-subjects factor (time).
-# The first table presents summary statistics for each measurement time point.
-# The second table illustrates results from outlier analysis. Outliers are detected using boxplot method and lagged as is.outlier and/or as is.extreme.
-# The third table shows the results from Shapiro-Wilk test for normality that was performed for all possible combinations of factor levels.
-# In case of p < 0.05 the assumption of normal distribution of the data is violated.
-# The fourth table show the results from the test of homogeneity of variances by using levene's test.
-# In case of p < 0.05 the variances between the groups differences significantly and the assumption of homogeniety of variances is violated.
-# The box 'Mixed ANOVA results:' shows the mixed ANOVA results by providing information on the significance and
-# effect size (generalized eta squared) of the between factor (categorical variable), within factor (time), and their interaction (categorical variable x time).
-# <p></p>
-# In addition, a box plot is displayed in the upper left corner to illustrate the results for the between-within factors interactions.
-# The x-axis represents the measurement time point, and the color of the box plot indicates group membership.
-# Between-group pairwise comparisons are conducted using t-tests for dependent samples,
-# and multiple testing is corrected with Bonferroni.
-#
-#  <br><br>
-# <u>When to Use:</u><br>
-# Use mixed ANOVA when your study design includes both:
-#
-# <li>Between-subjects factors (e.g., different groups or conditions).</li>
-# <li>Within-subjects factors (e.g., repeated measures on the same subjects).</li>
-#
-# It’s ideal for scenarios like:
-# <ul>Comparing different groups (e.g., treatment vs. control) over multiple time points.</ul>
-# <ul>Examining interaction effects between group membership and repeated measures.</ul>
-#
-#   ")
-# })
-
 output$info_box_mixed_anova <- renderUI({
   HTML("
     <p align='justify'>
@@ -43,7 +11,7 @@ output$info_box_mixed_anova <- renderUI({
       The first table presents summary statistics for each measurement time point.
 
       <h4>Outlier Analysis</h4>
-      The second table shows results from outlier analysis. Outliers are detected using the boxplot method and marked as is.outlier and/or is.extreme.
+      The second table shows results from outlier analysis. Outliers are detected using the boxplot method and marked as is.outlier and is.extreme.
 
       <h4>Normality Test</h4>
       The third table provides results from the Shapiro-Wilk test for normality for all possible combinations of factor levels. A p-value < 0.05 indicates a violation of the normality assumption.
@@ -480,7 +448,6 @@ output$info_box_mixed_anova_selection <- renderUI({
         <li>The within-subjects factor 'Time'</li>
         <li>The interaction 'Time x Categorical'</li>
       </ul>
-      Additionally, the number of metabolites to include in the ranking can be specified.
     </p>
     <p align='justify'>
     <u>Used Packages and Additional Information:</u><br>

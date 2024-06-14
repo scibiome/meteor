@@ -691,7 +691,7 @@ ui <- dashboardPage(
           tabPanel(
             "Repeated Measures ANOVA for Feature Selection",
             fluidRow(box(
-              title = "Repeated ANOVA (Info)",
+              title = "Repeated ANOVA (Info) for Feature Selection",
               status = "info", solidHeader = TRUE,
               collapsible = TRUE, collapsed = TRUE,
               htmlOutput("info_box_repeated_anova_selection"),
