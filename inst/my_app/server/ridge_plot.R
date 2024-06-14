@@ -1,12 +1,17 @@
 #### Ridge Plot ####
 
-output$info_box_ridge1<- renderUI({
-  HTML("<p align = 'justify'>
-       This section presents ridge plots contrasting the distribution of selected metabolites (see: Select Metabolites:)
-       at different measurement time points. The measurement times to be compared can be selected in the menu below this box.")
+
+output$info_box_ridge1 <- renderUI({
+  HTML("<p align='justify'>
+        This section presents ridge plots contrasting the distribution of selected metabolites at different measurement time points.<br><br>
+
+        <u>When to use:</u><br>
+        This tool is ideal for comparing the distribution of metabolites across different time points, allowing you to visualize changes and patterns over time.<br><br>
+
+        <u>Additional Information:</u><br>
+        You can select the specific metabolites from the sidebar and measurement times using the time point selection below.
+      </p>")
 })
-
-
 
 
 
@@ -117,14 +122,20 @@ output$ridgeplot1 <- renderPlot({
           )
   }}, bg = '#edeff4')
 
-output$info_box_ridge2<- renderUI({
-  HTML("<p align = 'justify'>
-       This section also allows for the comparison of metabolites at different timepoints using ridge plots.
-       The ridge plots illustrate the distribution of selected metabolites at different measurement time points,
-       which can be selected in the menu provided below this section.
-       This comparison enables a visual representation of changes in metabolite levels over time,
-       which can provide valuable insights into the metabolic processes occurring in the system under study.")
+output$info_box_ridge2 <- renderUI({
+  HTML("<p align='justify'>
+        This section allows for the comparison of metabolites between different groups using ridge plots.
+        The ridge plots illustrate the distribution of selected metabolites of the different groups for a specific time point.<br><br>
+
+        <u>When to use:</u><br>
+        This tool is ideal for visualizing the distribution and changes in metabolite levels between different groups, providing insights into group-specific metabolic processes.<br><br>
+
+        <u>Additional Information:</u><br>
+        The groups and timepoints to compare can be selected from the from the sidebar.
+      </p>")
 })
+
+
 
 observeEvent(input$rp_compute2, {
 
