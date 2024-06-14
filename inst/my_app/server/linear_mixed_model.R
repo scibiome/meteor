@@ -53,7 +53,8 @@ lmm.res <- reactiveValues(result = NULL,
                           lmm_model = NULL,
                           model.code = NULL,
                           res.anova = NULL,
-                          multi_tab = NULL)
+                          multi_tab = NULL,
+                          check.mod = NULL)
 
 stored_lm <- reactiveValues(lm1 = NULL, lm2=NULL, lm3=NULL)
 
@@ -83,6 +84,8 @@ observeEvent(input$act_lmm,{
             mixed.lm <- lmer(formula, data = data.filtered)
             data.filtered$fit <- predict(mixed.lm)
 
+            lmm.res$check.mod <- mixed.lm
+
             lmm.res$model.code <- paste0("lmer(values ~ time + ",input$catVars," + time:",input$catVars," +  (1 + time | id), data = data.filtered)")
 
 
@@ -93,6 +96,8 @@ observeEvent(input$act_lmm,{
             mixed.lm <- lmer(formula, data = data.filtered)
             data.filtered$fit <- predict(mixed.lm)
 
+            lmm.res$check.mod <- mixed.lm
+
             lmm.res$model.code <- paste0("lmer(values ~ time + ",input$catVars," + time:",input$catVars," +  (1 | id), data = data.filtered)")
 
       } else if (input$lmm_select %in% "Random slope") {
@@ -100,6 +105,7 @@ observeEvent(input$act_lmm,{
             formula_text <- paste("values ~ ","time"," + ",input$catVars," + ", "time:", input$catVars, " + (0 + time | id)")
             formula <- as.formula(formula_text)
             mixed.lm <- lmer(formula, data = data.filtered)
+            lmm.res$check.mod <- mixed.lm
             data.filtered$fit <- predict(mixed.lm)
             a <- predict(mixed.lm)
             lmm.res$model.code <- paste0("lmer(values ~ time + ",input$catVars," + time:",input$catVars," + (0 + time | id), data = data.filtered)")
@@ -209,6 +215,9 @@ observeEvent(input$act_lmm,{
   #output$vis_grid <- renderPlotly({ggplotly(lmm.res$vis_grid)})
   output$res.anova <- renderPrint({lmm.res$res.anova})
   output$multi_tab <- renderUI({lmm.res$multi_tab})
+  output$check.mod.lmm <- renderPlot({
+   # browser()
+    check_model(lmm.res$check.mod, base_size = 13.5)})
 
 })
 

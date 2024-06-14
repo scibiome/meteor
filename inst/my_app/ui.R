@@ -759,6 +759,16 @@ ui <- dashboardPage(
             fluidRow(
               column(
                 width = 12,
+                box(title = "Check model assumptions:",
+                    status = "primary", solidHeader = TRUE,
+                    collapsible = TRUE, width = 12, height = "1200px",
+                    plotOutput("check.mod.lmm", height = "1000px"))
+
+              )
+            ),
+            fluidRow(
+              column(
+                width = 12,
                 box(
                   title = "Mixed model selection:",
                   status = "primary", solidHeader = TRUE,
