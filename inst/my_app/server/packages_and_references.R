@@ -21,6 +21,7 @@ output$markdown <- renderUI({
 # "igraph", "caret", "shinyjs", "jsonlite", "sjPlot", "pROC", "plotROC", "shinydashboard",
 # "shinycssloaders", "rlang", "lme4", "Biobase", "rstatix", "EnhancedVolcano", "limma",
 # "knitr", "rmarkdown", "markdown", "doParallel", "parallel", "foreach", "xgboost",
-# "randomForest", "MLmetrics", "tidyverse", "rintrojs"
+# "randomForest", "MLmetrics", "tidyverse", "rintrojs", "KEGGREST", "data.table", "easystats",
+# "performance", "see"
 # )
 # knitr::write_bib(package_list, "packages.bib")
