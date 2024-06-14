@@ -2,14 +2,25 @@
 
 #### get time points for slider ----
 
+
 output$info_box_pcn <- renderUI({
-  HTML("<p align = 'justify'> A Pearson correlation analysis is performed to assess the relationships between different metabolites.
-       The results are then visualized as a network, with positive correlations shown in blue and negative correlations shown in red.
-       To facilitate exploration of the data, a slider tool is available to selectively display correlations based on the user's desired
-       level of strength or significance.
-       Different layouts can be choosen and subgroups of the graph can be selected. For a selected metabolite, the correlation with all connected metabolites is
-       shown as a scatterplot. The network can be exported as html.<p>")
+  HTML("<p align='justify'>
+        A Pearson correlation analysis is performed to assess the relationships between different metabolites. The results are then visualized as a network, with positive correlations shown in blue and negative correlations shown in red.<br><br>
+
+        <u>When to use:</u><br>
+        For exploring and visualizing the relationships and interactions between multiple metabolites, allowing you to identify significant correlations and potential patterns within the data.<br><br>
+
+        <u>Additional Information:</u><br>
+        To facilitate exploration of the data, a slider tool is available to selectively display correlations based on the user's desired level of strength or significance.
+        Different layouts can be chosen, and subgroups of the graph can be selected.
+        For a selected metabolite, the correlation with all connected metabolites is shown as a scatterplot.
+        The network can be exported as HTML, providing an interactive and shareable visualization.<br><br>
+
+        To find out more about correlation networks and how to use them in metabolomics, refer to Lin, W. et al. <a href='https://link.springer.com/article/10.1007/s00726-020-02891-8' target='_blank'>Metabolomics and correlation network analyses of core biomarkers in type 2 diabetes</a> (2020).
+
+      </p>")
 })
+
 
 observe({
   req(data())
@@ -265,15 +276,27 @@ rowCallback <- c(
 #### mgm.fit ----
 
 
-output$info_box_ggm <- renderUI({
-  HTML("<p align = 'justify'> A partial correlation analysis is performed to assess the relationships between different metabolites.
-The results are then visualized as a network, with positive correlations shown in blue and negative correlations shown in red.
-To facilitate exploration of the data, a slider tool is available to selectively display correlations based on the user's desired
-level of strength or significance.
-Different layouts can be choosen and subgroups of the graph can be selected. For a selected metabolite, the correlation with all connected metabolites is
-shown as a scatterplot. The network can be exported as html. <p>")
-})
 
+output$info_box_ggm <- renderUI({
+  HTML("<p align='justify'>
+        A partial correlation analysis is performed to assess the relationships between different metabolites.
+        The results are then visualized as a network, with positive correlations shown in blue and negative correlations shown in red.<br><br>
+
+        <u>When to use:</u><br>
+        This tool is ideal for exploring and visualizing the direct relationships between multiple metabolites, controlling for the influence of other variables.
+        It helps in identifying significant direct correlations and potential patterns within the data.<br><br>
+
+        <u>Additional Information:</u><br>
+        To facilitate exploration of the data, a slider tool is available to selectively display correlations based on the user's desired level of strength or significance.
+        Different layouts can be chosen, and subgroups of the graph can be selected. For a selected metabolite, the correlation with all connected metabolites is shown as a scatterplot.
+        The network can be exported as HTML, providing an interactive and shareable visualization.<br><br>
+
+
+        To find out more about partial correlation networks in metabolomics, refer to Krumsiek, J. et al.
+        <a href='https://pubmed.ncbi.nlm.nih.gov/21281499/' target='_blank'>Gaussian graphical modeling reconstructs pathway reactions from high-throughput metabolomics data</a> (2011).
+
+      </p>")
+})
 
 observeEvent(input$ggm_compute, {
 

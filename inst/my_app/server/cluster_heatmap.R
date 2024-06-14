@@ -1,14 +1,52 @@
 ###### Cluster Heatmap #####
 
 output$info_box_sm <- renderUI({
-  HTML("<p align = 'justify'> The Cluster Heatmap tool allows to visualize and cluster metabolite data across different time points for a single metabolite. The tool generates a heatmap plot where each row represents a single observation, and each column represents the selected metabolite at a specific time point. The data can be clustered based on the metabolite and observation axis.
-       The plot can be customized by changing the number of clusters for both rows and columns and be downloaded as a PNG image by right-clicking on it.<p>")
+  HTML("<p align='justify'>
+        The Cluster Heatmap tool allows you to visualize and cluster metabolite data across different time points for a single metabolite.
+        The tool generates a heatmap plot where each row represents a single observation,
+        and each column represents the selected metabolite at a specific time point. The data can be clustered based on the metabolite and observation axis.<br><br>
+
+        <u>When to use:</u><br>
+        This tool is ideal if you need to analyze and visualize the temporal variation of a single metabolite across multiple time points,
+        allowing for the identification of patterns and clusters over time.<br><br>
+
+        <u>Additional Information:</u><br>
+        The plot can be customized by changing the number of clusters for both rows and columns and can be downloaded as a PNG image by right-clicking on it.
+        This customization helps in fine-tuning the clustering results to better understand the data structure and relationships.<br><br>
+
+        To learn more about cluster heatmaps,
+        refer to Zhao, S. et al.
+        <a href='https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4124803/' target='_blank'>Advanced Heat Map and Clustering Analysis Using Heatmap3</a> (2014).
+        Additionally, you can explore this
+        <a href='https://davetang.org/muse/2018/05/15/making-a-heatmap-in-r-with-the-pheatmap-package/' target='_blank'>tutorial on creating heatmaps with the pheatmap package</a>.
+
+
+      </p>")
 })
 
 output$info_box_tb <- renderUI({
-  HTML("<p align = 'justify'> The Cluster Heatmap tool allows to visualize and cluster metabolite data across different time points for multiple metabolites. The tool generates a heatmap plot where each row represents a single observation, and each column represents the metabolites at the selected timepoint.
-       The plot can be customized by changing the number of clusters for both rows and columns and be downloaded as a PNG image by right-clicking on it. <p>")
+  HTML("<p align='justify'>
+        The Cluster Heatmap tool allows you to visualize and cluster metabolite data across different time points for multiple metabolites.
+        The tool generates a heatmap plot where each row represents a single observation,
+        and each column represents the metabolites at the selected timepoint.<br><br>
+
+        <u>When to use:</u><br>
+        This tool is ideal if you need to analyze and visualize the variation of multiple metabolites across a single time point,
+        providing insights into the relationships and patterns among different metabolites at that time.<br><br>
+
+        <u>Additional Information:</u><br>
+        The plot can be customized by changing the number of clusters for both rows and columns and can be downloaded as a PNG image by right-clicking on it.
+        This feature allows for a detailed exploration of the metabolite data and helps in identifying significant clusters and patterns.
+
+                To learn more about cluster heatmaps,
+        refer to Zhao, S. et al.
+        <a href='https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4124803/' target='_blank'>Advanced Heat Map and Clustering Analysis Using Heatmap3</a> (2014).
+        Additionally, you can explore this
+        <a href='https://davetang.org/muse/2018/05/15/making-a-heatmap-in-r-with-the-pheatmap-package/' target='_blank'>tutorial on creating heatmaps with the pheatmap package</a>.
+
+      </p>")
 })
+
 
 observe({
 

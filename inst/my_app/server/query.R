@@ -9,7 +9,7 @@ output$info_box_enrichment <- renderUI({
 
         <u>Additional Information:</u><br>
         Disclaimer: The API of MetaboAnalyst is currently not available, so we used this workaround.
-        For a step-by-step tutorial on the enrichment analysis, refer to TODO.<br><br>
+        For a step-by-step tutorial on the enrichment analysis, refer to <a href='https://scibiome.github.io/meteor/articles/Tutorial.html' target='_blank'>Tutorial</a>.<br><br>
 
         In step 1, the currently selected metabolites are displayed. Copy these metabolites and visit
         <a href='https://www.metaboanalyst.ca/MetaboAnalyst/upload/ConvertView.xhtml' target='_blank'>MetaboAnalyst</a>. Paste the metabolites into the provided form and click 'Submit' to perform the metabolite ID conversion.

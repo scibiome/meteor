@@ -1,6 +1,23 @@
 
 output$info_box_volcano <- renderUI({
-  HTML("<p align = 'justify'> The volcano plot is a tool for visualizing the differential occurrence of metabolites. By plotting the log-fold change on the x-axis and the statistical significance on the y-axis, represented as the negative log of the p-value, it effectively reveals the distribution of metabolites that are significantly upregulated or downregulated between two conditions. This enables to identify the most significant and biologically relevant changes. The cut-off for statistical significance and for the absolute log fold-change can be specified:<p>")
+  HTML("<p align='justify'>
+        The volcano plot is a tool for visualizing the differential occurrence of metabolites.
+        By plotting the log-fold change on the x-axis and the statistical significance on the y-axis, represented as the negative log of the p-value,
+        it effectively reveals the distribution of metabolites that are significantly upregulated or downregulated between two conditions.
+        This enables identification of the most significant and biologically relevant changes.<br><br>
+
+        <u>When to use</u>:<br>
+        Use the volcano plot to quickly identify and visualize significant changes in metabolite levels between two conditions.
+        This is particularly useful for highlighting key metabolites that may be involved in biological processes or disease states.<br><br>
+
+        <u>Additional Information:</u><br>
+        The cut-off for statistical significance and the absolute log-fold change can be specified to tailor the analysis to your specific needs.
+        Adjust these parameters to focus on the most relevant changes and to control the stringency of the significance criteria.
+        Additionally, the tool allows you to select the ten most significant metabolites for further analysis.<br><br>
+
+        To learn more about the volcano plots and their application in metabolomics, refer to
+        Chen, J. et al. <a href='https://link.springer.com/content/pdf/10.1186/s12870-020-02554-6.pdf' target='_blank'>Integrated metabolomics and transcriptome analysis on flavonoid biosynthesis in safflower (Carthamus tinctorius L.) under MeJA treatment</a> 2020.
+      </p>")
 })
 
 observeEvent(input$catVars, {

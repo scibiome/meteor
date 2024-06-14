@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# MeTEor Tutorial
+<!-- # MeTEor Tutorial -->
 
 ## Load Data
 
@@ -80,8 +80,43 @@ The Cluster Heatmap tool allows to visualize and cluster metabolite data across 
 
 ## Functional Analysis
 
+The enrichment analysis allows users to perform database queries for the selected metabolites. 
+
 ### Pathway Enrichment
 
-![](../man/figures/Enrichment.png)
+**Disclaimer:** The API of MetaboAnalyst is currently not available, therefore we developed this workaround.
 
-The enrichment analysis allows users to perform database queries for the selected metabolites. The top table displays the names of the chosen metabolites, which can be edited directly within the table. To initiate the analysis, users can send a query to the MetaboAnalyst API, which will generate a list of different identifiers for each metabolite, including HMDB, PubChem, ChEBI, KEGG, METLIN, and SMILES. Next, users can leverage the HMDB identifier to perform pathway enrichment analysis using the Relational Database of Metabolomics Pathways (RaMP). This analysis will return information about the pathways that involve the selected metabolites.
+
+The top table displays the names of the selected metabolites. In the field of step 1, the names of the metabolites are shown.
+
+![](../man/figures/enrichment1.png)
+
+
+To initiate the analysis, users can edit and copy the names of selected metabolites and head to <a href='https://www.metaboanalyst.ca/MetaboAnalyst/upload/ConvertView.xhtml' target='_blank'>MetaboAnalyst</a> for the ID conversion. The IDs are needed to map the metabolites to known KEGG pathways.
+
+![](../man/figures/enrichment_copy.png)
+
+Paste the metabolites into the provided form and click 'Submit' to perform the metabolite ID conversion.
+
+![](../man/figures/id_conversion.png)
+
+The mapping of the selected metabolites. Click on *here* at the bottom, to show the data as csv. 
+
+![](../man/figures/id_conversion2.png)
+
+Copy the data and head back to MeTEor.
+
+![](../man/figures/id_conversion3.png)
+
+Paste the content into the field of step 2.
+
+![](../man/figures/enrichment_paste.png)
+
+Click 'Get enriched pathways' to receive a list of pathways where your selected metabolites are present, ranked by occurrence. 
+
+![](../man/figures/pathway_enrichment.png)
+
+Each pathway includes outlinks to interactive KEGG pathways with metabolites highlighted in red, enabling deeper analysis and functional understanding of the measured metabolites. Users can click on the highlighted metabolites for further analysis.
+
+![](../man/figures/KEGG.png)
+
