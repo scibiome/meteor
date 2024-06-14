@@ -1,4 +1,4 @@
-# MeTEor - MEtabolite Trajectory ExplORer <img src="man/figures/logo.png" align="right" alt="" width="120" />
+# MeTEor - MEtabolite Trajectory ExplORer <img src="man/figures/logo.png" align="right" width="120"/>
 
 # Overview
 
@@ -14,7 +14,7 @@ Currently implemented features include:
 -   **Line plots**
 -   **Cluster heatmaps**
 -   **Volcano plots**
--   **Enrichment:** Map compounds (MetaboAnalyst API), Relational Database of Metabolomics Pathways (RaMP)
+-   **Enrichment:** Map compounds (MetaboAnalyst ID Conversion), Map to KEGG Pathways (KEGGREST)
 
 # Running MeTEor:
 
@@ -54,7 +54,7 @@ MeTEor is also available as an R package. For the correct installation the setup
 
 ### Install rminiconda MacOS/Linux
 
-```r
+``` r
 if (!requireNamespace("remotes", quietly = TRUE)) {
   install.packages("remotes")
 }
@@ -67,7 +67,7 @@ rminiconda::install_miniconda(name='miniconda_for_meteor')
 
 Please create an empty folder 'miniconda_py_r' on drive C./ . The reason is that for MeTEor an installation of Python is necessary. To make sure that everything can be installed correctly a Miniconda environment is created. A problem can arise if the directory in which Miniconda is installed contains spaces. A workaround is the installation on drive C./.
 
-```r
+``` r
 if (!requireNamespace("remotes", quietly = TRUE)) {
   install.packages("remotes")
 }
@@ -78,7 +78,7 @@ rminiconda::install_miniconda(path = "C:\\miniconda_py_r", name='miniconda_for_m
 
 ### Install MeTEor
 
-```r
+``` r
 remotes::install_github("scibiome/meteor")
 
 library(MeTEor)
