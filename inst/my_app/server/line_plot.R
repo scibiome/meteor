@@ -18,20 +18,43 @@ observeEvent(input$lp_compute2, {
   lineplot_stored$computation_done_plot2 <- TRUE
 })
 
+
 output$info_box_il <- renderUI({
-  HTML("<p align = 'justify'> Line plots can be useful for visualizing the distribution of a small set of data or
-       showing patterns over time. On the x-axis are the time points, for each metabolite. The lines are colored by the selected category.  <p>")
+  HTML("<p align='justify'>
+        Line plots can be useful for visualizing the distribution of a small set of data or showing patterns over time. On the x-axis are the time points for each metabolite. The lines are colored by the selected category.<br><br>
+
+        <u>When to use:</u><br>
+        This tool is ideal for analyzing and visualizing the temporal distribution and patterns of a small set of data points, with lines representing different categories.<br><br>
+
+        <u>Additional Information:</u><br>
+        Line plots help in understanding trends and changes in data over time, making it easier to identify significant patterns and anomalies within specific categories.
+      </p>")
 })
 
 output$info_box_gl <- renderUI({
-  HTML("<p align = 'justify'> Line plots to visualize the mean metabolite course of a category group.
-       On the x-axis are the time points, for each metabolite. The lines are colored by the selected category. <p>")
+  HTML("<p align='justify'>
+        Line plots to visualize the mean metabolite course of a category group. On the x-axis are the time points for each metabolite. The lines are colored by the selected category.<br><br>
+
+        <u>When to use:</u><br>
+        This tool is useful for visualizing the average trend of metabolite data within different category groups over time, helping to compare the overall behavior across categories.<br><br>
+
+        <u>Additional Information:</u><br>
+        By showing the mean metabolite course, these plots facilitate the comparison of group-level trends and patterns, aiding in the identification of group-specific behaviors.
+      </p>")
 })
 
 output$info_box_ml <- renderUI({
-  HTML("<p align = 'justify'> Line plots to visualize the mean metabolite course.
-       On the x-axis are the time points, for each metabolite. The lines are colored by the selected metabolite. <p>")
+  HTML("<p align='justify'>
+        Line plots to visualize the mean metabolite course. On the x-axis are the time points for each metabolite. The lines are colored by the selected metabolite.<br><br>
+
+        <u>When to use:</u><br>
+        This tool is best for visualizing the overall average trend of individual metabolites over time, providing insights into the general course of each metabolite.<br><br>
+
+        <u>Additional Information:</u><br>
+        These plots help in understanding the average behavior of metabolites, making it easier to spot trends, patterns, and potential anomalies within the data set.
+      </p>")
 })
+
 
 output$plot2 <- renderPlotly({
   if (lineplot_stored$computation_done_plot2) {
