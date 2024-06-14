@@ -1061,45 +1061,37 @@ observeEvent(
 ###### Tutorial Enrichment ------
 
 
-helptext_volcano <- reactive(data.table::data.table(
-  tab = c("tutorial_volcano"),
+helptext_enrichment <- reactive(data.table::data.table(
+  tab = c("tutorial_enrichment"),
   step = c(1, 2, 3,
-           4, 5, 6),
+           4, 5),
   element = c(
     "#sidebarItemExpanded > ul > li:nth-child(3) > a",
-    "#sidebarItemExpanded > ul > li:nth-child(4) > a",
-    "#shiny-tab-volcano > div:nth-child(3) > div.col-sm-3 > div",
-    "#shiny-tab-volcano > div:nth-child(3) > div.col-sm-6 > div",
-    "#shiny-tab-volcano > div:nth-child(5) > div.col-sm-3 > div",
-    "#shiny-tab-volcano > div:nth-child(5) > div.col-sm-6 > div",
-    "#act_volc",
-    "#load_top_features_volcano"),
+    "#editableField",
+    "#shiny-tab-export > div:nth-child(4) > div > a",
+    "#jsonInput",
+    "#shiny-tab-export > div:nth-child(6) > div"),
   intro = c(
-    "Here, you can select the time point of measurement for the analysis.",
-    "Here, you can select the categorical variable for the analysis",
-    "To generate the volcano plot, a differential abundance analysis is conducted by comparing two groups.
-     If the selected categorical variable has more than two groups, one specific group can be chosen here for the comparison.",
-    "Here, you can chose the second group.",
-    "Here, you can select a cut-off for statistical significance.",
-    "Here, you can select a cut-off for absolute log2 fold-change",
-    "Click here to perform the differential abundance analysis and generate the volcano plot.",
-    "Here, you can select the top 10 differentially abundant metabolites based on the p-value. They are added to the metabolite picker."
+    "Here, you can select metabolites to be included in the enrichment analysis.",
+    "Here, you can copy the selected metabolites.",
+    "Go to MetaboAnalyst and paste the copied metabolites.",
+    "Paste the downloaded query results here.",
+    "Click on the button 'Get enriched pathways' to receive a list of pathways where your selected metabolites are present."
   ),
   position = c("auto", "auto", "auto",
-               "auto", "auto", "auto",
-               "auto", "auto")
+               "auto", "auto" )
 ))
 
 
 observeEvent(
-  eventExpr = input$tutorial_volcano,
+  eventExpr = input$tutorial_enrichment,
   handlerExpr = {
     introjs(session,
             options = list(
               "nextLabel" = "Next",
               "prevLabel" = "Back",
               "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
-              steps = helptext_volcano()[tab == "tutorial_volcano"]
+              steps = helptext_enrichment()[tab == "tutorial_enrichment"]
             )
     )
   }
