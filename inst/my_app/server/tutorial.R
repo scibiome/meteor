@@ -1058,6 +1058,46 @@ observeEvent(
 )
 
 
+###### Tutorial Enrichment ------
+
+
+helptext_enrichment <- reactive(data.table::data.table(
+  tab = c("tutorial_enrichment"),
+  step = c(1, 2, 3,
+           4, 5),
+  element = c(
+    "#sidebarItemExpanded > ul > li:nth-child(3) > a",
+    "#editableField",
+    "#shiny-tab-export > div:nth-child(4) > div > a",
+    "#jsonInput",
+    "#shiny-tab-export > div:nth-child(6) > div"),
+  intro = c(
+    "Here, you can select metabolites to be included in the enrichment analysis.",
+    "Here, you can copy the selected metabolites.",
+    "Go to MetaboAnalyst and paste the copied metabolites.",
+    "Paste the downloaded query results here.",
+    "Click on the button 'Get enriched pathways' to receive a list of pathways where your selected metabolites are present."
+  ),
+  position = c("auto", "auto", "auto",
+               "auto", "auto" )
+))
+
+
+observeEvent(
+  eventExpr = input$tutorial_enrichment,
+  handlerExpr = {
+    introjs(session,
+            options = list(
+              "nextLabel" = "Next",
+              "prevLabel" = "Back",
+              "skipLabel" = "<strong><i class='fa-regular fa-circle-xmark' style='color: red;'></i></strong>",
+              steps = helptext_enrichment()[tab == "tutorial_enrichment"]
+            )
+    )
+  }
+)
+
+
 
 
 

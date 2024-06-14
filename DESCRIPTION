@@ -83,7 +83,10 @@ Imports:
     MLmetrics,
     rintrojs,
     KEGGREST,
-    data.table
+    data.table,
+    easystats,
+    performance,
+    see
 Suggests: 
     tidyverse
 RoxygenNote: 7.3.1

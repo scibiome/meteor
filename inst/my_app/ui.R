@@ -1171,7 +1171,8 @@ ui <- dashboardPage(
           title = "Enrichment (Info)",
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
-          htmlOutput("info_box_enrichment")
+          htmlOutput("info_box_enrichment"),
+          column(width =  4, actionButton("tutorial_enrichment", "Start page tutorial!", class =  "btn-info"))
         )),
         fluidRow(
           column(
