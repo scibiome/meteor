@@ -602,6 +602,9 @@ ui <- dashboardPage(
               actionButton("act_mixed_anova", "Compute")
             )),
             fluidRow(column(width = 12, DT::DTOutput("summary_stats_mixed_anova"))),
+            fluidRow(column(width = 12, DT::DTOutput("outliers_mixed_anova"))),
+            fluidRow(column(width = 12, DT::DTOutput("normality_mixed_anova"))),
+            fluidRow(column(width = 12, DT::DTOutput("levene_mixed_anova"))),
             fluidRow(column(width = 12, box(
               title = "Mixed ANOVA results:",
               status = "info", solidHeader = TRUE,
@@ -673,6 +676,9 @@ ui <- dashboardPage(
               actionButton("act_repeated_anova", "Compute")
             )),
             fluidRow(column(width = 12, DT::DTOutput("summary_stats_repeated_anova"))),
+            fluidRow(column(width = 12, DT::DTOutput("outliers_repeated_anova"))),
+            fluidRow(column(width = 12, DT::DTOutput("normality_repeated_anova"))),
+            fluidRow(column(width = 12, DT::DTOutput("levene_repeated_anova"))),
             fluidRow(column(width = 12, box(
               title = "Repeated Measures ANOVA results:",
               status = "info", solidHeader = TRUE,
@@ -685,7 +691,7 @@ ui <- dashboardPage(
           tabPanel(
             "Repeated Measures ANOVA for Feature Selection",
             fluidRow(box(
-              title = "Repeated ANOVA (Info)",
+              title = "Repeated ANOVA (Info) for Feature Selection",
               status = "info", solidHeader = TRUE,
               collapsible = TRUE, collapsed = TRUE,
               htmlOutput("info_box_repeated_anova_selection"),
@@ -754,6 +760,16 @@ ui <- dashboardPage(
                 width = 4,
                 actionButton("act_lmm", "Compute"),
                 style = "padding-bottom:17px",
+              )
+            ),
+            fluidRow(
+              column(
+                width = 12,
+                box(title = "Check model assumptions:",
+                    status = "primary", solidHeader = TRUE,
+                    collapsible = TRUE, width = 12, height = "1200px",
+                    plotOutput("check.mod.lmm", height = "1000px"))
+
               )
             ),
             fluidRow(

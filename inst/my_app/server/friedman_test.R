@@ -1,15 +1,57 @@
 # Friedman test
 # https://www.datanovia.com/en/lessons/friedman-test-in-r/
 
+
 output$info_box_friedman <- renderUI({
-  HTML("<p align = 'justify'>
-       In this section, the Friedman test can be applied. This non-parametric test is suitable for the study of paired samples.
-       Kendall's coefficient of concordance (W) is given as the effect size.
-       Pairwise comparisons of the measurement times are carried out with the Wilcoxon test and, in the case of significant pairwise comparisons, are shown in the box plot.
-       <p></p>
-       The metabolite to be tested can be selected via the dropdown menu.
-       ")
+  HTML("
+    <p align='justify'>
+      In this section, the Friedman test can be applied. This non-parametric test is suitable for the study of paired samples.
+    </p>
+    <h4>Summary Statistics</h4>
+    <p align='justify'>
+      The first table provides summary statistics for the individual time points.
+    </p>
+    <h4>Friedman Test Results</h4>
+    <p align='justify'>
+      The second table on the right side provides the results of the Friedman test.
+    </p>
+    <h4>Effect Size</h4>
+    <p align='justify'>
+      The third table on the left provides information about the effect size (Kendall's coefficient of concordance (W)).
+    </p>
+    <h4>Visual Representation</h4>
+    <p align='justify'>
+      A box plot is displayed to illustrate the trend over different time points of measurement. Each box plot represents a distribution for a given time point, with the x-axis representing the measurement time points and the y-axis representing the metabolite abundance levels.
+    </p>
+    <h4>Pairwise Comparisons</h4>
+    <p align='justify'>
+      Pairwise comparisons of the measurement times are carried out with the Wilcoxon test and, in the case of significant pairwise comparisons, are shown in the box plot.
+    </p>
+    <p align='justify'>
+      The metabolite to be tested can be selected via the dropdown menu.
+    </p>
+    <br><br>
+        <u>When to Use:</u><br>
+    <p align='justify'>
+      The Friedman test is suitable for:
+    </p>
+    <ul>
+      <li>Comparing multiple treatments or conditions applied to the same subjects or units.</li>
+      <li>When the data violates assumptions of parametric tests like ANOVA (e.g., normality, homogeneity of variances).</li>
+      <li>Paired observations or repeated measures where the same subjects are measured under different conditions or at different time points.</li>
+    </ul>
+    <br><br>
+    <u>Used Packages and Additional Information:</u><br>
+    <ul>
+      <li>Kassambara A (2023). <em>rstatix: Pipe-Friendly Framework for Basic Statistical Tests</em>. R package version 0.7.2. Available at: <a href='https://CRAN.R-project.org/package=rstatix' target='_blank'>https://CRAN.R-project.org/package=rstatix</a></li>
+      <li><a href='https://www.datanovia.com/en/lessons/friedman-test-in-r/' target='_blank'>Tutorial on Friedman Test</a></li>
+    </ul>
+  ")
 })
+
+
+
+
 
 observe({
   req(data())

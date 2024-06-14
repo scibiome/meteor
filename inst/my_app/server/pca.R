@@ -28,12 +28,12 @@ output$info_box_pca <- renderUI({
          <li>Identify which variables (e.g., metabolites) contribute most to the variance in the data.</li>
          <li>Uncover underlying patterns in the data that might not be immediately apparent.</li>
        </ul>
-       <u>Additional information:</u><br>
-       <li>Tutorial <a href = https://rpkgs.datanovia.com/factoextra/index.html>factoextra</li>
-       <li>Sebastien Le, Julie Josse, Francois Husson (2008). FactoMineR: An R Package for Multivariate Analysis. Journal of Statistical Software, 25(1), 1-18. <a href='https://doi.org/10.18637/jss.v025.i01'>10.18637/jss.v025.i01</a>
-       </li>
-      <li>Kassambara A, Mundt F (2020). _factoextra: Extract and Visualize the Results of Multivariate Data Analyses_. R package version 1.0.7,
-  <https://CRAN.R-project.org/package=factoextra></li>"))
+       <u>Used Packages and Additional information:</u><br>
+        <ul>
+          <li>Tutorial: <a href='https://rpkgs.datanovia.com/factoextra/index.html' target='_blank'>factoextra</a></li>
+          <li>Sebastien Le, Julie Josse, Francois Husson (2008). FactoMineR: An R Package for Multivariate Analysis. Journal of Statistical Software, 25(1), 1-18. <a href='https://doi.org/10.18637/jss.v025.i01' target='_blank'>10.18637/jss.v025.i01</a></li>
+          <li>Kassambara A, Mundt F (2020). <em>factoextra: Extract and Visualize the Results of Multivariate Data Analyses</em>. R package version 1.0.7. Available at: <a href='https://CRAN.R-project.org/package=factoextra' target='_blank'>https://CRAN.R-project.org/package=factoextra</a></li>
+        </ul>"))
 })
 
 

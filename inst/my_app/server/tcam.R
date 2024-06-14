@@ -4,15 +4,53 @@
 
 #### categorial variable selection ----
 
-output$info_box_tcam <- renderUI({
-  HTML("<p align = 'justify'>
-       In this section, principal component analysis is contrasted with a modern tensor factorization method (TCAM).
-       TCAM is an unsupervised tensor factorization method for the analysis of multiway data such as longitudinal omics data.
-       Both methods are applied to all measurement time points.
+# output$info_box_tcam <- renderUI({
+#   HTML("<p align = 'justify'>
+#        In this section, principal component analysis is contrasted with a modern tensor factorization method (TCAM).
+#        TCAM is an unsupervised tensor factorization method for the analysis of multiway data such as longitudinal omics data.
+#        Both methods are applied to all measurement time points.
+#
+#        For more information on TCAM, see:
+#        <p> Mor U, Cohen Y, Valdés-Mas R, Kviatcovsky D, Elinav E, Avron H.
+#        Dimensionality reduction of longitudinal'omics data using modern tensor factorizations. PLoS Computational Biology. 2022 Jul 15;18(7):e1010212.</p>")
+# })
 
-       For more information on TCAM, see:
-       <p> Mor U, Cohen Y, Valdés-Mas R, Kviatcovsky D, Elinav E, Avron H.
-       Dimensionality reduction of longitudinal'omics data using modern tensor factorizations. PLoS Computational Biology. 2022 Jul 15;18(7):e1010212.</p>")
+output$info_box_tcam <- renderUI({
+  HTML("
+    <p align='justify'>
+      This section contrasts principal component analysis (PCA) with a modern tensor factorization method known as TCAM. TCAM is an unsupervised tensor factorization method designed for analyzing multiway data, such as longitudinal omics data. Both methods are applied across all measurement time points to facilitate comprehensive data analysis.
+    </p>
+    <h4>Principal Component Analysis (PCA)</h4>
+    <p align='justify'>
+      PCA is a widely used technique for dimensionality reduction that transforms the data into a set of orthogonal components, capturing the most variance in the data.
+    </p>
+    <h4>Tensor Component Analysis (TCAM)</h4>
+    <p align='justify'>
+      TCAM provides an advanced approach for dimensionality reduction, specifically tailored for multiway data structures. It decomposes the data tensor into factors that can reveal underlying patterns and trends.
+    </p>
+    <h4>Application to Longitudinal Data</h4>
+    <p align='justify'>
+      Both PCA and TCAM are applied to all measurement time points to compare their effectiveness in capturing and reducing data dimensionality.
+    </p>
+  <h4>When to Use</h4>
+    <p align='justify'>
+      Use TCAM when:
+    </p>
+    <ul>
+      <li>You have multiway data structures, such as longitudinal or multi-modal data.</li>
+      <li>You need to uncover complex underlying patterns and interactions within the data.</li>
+      <li>Traditional methods like PCA do not adequately capture the variance or structure of your data.</li>
+    </ul>
+    <p align='justify'>
+    <u>Used Packages and Additional Information:</u><br>
+    </p>
+    <ul>
+     <li>Tutorial: <a href='https://rpkgs.datanovia.com/factoextra/index.html' target='_blank'>factoextra</a></li>
+          <li>Sebastien Le, Julie Josse, Francois Husson (2008). FactoMineR: An R Package for Multivariate Analysis. Journal of Statistical Software, 25(1), 1-18. <a href='https://doi.org/10.18637/jss.v025.i01' target='_blank'>10.18637/jss.v025.i01</a></li>
+          <li>Kassambara A, Mundt F (2020). <em>factoextra: Extract and Visualize the Results of Multivariate Data Analyses</em>. R package version 1.0.7. Available at: <a href='https://CRAN.R-project.org/package=factoextra' target='_blank'>https://CRAN.R-project.org/package=factoextra</a></li>
+      <li>Mor U, Cohen Y, Valdés-Mas R, Kviatcovsky D, Elinav E, Avron H. (2022). Dimensionality reduction of longitudinal omics data using modern tensor factorizations. PLoS Computational Biology, 18(7):e1010212. <a href='https://doi.org/10.1371/journal.pcbi.1010212' target='_blank'>https://doi.org/10.1371/journal.pcbi.1010212</a></li>
+    </ul>
+  ")
 })
 
 

@@ -415,7 +415,7 @@ helptext_fried <- reactive(data.table::data.table(
   tab = c("tutorial_fried"),
   step = c(1, 2),
   element = c(
-    "#shiny-tab-fried > div:nth-child(2) > div > div > div > div > div.selectize-input.items.has-options.full.has-items",
+    "#id8-label",
     "#act_fried"
   ),
   intro = c(
@@ -451,7 +451,7 @@ helptext_mixedanova <- reactive(data.table::data.table(
   ),
   element = c(
     "#shiny-tab-mixedanova > div > ul > li.active",
-    "#tab-6394-1 > div:nth-child(2) > div > div",
+    "#id10-label",
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
     "#act_mixed_anova"
   ),
@@ -495,7 +495,7 @@ helptext_mixedanova_feat <- reactive(data.table::data.table(
   element = c(
     "#shiny-tab-mixedanova > div > ul > li.active",
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
-    "#tab-6394-2 > div:nth-child(2) > div > div",
+    "#selectfactor-label",
     "#act_mixed_anova_selection",
     "#load_top_features_anova",
     "#sidebarItemExpanded > ul > div.form-group.shiny-input-container"
@@ -634,7 +634,8 @@ helptext_lmm <- reactive(data.table::data.table(
   tab = c("tutorial_lmm"),
   step = c(
     1, 2, 3,
-    4, 5, 6
+    4, 5, 6,
+    7
   ),
   element = c(
     "#shiny-tab-lmm > div > ul > li.active",
@@ -642,8 +643,9 @@ helptext_lmm <- reactive(data.table::data.table(
     "#id9-label",
     "#lmm_select-label",
     "#act_lmm",
-    "#tab-8227-1 > div:nth-child(4) > div > div > div > div.box-header > h3",
-    "#tab-8227-1 > div:nth-child(5) > div > div > div > div.box-header > h3"
+    "#tab-2496-1 > div:nth-child(4) > div",
+    "#tab-2496-1 > div:nth-child(5) > div > div",
+    "#tab-2496-1 > div:nth-child(6) > div > div"
   ),
   intro = c(
     "Here you can calculate a mixed ANOVA for a single selected metabolite.",
@@ -651,12 +653,14 @@ helptext_lmm <- reactive(data.table::data.table(
     "Here you can select the metabolite for which you want to perform the analysis.",
     "Here, you can choose between different types of models: random intercept, random slope, or random intercept and random slope.",
     "If you click on this button, the linear mixed model is calculated.",
+    "This box shows you the testing of the model assumptions.",
     "This box shows you the model formula used for computing the linear mixed model.",
     "This box shows you the model summary including estimates for fixed and random effects."
   ),
   position = c(
     "auto", "auto", "auto",
-    "auto", "auto", "auto"
+    "auto", "auto", "auto",
+    "auto"
   )
 ))
 
@@ -688,8 +692,8 @@ helptext_lmm_comp <- reactive(data.table::data.table(
     "#shiny-tab-lmm > div > ul > li.active",
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
     "#act_lmm2",
-    "#tab-1982-2 > div:nth-child(3) > div > div > div > div.box-header > h3",
-    "#tab-1982-2 > div:nth-child(4) > div > div > div > div.box-header > h3"
+    "#tab-2496-2 > div:nth-child(3) > div",
+    "#tab-2496-2 > div:nth-child(4) > div"
   ),
   intro = c(
     "Here you can perform a model comparion between the different types of the linear mixed model.",

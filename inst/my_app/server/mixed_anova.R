@@ -3,19 +3,54 @@
 
 
 output$info_box_mixed_anova <- renderUI({
-  HTML("<p align = 'justify'>
-This section enables you to perform a mixed ANOVA analysis for a specific metabolite,
-using a between-subjects factor (selected categorical variable) and a within-subjects factor (time).
-The first table presents summary statistics for each measurement time point,
-while the ANOVA results box provides information on the significance and
-effect size (generalized eta squared) of the between factor, within factor, and their interaction.
-<p></p>
-In addition, a box plot is displayed in the upper left corner to illustrate the results for the between-within factors interactions.
-The x-axis represents the measurement time point, and the color of the box plot indicates group membership.
-Between-group pairwise comparisons are conducted using t-tests for dependent samples,
-and multiple testing is corrected with Bonferroni.
+  HTML("
+    <p align='justify'>
+      This section allows you to perform a mixed ANOVA analysis on a specific metabolite using a between-subjects factor (selected categorical variable) and a within-subjects factor (time).
+
+      <h4>Summary Statistics</h4>
+      The first table presents summary statistics for each measurement time point.
+
+      <h4>Outlier Analysis</h4>
+      The second table shows results from outlier analysis. Outliers are detected using the boxplot method and marked as is.outlier and is.extreme.
+
+      <h4>Normality Test</h4>
+      The third table provides results from the Shapiro-Wilk test for normality for all possible combinations of factor levels. A p-value < 0.05 indicates a violation of the normality assumption.
+
+      <h4>Homogeneity of Variances</h4>
+      The fourth table shows results from Levene's test for homogeneity of variances. A p-value < 0.05 indicates significant differences in variances between groups, violating the homogeneity assumption.
+
+      <h4>Mixed ANOVA Results</h4>
+      The 'Mixed ANOVA results' box displays the mixed ANOVA results, providing information on the significance and effect size (generalized eta squared) for the between-subjects factor (categorical variable), within-subjects factor (time), and their interaction (categorical variable x time).
+
+      <h4>Visual Representation</h4>
+      A box plot in the upper left corner illustrates the interaction effects of the between- and within-subjects factors. The x-axis represents the measurement time points, and the box plot colors indicate group membership.
+
+      <h4>Pairwise Comparisons</h4>
+      Between-group pairwise comparisons are conducted using t-tests for dependent samples, with Bonferroni correction for multiple testing.
+
+      <br><br>
+      <u>When to Use:</u><br>
+      Use mixed ANOVA when your study design includes both:
+      <ul>
+        <li>Between-subjects factors (e.g., different groups or conditions)</li>
+        <li>Within-subjects factors (e.g., repeated measures on the same subjects)</li>
+      </ul>
+
+      It is ideal for scenarios such as:
+      <ul>
+        <li>Comparing different groups (e.g., treatment vs. control) over multiple time points</li>
+        <li>Examining interaction effects between group membership and repeated measures</li>
+      </ul>
+    </p>
+    <br><br>
+    <u>Used Packages and Additional Information:</u><br>
+    <ul>
+      <li>Kassambara A (2023). <em>rstatix: Pipe-Friendly Framework for Basic Statistical Tests</em>. R package version 0.7.2. Available at: <a href='https://CRAN.R-project.org/package=rstatix' target='_blank'>https://CRAN.R-project.org/package=rstatix</a></li>
+      <li><a href='https://www.datanovia.com/en/lessons/mixed-anova-in-r/' target='_blank'>Tutorial on Mixed ANOVA</a></li>
+    </ul>
   ")
 })
+
 
 
 observe({
@@ -33,7 +68,10 @@ reactive_mixed_anova <- reactiveValues(
   res_mixed_anova = NULL,
   boxplot = NULL,
   pairwise = NULL,
-  pairwise.filtered = NULL
+  pairwise.filtered = NULL,
+  outliers = NULL,
+  shapiro = NULL,
+  levene = NULL,
 )
 
 
@@ -44,6 +82,44 @@ observeEvent(input$act_mixed_anova, {
     filter(metabolites %in% input$id10)
 
 
+  ##### Testing assumptions ######
+
+
+  ## outliers
+
+  a <- catv()
+
+  vars <- c("id", "time", a, "metabolites", "values")
+
+  outliers <- data.filtered %>%
+                select(all_of(vars)) %>%
+                group_by(time, input$catVars) %>%
+                rstatix::identify_outliers(values) %>%
+                mutate(across(where(is.numeric), ~round(.,3)))
+
+  colnames(outliers) <- c("Time", "Category", "ID", "Group", "Metabolites", "Values", "is.outlier", "is.extreme")
+
+  ## normality assumption
+  shapiro <- data.filtered %>%
+                group_by(time, input$catVars) %>%
+                rstatix::shapiro_test(values) %>%
+                mutate(across(where(is.numeric), ~round(.,3)))
+
+  colnames(shapiro) <- c("Category", "Time", "Variable", "statistic", "p")
+
+
+  # Construct the formula for Levene's test
+  form.levene <- as.formula(paste0("values ~ ", input$catVars))
+
+  # Perform Levene's test for homogeneity of variance
+  levene <- data.filtered %>%
+    mutate(!!sym(input$catVars) := factor(!!sym(input$catVars))) %>%
+    group_by(time) %>%
+    rstatix::levene_test(form.levene) %>%
+    mutate(across(where(is.numeric), ~round(.,3)))
+
+  colnames(levene) <- c("Time", "df1", "df2", "statistic", "p")
+
 
   summary_stats <- data.filtered %>%
     group_by(time, input$catVars) %>%
@@ -51,8 +127,6 @@ observeEvent(input$act_mixed_anova, {
 
 
   colnames(summary_stats) <- c("Time", "Category", "Variable", "N", "Mean", "SD")
-
-
 
 
 
@@ -97,6 +171,9 @@ observeEvent(input$act_mixed_anova, {
   reactive_mixed_anova$pairwise <- pairwise
   reactive_mixed_anova$pairwise.filtered <- pairwise.filtered
   reactive_mixed_anova$computation_done <- TRUE
+  reactive_mixed_anova$outliers <- outliers
+  reactive_mixed_anova$shapiro <- shapiro
+  reactive_mixed_anova$levene <- levene
 })
 
 
@@ -109,6 +186,41 @@ datatable(reactive_mixed_anova$summary_stats,
     paging = TRUE
   )
 ))
+
+
+
+output$outliers_mixed_anova <- renderDT(
+  datatable(reactive_mixed_anova$outliers,
+            caption = "Outlier detection (Univariate outlier detection using boxplot methods):",
+            options = list(
+              searching = FALSE,
+              lengthChange = FALSE,
+              paging = TRUE
+            )
+  ))
+
+
+output$normality_mixed_anova <- renderDT(
+  datatable(reactive_mixed_anova$shapiro,
+            caption = "Normality test (Shapiro-Wilk test for all possible combinations of factor levels):",
+            options = list(
+              searching = FALSE,
+              lengthChange = FALSE,
+              paging = TRUE
+            )
+  ))
+
+output$levene_mixed_anova <- renderDT(
+  datatable(reactive_mixed_anova$levene,
+            caption = "Homogeneity of variance (Levene's test checks for equal variances across groups):",
+            options = list(
+              searching = FALSE,
+              lengthChange = FALSE,
+              paging = TRUE
+            )
+  ))
+
+
 
 
 
@@ -325,14 +437,26 @@ observeEvent(input$load_top_features_anova, {
 
 
 output$info_box_mixed_anova_selection <- renderUI({
-  HTML("<p align = 'justify'>
-      In this section, a mixed ANOVA is computed for all metabolites,
-      providing results that can be used to select metabolites for further processing.
-      Metabolites are ranked based on their p-values, with lower p-values indicating a higher rank.
-      Users can choose to select p-values for the between factor 'Categorical',
-      the within factor 'time', or the interaction 'Time x Categorical'.
-      Additionally, the number of metabolites to be included in the ranking can be specified.
-       ")
+  HTML("
+    <p align='justify'>
+      In this section, a mixed ANOVA is computed for all metabolites, providing results for selecting metabolites for further processing. Metabolites are ranked based on their p-values, with lower p-values indicating a higher rank.
+    </p>
+    <p align='justify'>
+      Users can choose to select p-values for:
+      <ul>
+        <li>The between-subjects factor 'Categorical'</li>
+        <li>The within-subjects factor 'Time'</li>
+        <li>The interaction 'Time x Categorical'</li>
+      </ul>
+    </p>
+    <p align='justify'>
+    <u>Used Packages and Additional Information:</u><br>
+      <ul>
+        <li>Kassambara A (2023). <em>rstatix: Pipe-Friendly Framework for Basic Statistical Tests</em>. R package version 0.7.2. Available at: <a href='https://CRAN.R-project.org/package=rstatix' target='_blank'>https://CRAN.R-project.org/package=rstatix</a></li>
+        <li><a href='https://www.datanovia.com/en/lessons/mixed-anova-in-r/' target='_blank'>Tutorial on Mixed ANOVA</a></li>
+      </ul>
+    </p>
+  ")
 })
 
 
