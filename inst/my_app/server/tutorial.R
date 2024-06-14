@@ -415,7 +415,7 @@ helptext_fried <- reactive(data.table::data.table(
   tab = c("tutorial_fried"),
   step = c(1, 2),
   element = c(
-    "#shiny-tab-fried > div:nth-child(2) > div > div > div > div > div.selectize-input.items.has-options.full.has-items",
+    "#id8-label",
     "#act_fried"
   ),
   intro = c(
