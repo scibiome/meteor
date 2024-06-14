@@ -1,27 +1,30 @@
 #### Metabolite query ####
 library(KEGGREST)
 output$info_box_enrichment <- renderUI({
+  HTML("<p align='justify'>
+        This section enables users to conduct a deeper analysis of selected metabolites by getting their comon IDs and identifying pathways where these metabolites are abundant.<br><br>
 
-  HTML("<p align = 'justify'>
-        This section enables users to perform database queries for the selected metabolites.
-        The top table displays the names of the chosen metabolites,
-        which can be edited directly within the table.
-        To initiate the analysis, users can send a query to the MetaboAnalyst API,
-        which will generate a list of different identifiers for each metabolite,
-        including HMDB, PubChem, ChEBI, KEGG, METLIN, and SMILES.
-        <p></p>
-        Next, users can leverage the HMDB identifier to
-        perform pathway enrichment analysis using the Relational Database of Metabolomics Pathways (RaMP) [1].
-        This analysis will return information about the pathways that involve the selected metabolites.
-        <p></p>
-        [1] Zhang, B., Hu, S., Baskin, E., Patt, A., Siddiqui, J. K., & Mathé, E. A. (2018).
-              RaMP: A Comprehensive Relational Database of Metabolomics Pathways for Pathway Enrichment Analysis of Genes and Metabolites.
-              Metabolites, 8(1), 16. https://doi.org/10.3390/metabo8010016
-       ")
+        <u>When to use</u>:<br>
+        If you want to obtain common IDs, identify pathways with high abundance, perform functional analysis using the KEGG website, and save your results.<br><br>
+
+        <u>Additional Information:</u><br>
+        Disclaimer: The API of MetaboAnalyst is currently not available, so we used this workaround.
+        For a step-by-step tutorial on the enrichment analysis, refer to TODO.<br><br>
+
+        In step 1, the currently selected metabolites are displayed. Copy these metabolites and visit
+        <a href='https://www.metaboanalyst.ca/MetaboAnalyst/upload/ConvertView.xhtml' target='_blank'>MetaboAnalyst</a>. Paste the metabolites into the provided form and click 'Submit' to perform the metabolite ID conversion.
+        The 'Compound Name/ID Standardization' will be shown. At the bottom of the page, click the 'here' button to download the results in CSV format:<br><br>
+
+        <pre>\"Query\",\"Match\",\"HMDB\",\"PubChem\",\"ChEBI\",\"KEGG\",\"METLIN\",\"SMILES\",\"Comment\"<br>\"1,3-Diaminopropane\",\"1,3-Diaminopropane\",\"HMDB0000002\",\"428\",\"15725\",\"C00986\",\"5081\",\"NCCCN\",\"1\"<br>\"2-Ketobutyric acid\",\"2-Ketobutyric acid\",\"HMDB0000005\",\"58\",\"30831\",\"C00109\",NA,\"CCC(=O)C(O)=O\",\"1\"</pre><br><br>
+
+        Copy the content and return to MeTEor to paste it into the form of step 2.
+
+        In the 3 step, click 'Get enriched pathways' to receive a list of pathways where your selected metabolites are present, ranked by occurrence..<br><br>
+
+        Each pathway includes outlinks to the interactive KEGG pathway with highlighted metabolites in red,
+        facilitating deeper analysis and functional understanding of the measured metabolites.
+      </p>")
 })
-
-
-
 
 
 raw_list <- reactiveValues(data = NULL)

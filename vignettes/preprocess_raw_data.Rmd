@@ -75,11 +75,15 @@ non_numeric_columns <- names(raw_example_data)[!sapply(raw_example_data, is.nume
 # transform to numeric
 cleaned_data <- raw_example_data %>% mutate_if(is.character, as.numeric)
 
-# Select the numeric columns you want to scale
-columns_to_scale <- 5:ncol(cleaned_data)
+# Select the numeric columns you want to normalize
+columns_to_normalize <- 5:ncol(cleaned_data)
 
-# Scale the selected numeric columns
-cleaned_data[, columns_to_scale] <- scale(cleaned_data[, columns_to_scale])
+# Normalize the selected numeric columns
+normalize <- function(x) {
+  (x - min(x)) / (max(x) - min(x))
+}
+
+cleaned_data[, columns_to_normalize] <- apply(cleaned_data[, columns_to_normalize], 2, normalize)
 
 head(cleaned_data[, 1:8], n = 5)
 
