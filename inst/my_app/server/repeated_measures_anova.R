@@ -47,7 +47,9 @@ reactive_repeated_anova <- reactiveValues(
   res_mixed_anova = NULL,
   boxplot = NULL,
   pairwise = NULL,
-  pairwise.filtered = NULL
+  pairwise.filtered = NULL,
+  outliers = NULL,
+  shapiro = NULL,
 )
 
 
@@ -57,6 +59,32 @@ observeEvent(input$act_repeated_anova, {
   data.filtered <- data() %>%
     filter(metabolites %in% input$repeated_anova_metabolite)  %>%
     filter(!!sym(input$catVars) %in% input$repeated_anova_category)
+
+
+  ##### Testing assumptions ######
+
+
+  ## outliers
+
+  a <- catv()
+
+  vars <- c("id", "time", a, "metabolites", "values")
+
+  outliers <- data.filtered %>%
+    select(all_of(vars)) %>%
+    group_by(time) %>%
+    rstatix::identify_outliers(values) %>%
+    mutate(across(where(is.numeric), ~round(.,3)))
+
+  colnames(outliers) <- c("Time", "Category", "ID", "Group", "Metabolites", "Values", "is.outlier", "is.extreme")
+
+  ## normality assumption
+  shapiro <- data.filtered %>%
+    group_by(time) %>%
+    rstatix::shapiro_test(values) %>%
+    mutate(across(where(is.numeric), ~round(.,3)))
+
+  colnames(shapiro) <- c("Category", "Time", "Variable", "statistic", "p")
 
 
   summary_stats <- data.filtered %>%
@@ -112,6 +140,8 @@ observeEvent(input$act_repeated_anova, {
   reactive_repeated_anova$pairwise <- pairwise
   reactive_repeated_anova$pairwise.filtered <- pairwise.filtered
   reactive_repeated_anova$computation_done <- TRUE
+  reactive_repeated_anova$outliers <- outliers
+  reactive_repeated_anova$shapiro <- shapiro
 })
 
 
@@ -125,6 +155,26 @@ output$summary_stats_repeated_anova <- renderDT(
             )
   ))
 
+output$outliers_repeated_anova <- renderDT(
+  datatable(reactive_repeated_anova$outliers,
+            caption = "Outlier detection (Univariate outlier detection using boxplot methods):",
+            options = list(
+              searching = FALSE,
+              lengthChange = FALSE,
+              paging = TRUE
+            )
+  ))
+
+
+output$normality_repeated_anova <- renderDT(
+  datatable(reactive_repeated_anova$shapiro,
+            caption = "Normality test (Shapiro-Wilk test for all time points.):",
+            options = list(
+              searching = FALSE,
+              lengthChange = FALSE,
+              paging = TRUE
+            )
+  ))
 
 
 output$res_repeated_anova <- renderPrint({
