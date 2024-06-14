@@ -27,7 +27,6 @@ output$info_box_pca <- renderUI({
          <li>Reduce the dimensionality of your data to simplify visualization and analysis.</li>
          <li>Identify which variables (e.g., metabolites) contribute most to the variance in the data.</li>
          <li>Uncover underlying patterns in the data that might not be immediately apparent.</li>
-         <li>Prepare data for other analytical techniques that require reduced dimensionality.</li>
        </ul>
        <u>Additional information:</u><br>
        <li>Tutorial <a href = https://rpkgs.datanovia.com/factoextra/index.html>factoextra</li>
