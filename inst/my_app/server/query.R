@@ -8,6 +8,7 @@ output$info_box_enrichment <- renderUI({
         If you want to obtain common IDs, identify pathways with high abundance, perform functional analysis using the KEGG website, and save your results.<br><br>
 
         <u>Additional Information:</u><br>
+        Disclaimer: The API of MetaboAnalyst is currently not available, so we used this workaround.
         For a step-by-step tutorial on the enrichment analysis, refer to TODO.<br><br>
 
         In step 1, the currently selected metabolites are displayed. Copy these metabolites and visit
@@ -24,7 +25,6 @@ output$info_box_enrichment <- renderUI({
         facilitating deeper analysis and functional understanding of the measured metabolites.
       </p>")
 })
-
 
 
 raw_list <- reactiveValues(data = NULL)
