@@ -5,13 +5,36 @@
 
 #### Info box: ----
 
+
 output$info_box_pca <- renderUI({
-  HTML("<p align = 'justify'> In this section, a principal component analysis is performed for the selected time point.
-       The eigenvalues of the principal components are shown in the diagram in the upper left corner.
-       A scatter plot with the observations colored by the selected grouping variable is displayed in the upper right corner.
-       The contributions of the variables to the principal components and a biplot are displayed at the bottom.
-       A 3D scatterplot can also be created in the bottom panel.
-       The principal components can be selected by dropdown menu for the different dimensions. <p>")
+
+  HTML(paste0("<p align='justify'>
+       In this section, a Principal Component Analysis (PCA) is performed for the selected time point. PCA helps to reduce the dimensionality of the data, making it easier to visualize and analyze. It can also help identify important metabolites that contribute most to the variance in the data.
+       <br><br>
+       <u>Visualizations provided:</u>
+       <ul>
+         <li>The <b>eigenvalues</b> of the principal components are displayed in the diagram in the upper left corner.</li>
+         <li>A <b>scatter plot</b> with observations colored by the selected grouping variable is shown in the upper right corner.</li>
+         <li>The <b>contributions of the variables</b> to the principal components and a <b>biplot</b> are presented at the bottom.</li>
+         <li>A <b>3D scatter plot</b> can also be generated in the bottom panel.</li>
+       </ul>
+       <br>
+       Principal components can be selected for different dimensions using the dropdown menu.
+       <br><br>
+       <u>When to Use:</u><br>
+       Use PCA when you need to:
+       <ul>
+         <li>Reduce the dimensionality of your data to simplify visualization and analysis.</li>
+         <li>Identify which variables (e.g., metabolites) contribute most to the variance in the data.</li>
+         <li>Uncover underlying patterns in the data that might not be immediately apparent.</li>
+         <li>Prepare data for other analytical techniques that require reduced dimensionality.</li>
+       </ul>
+       <u>Additional information:</u><br>
+       <li>Tutorial <a href = https://rpkgs.datanovia.com/factoextra/index.html>factoextra</li>
+       <li>Sebastien Le, Julie Josse, Francois Husson (2008). FactoMineR: An R Package for Multivariate Analysis. Journal of Statistical Software, 25(1), 1-18. <a href='https://doi.org/10.18637/jss.v025.i01'>10.18637/jss.v025.i01</a>
+       </li>
+      <li>Kassambara A, Mundt F (2020). _factoextra: Extract and Visualize the Results of Multivariate Data Analyses_. R package version 1.0.7,
+  <https://CRAN.R-project.org/package=factoextra></li>"))
 })
 
 
