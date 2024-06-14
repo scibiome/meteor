@@ -226,48 +226,66 @@ ui <- dashboardPage(
       tabItem(
         tabName = "intro",
         box(
-          title = "MeTEor - Metabolite trajectory explorer",
+          title = tags$h2("MeTEor - Metabolite trajectory explorer"),
           status = "primary",
           solidHeader = F,
           collapsible = F,
           width = 12,
           fluidRow(
-            column(width = 6, HTML("<p>   High-throughput data are commonplace in metabolomics research.
-                                          Moreover, there is a considerable increase in longitudinal, i.e.
-                                          time course metabolomics experiments.
-                                          These allow for more detailed insights into biological
-                                          processes and time-resolved characterization of systems responses.
-                                          Statistical analysis of such data, however, is more challenging than in the case of snapshot metabolomics.
-                                          To make explorative analysis of these data readily available to researchers without
-                                          a deep background in computer science and programming,
-                                          we present MeTEor, an R Shiny app providing  a set of
-                                          state-of-the-art statistical analysis methods,
-                                          including correlation networks, clustermaps and vulcanoplots,
-                                          as well as visualizations for interactive data exploration.
-                                          Additionally, advanced methods for dimensionality reduction of
-                                          multivariate longitudinal data are integrated [1].
-                                          Hence, MeTEor streamlines exploratory analysis of
-                                          time-resolved metabolomics data and offers user-friendly
-                                          access to advanced data science approaches.</p>
-
-                                          <p>References</p>
-                                          <p>1 Mor, U., Cohen, Y., Valdés-Mas, R., Kviatcovsky, D., Elinav, E., & Avron, H. (2022).
-                                          Dimensionality reduction of longitudinal’omics data using modern tensor factorizations.
-                                          PLOS Computational Biology, 18(7), e1010212.</p>
-                                          <p> Hex logo made by Lisa-Marie Bente. </P>")),
+            column(width = 7, HTML("<p style='font-size: 18px;'>   High-throughput data are commonplace in metabolomics research.
+                                  Moreover, there is a considerable increase in longitudinal, i.e.
+                                  time course metabolomics experiments.
+                                  These allow for more detailed insights into biological
+                                  processes and time-resolved characterization of systems responses.
+                                  Statistical analysis of such data, however, is more challenging than in the case of snapshot metabolomics.
+                                  To make explorative analysis of these data readily available to researchers without
+                                  a deep background in computer science and programming,
+                                  we present MeTEor, an R Shiny app providing  a set of
+                                  state-of-the-art statistical analysis methods,
+                                  including correlation networks, clustermaps and vulcanoplots,
+                                  as well as visualizations for interactive data exploration.
+                                  Additionally, advanced methods for dimensionality reduction of
+                                  multivariate longitudinal data are integrated.
+                                  Hence, MeTEor streamlines exploratory analysis of
+                                  time-resolved metabolomics data and offers user-friendly
+                                  access to advanced data science approaches.</p>"),
+                   div(
+                     style = "text-align: center;",  # Center align content
+                     img(
+                       src = "Meteor5.png", width = "90%", height = "100%",
+                       style = "margin-top: 20px; display: inline-block;"
+                     )
+                   ),
+                   HTML("<p style='margin-top: 40px; font-size: 18px;'>   Overview of the various techniques offered by MeTEor:
+                        On the left side is the Configurator, enabling a targeted analysis.
+                        It is possible to choose a specific time point, select a categorical variable,
+                        the levels of the categorical variable, and pick multiple metabolites.
+                        The selection is shared across the different methods, facilitating a seamless exploratory analysis.
+                        In our example analysis, the loaded data undergoes statistical analysis to
+                        identify interesting metabolites that exhibit changes between time points or categories.
+                        The chosen metabolites are then subjected to further analysis using diverse visualization
+                        techniques such as line plots or heatmaps. Lastly, an enrichment analysis is conducted,
+                        revealing pathways with a high prevalence of the selected metabolites, which can then be exported to multiple data formats. </p>")
+                   ),
             column(
-              width = 6, align = "center",
-              img(
-                src = "logo.png", width = "50%", height = "50%",
-                style = "-webkit-filter: drop-shadow(5px 5px 5px #222);
-                                      filter: drop-shadow(5px 5px 5px #222);
-                                      position: top;"
-              )
+              width = 5,
+              div(
+                style = "text-align: center;",
+                img(
+                  src = "logo.png", width = "45%", height = "50%",
+                  style = "-webkit-filter: drop-shadow(5px 5px 5px #222);
+                  filter: drop-shadow(5px 5px 5px #222);
+                  position: top;
+                  margin-top: 160px;"
+                )
+              ),
+              HTML("<p style='font-size: 18px; text-align: center; margin-top: 40px;'> Hex logo made by Lisa-Marie Bente. </p>")
             )
           ),
           fluidRow(width = 4, align="center",
-            actionButton("tutorial_main", "Start tutorial!", class = "btn-info btn-lg btn-block")
-          ))
+                   actionButton("tutorial_main", "Start tutorial!", class = "btn-info btn-lg btn-block")
+          )
+        )
         ),
       tabItem(
         tabName = "file",
