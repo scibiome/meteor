@@ -1,25 +1,6 @@
 # Friedman test
 # https://www.datanovia.com/en/lessons/friedman-test-in-r/
 
-# output$info_box_friedman <- renderUI({
-#   HTML("<p align = 'justify'>
-#        In this section, the Friedman test can be applied. This non-parametric test is suitable for the study of paired samples.
-#        The first table provides summary statistics for the individual time points.
-#        The second table on the right side provides the results of the Friedman test,
-#        The third table on the left provides information about effect size (Kendall's coefficient of concordance (W)).
-#        A box plot is displayed to illustrate the trend over different time points of measurement. Each box plot represents a distribution for a given time point, with the x-axis representing the measurement time points and the y-axis representing the metabolite abundance levels.
-#        Pairwise comparisons of the measurement times are carried out with the Wilcoxon test and, in the case of significant pairwise comparisons, are shown in the box plot.
-#        <p></p>
-#        The metabolite to be tested can be selected via the dropdown menu.
-#        <br><br>
-#        <u>Used Packages and Additional Information:</u><br>
-#        <ul>
-#         <li>Kassambara A (2023). <em>rstatix: Pipe-Friendly Framework for Basic Statistical Tests</em>. R package version 0.7.2. Available at: <a href='https://CRAN.R-project.org/package=rstatix' target='_blank'>https://CRAN.R-project.org/package=rstatix</a></li>
-#         <li><a href='https://www.datanovia.com/en/lessons/repeated-measures-anova-in-r/' target='_blank'>Tutorial on Repeated Measures ANOVA</a></li>
-#        </ul>
-#        ")
-# })
-
 
 output$info_box_friedman <- renderUI({
   HTML("
