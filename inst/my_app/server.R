@@ -58,7 +58,8 @@ library(markdown)
 library(KEGGREST)
 library(rintrojs)
 library(data.table) # TODO add to references
-library(easystats) # TODO add to description + references
+library(easystats)
+library(performance)# TODO add to description + references
 library(see) # TODO
 
 #### Python module ####
