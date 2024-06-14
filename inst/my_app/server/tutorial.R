@@ -451,7 +451,7 @@ helptext_mixedanova <- reactive(data.table::data.table(
   ),
   element = c(
     "#shiny-tab-mixedanova > div > ul > li.active",
-    "#tab-6394-1 > div:nth-child(2) > div > div",
+    "#id10-label",
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
     "#act_mixed_anova"
   ),
@@ -495,7 +495,7 @@ helptext_mixedanova_feat <- reactive(data.table::data.table(
   element = c(
     "#shiny-tab-mixedanova > div > ul > li.active",
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
-    "#tab-6394-2 > div:nth-child(2) > div > div",
+    "#selectfactor-label",
     "#act_mixed_anova_selection",
     "#load_top_features_anova",
     "#sidebarItemExpanded > ul > div.form-group.shiny-input-container"
