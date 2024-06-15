@@ -131,3 +131,6 @@ head(data_meta_imputed_long, n = 5)
 ```{r write}
 write.csv(data_meta_imputed_long, file = "data_long.csv", row.names = FALSE )
 ```
+
+# Additional Information
+For more methods and background on preprocessing metabolomics, refer to Karaman, I. [Preprocessing and pretreatment of metabolomics data for statistical analysis](https://link.springer.com/chapter/10.1007/978-3-319-47656-8_6) (2017)
