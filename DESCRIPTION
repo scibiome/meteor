@@ -86,7 +86,8 @@ Imports:
     data.table,
     easystats,
     performance,
-    see
+    see,
+    patchwork
 Suggests: 
     tidyverse
 RoxygenNote: 7.3.1

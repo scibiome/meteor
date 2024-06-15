@@ -692,8 +692,8 @@ helptext_lmm_comp <- reactive(data.table::data.table(
     "#shiny-tab-lmm > div > ul > li.active",
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
     "#act_lmm2",
-    "#tab-2496-2 > div:nth-child(3) > div",
-    "#tab-2496-2 > div:nth-child(4) > div"
+    "#tab-5319-2 > div:nth-child(3) > div > div",
+    "#tab-5319-2 > div:nth-child(4) > div"
   ),
   intro = c(
     "Here you can perform a model comparion between the different types of the linear mixed model.",
