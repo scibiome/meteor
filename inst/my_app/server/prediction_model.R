@@ -360,17 +360,6 @@ output$prediction_text <- renderText({
   "No testdata for to compute ROC curve"
 })
 
-# output$color_pr <- renderPrint({ # für die Output box
-#   req(input$select1)
-#   input$select1
-# })
-#
-# output$panelStatus <- reactive({ # wenn show == show, ist der wert True
-#   input$select1=="show"
-# })
-# outputOptions(output, "panelStatus", suspendWhenHidden = FALSE) #set the
-
-
 output$prediction <- renderPlot(
   {
     if(isolate(input$testdata) != 0){
@@ -442,16 +431,16 @@ output$feature_imp_plot <- renderPlotly({
 
 output$report <- downloadHandler(
   # For PDF output, change this to "report.pdf"
-  filename = "report.html",
+  filename = "report_prediction.html",
   content = function(file) {
     # Copy the report file to a temporary directory before processing it, in
     # case we don't have write permissions to the current working dir (which
     # can happen when deployed).
     tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/report.Rmd", tempReport, overwrite = TRUE)
+    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/report_prediction.Rmd", tempReport, overwrite = TRUE)
 
     # Set up parameters to pass to Rmd document
-    params <- list(n = input$slider, prediction_stored_RMD = prediction_stored, input_RMD = input)
+    params <- list(prediction_stored_RMD = prediction_stored, input_RMD = input)
 
     # Knit the document, passing in the `params` list, and eval it in a
     # child of the global environment (this isolates the code in the document

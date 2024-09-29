@@ -1,0 +1,121 @@
+---
+title: "Dynamic report"
+output: html_document
+params:
+  n: NA
+  prediction_stored_RMD: NA
+  input_RMD: NA
+---
+
+```{r}
+prediction_stored <- params$prediction_stored_RMD
+input <- params$input_RMD
+print(params$prediction_stored)
+```
+
+```{r}
+print(prediction_stored$rfFit)
+```
+
+
+```{r}
+# Check if test data is available
+if (!is.na(input$testdata) && input$testdata != 0) {
+  
+  # Check if the computation is complete
+  if (prediction_stored$computation_done) {
+    
+    # Convert prediction labels to numeric format and calculate ROC curve
+    labels2 <- as.numeric(factor(prediction_stored$prediction1$obs, levels = c("X1", "X0")))
+    scores2 <- prediction_stored$prediction1[[1]]
+
+    # Compute the ROC object
+    rocobj <- pROC::roc(labels2, scores2)
+
+    # Store AUC score in the prediction_stored object
+    prediction_stored$scores[, "test AUC"] <- round(rocobj$auc, 3)
+    prediction_stored$auc <- rocobj$auc
+
+    # Generate the ROC plot using ggplot2
+    g <- ggroc(rocobj, legacy.axes = TRUE) + 
+      ggtitle("ROC Curve") +
+      geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+      theme(
+        panel.background = element_rect(fill = "#edeff4", colour = "black"),
+        plot.background = element_rect(fill = "#edeff4", colour = "#edeff4"),
+        axis.text = element_text(size = 14),
+        axis.title = element_text(size = 16)
+      )
+    
+    # Print the ROC plot
+    print(g)
+    
+  } else {
+    # Print message if computation is not done
+    cat("Computation is not complete. No ROC curve to display.")
+  }
+  
+} else {
+  # Print message if no test data is available
+  cat("No test data available.")
+}
+
+```
+
+```{r}
+if (prediction_stored$computation_done) {
+  # Depending on the prediction method, extract importance
+  if (input$prediction_method == 'XGB') {
+    imps <- as.matrix(varImp(prediction_stored$rfFit)$importance, scale=FALSE)
+  } else {
+    imps <- as.matrix(varImp(prediction_stored$rfFit)$importance)
+  }
+
+  # Create a data frame for the important features
+  imps_df <- data.frame(Overall = imps)
+  feature_imp <- imps_df %>% filter(Overall > 0.1) %>% arrange(desc(Overall)) %>% head(10)
+  colnames(feature_imp) <- "importance"
+  feature_imp$metabolite_name <- row.names(feature_imp)
+
+  # Create the ggplot object
+  p <- ggplot(feature_imp, aes(x = reorder(metabolite_name, importance), y = importance)) +
+    geom_bar(stat = "identity", fill = "#0072B2") +
+    theme_apa() +
+    xlab("Metabolites") +
+    coord_flip()
+
+  # Convert ggplot to plotly and customize layout
+  ggplotly(p) %>% layout(
+    plot_bgcolor = "#edeff4",       # Background of the plot area
+    paper_bgcolor = "#edeff4",      # Background of the surrounding area (paper)
+    legend = list(bgcolor = "#edeff4")  # Background color of the legend
+  )
+}
+
+```
+
+
+```{r}
+# Check if prediction_stored contains scores
+if (!is.null(prediction_stored$scores)) {
+  
+  # Render the scores table using DT::datatable
+  DT::datatable(
+    prediction_stored$scores,
+    options = list(
+      searching = FALSE,  # Disable search
+      paging = FALSE,     # Disable pagination
+      info = FALSE        # Disable table information
+    ),
+    extensions = "Scroller",   # Use the Scroller extension for efficient scrolling
+    style = "bootstrap"        # Use Bootstrap styling
+  )
+  
+} else {
+  # Print message if scores are not available
+  cat("No prediction scores available.")
+}
+
+```
+
+
