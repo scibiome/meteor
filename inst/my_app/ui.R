@@ -530,7 +530,9 @@ ui <- dashboardPage(
           column(width = 6, actionButton(
             "load_top_features",
             "Add top features to selection"
-          ))
+          )),
+          sliderInput("slider", "Slider", 1, 100, 50),
+          column(width = 6, downloadButton("report", "Generate report"))
         ),
         fluidRow(
           column(

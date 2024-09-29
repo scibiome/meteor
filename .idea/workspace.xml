@@ -4,11 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3e8d5c1-4e84-4333-a8a6-633f140095fb" name="Changes" comment="updated docker file">
+    <list default="true" id="c3e8d5c1-4e84-4333-a8a6-633f140095fb" name="Changes" comment="added reference to the preprocess tutorial">
+      <change afterPath="$PROJECT_DIR$/inst/my_app/server/report.Rmd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/docs/logo2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/reference/figures/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/docs/reference/figures/logo5.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inst/my_app/server.R" beforeDir="false" afterPath="$PROJECT_DIR$/inst/my_app/server.R" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inst/my_app/server/linear_mixed_model.R" beforeDir="false" afterPath="$PROJECT_DIR$/inst/my_app/server/linear_mixed_model.R" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inst/my_app/server/prediction_model.R" beforeDir="false" afterPath="$PROJECT_DIR$/inst/my_app/server/prediction_model.R" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inst/my_app/ui.R" beforeDir="false" afterPath="$PROJECT_DIR$/inst/my_app/ui.R" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inst/my_app/www/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/inst/my_app/www/logo3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/man/figures/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/man/figures/logo4.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="docker_june24" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -37,15 +42,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "include__check__data",
-    "last_opened_file_path": "/Users/gordonplri/Documents/Publications/MeTEor/meteor"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;include__check__data&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/gordonplri/Documents/Publications/MeTEor/meteor&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -111,7 +116,39 @@
       <option name="project" value="LOCAL" />
       <updated>1710176043262</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="added easystats">
+      <option name="closed" value="true" />
+      <created>1718397585992</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1718397585992</updated>
+    </task>
+    <task id="LOCAL-00009" summary="updated README">
+      <option name="closed" value="true" />
+      <created>1718398189684</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1718398189684</updated>
+    </task>
+    <task id="LOCAL-00010" summary="updated README">
+      <option name="closed" value="true" />
+      <created>1718400827197</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1718400827197</updated>
+    </task>
+    <task id="LOCAL-00011" summary="added reference to the preprocess tutorial">
+      <option name="closed" value="true" />
+      <created>1718445523931</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1718445523931</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -146,6 +183,9 @@
     <MESSAGE value="Added rm ANOVA to readme" />
     <MESSAGE value="updated page" />
     <MESSAGE value="updated docker file" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated docker file" />
+    <MESSAGE value="added easystats" />
+    <MESSAGE value="updated README" />
+    <MESSAGE value="added reference to the preprocess tutorial" />
+    <option name="LAST_COMMIT_MESSAGE" value="added reference to the preprocess tutorial" />
   </component>
 </project>
