@@ -1194,6 +1194,9 @@ ui <- dashboardPage(
 
 
         ),
+        fluidRow(
+          column(width = 6, downloadButton("report_volcano", "Generate report"))
+        ),
         fluidRow(column(width = 12, height = 20, withSpinner(plotOutput("volcano.plot", width = "100%", height = "1000px"))))
       ),
       tabItem(
