@@ -87,6 +87,7 @@ if (IS_IN_CONTAINER == "TRUE") {
       reticulate::use_condaenv("../my_env", required = T)
       reticulate::py_install(packages = c("pandas == 1.5.2"), pip = T)
       reticulate::py_install(packages = c("mprod-package"))
+      reticulate::py_install(packages = c("scipy == 1.10.0"), pip = T)
       reticulate::py_install(packages = c("numpy == 1.23.0"), pip = T)
 
     } else {
