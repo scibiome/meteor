@@ -89,7 +89,6 @@ if (IS_IN_CONTAINER == "TRUE") {
       reticulate::py_install(packages = c("mprod-package"))
       reticulate::py_install(packages = c("scipy == 1.10.0"), pip = T)
       reticulate::py_install(packages = c("numpy == 1.23.0"), pip = T)
-
     } else {
       reticulate::use_condaenv("../my_env", required = T)
     }
@@ -99,7 +98,11 @@ if (IS_IN_CONTAINER == "TRUE") {
       reticulate::use_python(rminiconda::find_miniconda_python("miniconda_for_meteor"), required = TRUE)
       reticulate::conda_create(envname = "../my_env", python = rminiconda::find_miniconda_python("miniconda_for_meteor"))
       reticulate::use_condaenv("../my_env", required = T)
-      reticulate::py_install(packages = c(c("pandas == 1.5.2"), "mprod-package", c("numpy == 1.23.0")))
+      reticulate::use_condaenv("../my_env", required = T)
+      reticulate::py_install(packages = c("pandas == 1.5.2"), pip = T)
+      reticulate::py_install(packages = c("mprod-package"))
+      reticulate::py_install(packages = c("scipy == 1.10.0"), pip = T)
+      reticulate::py_install(packages = c("numpy == 1.23.0"), pip = T)
     } else {
       reticulate::use_condaenv("../my_env", required = T)
     }
@@ -109,7 +112,10 @@ if (IS_IN_CONTAINER == "TRUE") {
       reticulate::use_python(rminiconda::find_miniconda_python("miniconda_for_meteor"), required = TRUE)
       reticulate::conda_create(envname = "../my_env", python = rminiconda::find_miniconda_python("miniconda_for_meteor"))
       reticulate::use_condaenv("../my_env", required = T)
-      reticulate::py_install(packages = c(c("pandas == 1.5.2"), "mprod-package", c("numpy == 1.23.0")))
+      reticulate::py_install(packages = c("pandas == 1.5.2"), pip = T)
+      reticulate::py_install(packages = c("mprod-package"))
+      reticulate::py_install(packages = c("scipy == 1.10.0"), pip = T)
+      reticulate::py_install(packages = c("numpy == 1.23.0"), pip = T)
     } else {
       reticulate::use_condaenv("../my_env", required = T)
     }
