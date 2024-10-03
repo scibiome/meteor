@@ -1,0 +1,38 @@
+---
+title: "Dynamic report"
+output: html_document
+params:
+  ridgeplot_stored_RMD: NA
+
+---
+
+```{r}
+ridgeplot_stored <- params$ridgeplot_stored_RMD
+```
+
+```{r}
+
+# Check if the computation is done
+if (ridgeplot_stored$computation_done_plot1) {
+
+  # Check if there is data to plot
+  if (nrow(ridgeplot_stored$computed_data_plot1) == 0) {
+    print("no metaboites selected")
+  } else {
+    # Create the ridge plot
+    ggplot(data= ridgeplot_stored$computed_data_plot1, aes(x = values, y = metabolites, fill = time)) +
+      geom_density_ridges(alpha = 0.3, scale = 1) +
+      theme_ridges() +
+      theme(
+        panel.background = element_rect(fill = "#edeff4", colour = NA), # Avoid drawing panel outline
+        panel.grid.major = element_blank(),  # Remove major gridlines
+        panel.grid.minor = element_blank(),  # Remove minor gridlines
+        plot.background = element_rect(fill = "#edeff4", colour = NA),  # Avoid drawing plot outline
+        legend.background = element_rect(fill = "#edeff4"),
+        legend.box.background = element_rect(fill = "#edeff4"),
+        legend.key = element_rect(fill = "#edeff4")
+      )
+  }
+}
+
+```

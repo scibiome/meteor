@@ -429,7 +429,7 @@ output$feature_imp_plot <- renderPlotly({
   }
 })
 
-output$report <- downloadHandler(
+output$report_prediction <- downloadHandler(
   # For PDF output, change this to "report.pdf"
   filename = "report_prediction.html",
   content = function(file) {
@@ -440,9 +440,9 @@ output$report <- downloadHandler(
     file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/report_prediction.Rmd", tempReport, overwrite = TRUE)
 
     # Set up parameters to pass to Rmd document
-    params <- list(prediction_stored_RMD = prediction_stored, input_RMD = input)
+    params <- list(prediction_stored_RMD = prediction_stored$computation_done)
 
-    # Knit the document, passing in the `params` list, and eval it in a
+    # Knit the document, passing in the `params` list, and eval it in as
     # child of the global environment (this isolates the code in the document
     # from the code in this app).
     rmarkdown::render(tempReport, output_file = file,

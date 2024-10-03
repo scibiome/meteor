@@ -1,0 +1,152 @@
+---
+title: "Dynamic report"
+output: html_document
+params:
+  df_pca_RMD: NA
+  input_RMD: NA
+  catv_RMD: NA
+  data_RMD: NA
+---
+
+```{r}
+df_pca <- params$df_pca_RMD
+input <- params$input_RMD
+catv <- params$catv_RMD
+data <- params$data_RMD
+```
+
+
+```{r}
+res.pca <- prcomp(df_pca)
+
+# Visualize eigenvalues/variances
+k <- fviz_screeplot(res.pca, addlabels = TRUE) +
+                    theme_apa()
+
+ggplotly(k) %>% layout(plot_bgcolor  = "#edeff4",
+                       paper_bgcolor = "#edeff4",
+                       fig_bgcolor   = "#edeff4")
+```
+
+
+```{r}
+a <- catv
+
+vars <- c("id", "time", a, "metabolites", "values")
+
+df <- data %>%
+  select(all_of(vars)) %>%
+  filter(time %in% input$timepoint) %>%
+  select(-time) %>%
+  pivot_wider(names_from = "metabolites",
+              values_from = "values", id_cols = all_of(c("id", a))) %>%
+  select(-id)
+
+# Perform PCA on the data after excluding 'a'
+df.pca <- df %>% select(-all_of(a)) %>% prcomp()
+
+# Retrieve the selected principal components for plotting
+dim1 <- input$pcA %>% as.integer()
+dim2 <- input$pcB %>% as.integer()
+
+# Set habillage based on unique categories in the first column
+if (length(unique(as.factor(df[[1]]))) < 2) {
+  habillage <- "none"
+} else {
+  habillage <- as.factor(df[[1]])
+}
+
+# Generate PCA scatter plot
+k <- fviz_pca_ind(df.pca,
+                  label = "none",        # Hide individual labels
+                  axes = c(dim1, dim2),  # Use the selected PC dimensions for x and y
+                  habillage = habillage, # Color by groups if available
+                  addEllipses = TRUE     # Add ellipses around groups
+) + theme_apa()
+
+# Convert ggplot object to Plotly for interactivity
+k <- ggplotly(k)
+
+# Fix labels in the Plotly object
+for (i in 1:length(k$x$data)) {
+  if (!is.null(k$x$data[[i]]$name)) {
+    k$x$data[[i]]$name <- gsub("\\(", "", str_split(k$x$data[[i]]$name, ",")[[1]][1])
+  }
+}
+
+# Set layout properties for the plotly object
+k %>% layout(
+  plot_bgcolor  = "#edeff4",
+  paper_bgcolor = "#edeff4",
+  fig_bgcolor   = "#edeff4",
+  legend = list(bgcolor = "#edeff4")
+)
+
+```
+
+
+
+```{r}
+res.pca <- prcomp(df_pca)
+
+dim1 <- input$pcA %>% as.integer()
+
+# Contributions of variables to PC1
+k <- fviz_contrib(res.pca, choice = "var", axes = dim1, top = 10)
+ggplotly(k) %>% layout(
+  plot_bgcolor  = "#edeff4",
+  paper_bgcolor = "#edeff4",
+  fig_bgcolor   = "#edeff4"
+)
+
+```
+
+
+```{r}
+res.pca <- prcomp(df_pca, scale. = TRUE)
+
+dim2 <- input$pcB %>% as.integer()
+
+# Contributions of variables to PC2
+k <- fviz_contrib(res.pca, choice = "var", axes = dim2, top = 10)
+
+# Convert to Plotly
+ggplotly(k) %>% layout(
+  plot_bgcolor = "#edeff4",
+  paper_bgcolor = "#edeff4"
+)
+
+```
+
+
+```{r}
+res.pca <- prcomp(df_pca)
+
+dim1 <- input$pcA %>% as.integer()
+dim2 <- input$pcB %>% as.integer()
+
+# Control the transparency of variables using their contributions
+k <- fviz_pca_var(res.pca, col.var = "contrib",
+                  alpha.var = "contrib",
+                  axes = c(dim1, dim2),
+                  repel = TRUE) +
+          theme_apa() +
+          theme(
+            panel.background = element_rect(fill = "#edeff4",
+                                            colour = NA_character_), # necessary to avoid drawing panel outline
+            panel.grid.major = element_blank(), # get rid of major grid
+            panel.grid.minor = element_blank(), # get rid of minor grid
+            plot.background = element_rect(fill = "#edeff4",
+                                           colour = NA_character_), # necessary to avoid drawing plot outline
+            legend.background = element_rect(fill = "#edeff4"),
+            legend.box.background = element_rect(fill = "#edeff4"),
+            legend.key = element_rect(fill = "#edeff4")
+          )
+
+plot(k)
+```
+
+
+
+
+

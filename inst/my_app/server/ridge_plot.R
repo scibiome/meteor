@@ -88,7 +88,6 @@ observeEvent(input$rp_compute, {
   ridgeplot_stored$computation_done_plot1 <- TRUE
 })
 
-
 output$ridgeplot1 <- renderPlot({
   if(ridgeplot_stored$computation_done_plot1)
   {
@@ -121,6 +120,23 @@ output$ridgeplot1 <- renderPlot({
             legend.key = element_rect(fill = "#edeff4")
           )
   }}, bg = '#edeff4')
+
+
+output$report_rp_time <- downloadHandler(
+  filename = "report_rp_time.html",
+  content = function(file) {
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/report_rp_time.Rmd", tempReport, overwrite = TRUE)
+
+    params <- list(ridgeplot_stored_RMD = ridgeplot_stored)
+
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
+)
+
 
 output$info_box_ridge2 <- renderUI({
   HTML("<p align='justify'>
@@ -184,3 +200,18 @@ output$ridgeplot2 <- renderPlot({
               legend.key = element_rect(fill = "#edeff4")
             )
   }}, bg = '#edeff4')
+
+output$report_rp_groups <- downloadHandler(
+  filename = "report_rp_groups.html",
+  content = function(file) {
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/report_rp_groups.Rmd", tempReport, overwrite = TRUE)
+
+    params <- list(ridgeplot_stored_RMD = ridgeplot_stored, catv_RMD = catv())
+
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
+)

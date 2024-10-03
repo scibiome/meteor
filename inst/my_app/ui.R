@@ -346,6 +346,9 @@ ui <- dashboardPage(
           ))
         )),
         fluidRow(
+          column(width = 6, downloadButton("report_PCA", "Generate report"))
+        ),
+        fluidRow(
           column(width = 6, plotlyOutput("eigenPCA", width = "100%", height = "500px")),
           column(width = 6, plotlyOutput("indPCA", width = "100%", height = "500px"))
         ),
@@ -469,6 +472,9 @@ ui <- dashboardPage(
           "rp_compute",
           "Compute"
         ))),
+        fluidRow(
+          column(width = 6, downloadButton("report_rp_time", "Generate report"))
+        ),
         plotOutput("ridgeplot1", width = "100%", height = "1000px")
       ),
       tabItem(
@@ -484,6 +490,9 @@ ui <- dashboardPage(
           "rp_compute2",
           "Compute"
         ))),
+        fluidRow(
+          column(width = 6, downloadButton("report_rp_groups", "Generate report"))
+        ),
         plotOutput("ridgeplot2", width = "100%", height = "1000px")
       ),
       tabItem(
@@ -531,8 +540,7 @@ ui <- dashboardPage(
             "load_top_features",
             "Add top features to selection"
           )),
-          sliderInput("slider", "Slider", 1, 100, 50),
-          column(width = 6, downloadButton("report", "Generate report"))
+          column(width = 6, downloadButton("report_prediction", "Generate report"))
         ),
         fluidRow(
           column(

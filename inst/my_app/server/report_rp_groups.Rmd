@@ -1,0 +1,49 @@
+---
+title: "Dynamic report"
+output: html_document
+params:
+  ridgeplot_stored_RMD: NA
+  catv_RMD: NA
+
+---
+
+```{r}
+ridgeplot_stored <- params$ridgeplot_stored_RMD
+catv <- params$catv_RMD
+```
+
+```{r}
+
+# Check if the computation is done for the second ridge plot
+if (ridgeplot_stored$computation_done_plot2) {
+
+  # Check if there is data to plot
+  if (nrow(ridgeplot_stored$computed_data_plot2) == 0) {
+    # Display an error message if no metabolite is selected
+    show_alert(
+      title = NULL,
+      text = tags$span(
+        tags$h3("Error", style = "color: steelblue;"),
+        "No metabolite selected!"
+      ),
+      html = TRUE
+    )
+  } else {
+    # Create the second ridge plot using a dynamic fill variable from catv()
+    ggplot(data = ridgeplot_stored$computed_data_plot2, 
+           aes(x = values, y = metabolites, fill = !!sym(catv))) +
+      geom_density_ridges(alpha = 0.3, scale = 1) +
+      theme_ridges() +
+      theme(
+        panel.background = element_rect(fill = "#edeff4", colour = NA),  # Avoid drawing panel outline
+        panel.grid.major = element_blank(),  # Remove major gridlines
+        panel.grid.minor = element_blank(),  # Remove minor gridlines
+        plot.background = element_rect(fill = "#edeff4", colour = NA),  # Avoid drawing plot outline
+        legend.background = element_rect(fill = "#edeff4"),
+        legend.box.background = element_rect(fill = "#edeff4"),
+        legend.key = element_rect(fill = "#edeff4")
+      )
+  }
+}
+
+```
