@@ -89,7 +89,6 @@ if (IS_IN_CONTAINER == "TRUE") {
       reticulate::py_install(packages = c("mprod-package"))
       reticulate::py_install(packages = c("numpy"))
 
-
     } else {
       reticulate::use_condaenv("../my_env", required = T)
     }
@@ -133,7 +132,7 @@ server <- function(input, output, session) {
   data("example_data", package = "MeTEor")
 
   #### Source: tcam_shiny.py ----
- # reticulate::source_python("tcam_shiny.py")
+  reticulate::source_python("tcam_shiny.py")
 
   #### source: tutorial.R ====
   source(file.path("server", "tutorial.R"), local = TRUE)$value
