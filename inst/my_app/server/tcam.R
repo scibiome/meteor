@@ -571,3 +571,21 @@ output$fc_loadings_long <- renderPlotly({
                                        fig_bgcolor   = "#edeff4",
                                        legend= list(bgcolor = "#edeff4" ))
       })
+
+
+
+output$report_tcam <- downloadHandler(
+  filename = "report_tcam.html",
+  content = function(file) {
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy(file.path("server", "report_tcam.Rmd"), tempReport, overwrite = TRUE)
+
+    params <- list(df_tcam_RMD = stored_tcam, input_RMD = input, catv_RMD = catv(), data_RMD = data())
+
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
+)
+

@@ -1,0 +1,85 @@
+---
+title: "Dynamic report"
+output: html_document
+params:
+  df_tcam_RMD: NA
+  input_RMD: NA
+  catv_RMD: NA
+  data_RMD: NA
+---
+
+```{r}
+df_tcam <- params$df_tcam_RMD
+input <- params$input_RMD
+catv <- params$catv_RMD
+data <- params$data_RMD
+```
+
+
+```{r}
+# Function to create the PCA plot
+create_pca_plot <- function(data, catv, input) {
+  
+  vars <- c("id", "time", catv, "metabolites", "values")
+  
+  # Pivot data and replace NA in character columns with "NA"
+  df <- data %>%
+    select(all_of(vars)) %>%
+    pivot_wider(names_from = c("metabolites", "time"), values_from = "values") %>%
+    select(-id) 
+  
+  # Replace NA in character columns with "NA"
+  df <- df %>%
+    mutate(across(where(is.character), ~replace_na(., "NA")))
+  
+  # Store the original group (habillage) before filtering
+  habillage <- as.factor(data[[catv]]) # Assuming catv is a column in data that defines groups
+  
+  # Filter complete cases
+  complete_cases <- complete.cases(df)
+  df_complete <- df[complete_cases, ]
+  
+  # Create habillage factor only for complete cases
+  habillage_complete <- habillage[complete_cases] # Only keep corresponding groups
+  habillage_complete <- factor(habillage_complete, exclude = NULL) # Retain NA levels
+  
+  # PCA computation
+  res.pca <- prcomp(df_complete[,-1], scale. = TRUE) # Scale the data for better results
+  
+  # Set dimensions for PCA plot
+  dim1 <- as.integer(input$pcAlong)
+  dim2 <- as.integer(input$pcBlong)
+  
+  # Create PCA plot
+  pca_plot <- fviz_pca_ind(res.pca,
+                            label = "none", # hide individual labels
+                            axes = c(dim1, dim2),
+                            habillage = habillage_complete, # color by groups, including NA
+                            addEllipses = TRUE, # Concentration ellipses
+                            legend.title = catv) + theme_apa()
+  
+  # Convert to Plotly
+  pca_plot <- ggplotly(pca_plot, tooltip = c("x", "y", "color"))
+  
+  # Fix labels
+  for (i in seq_along(pca_plot$x$data)) {
+    if (!is.null(pca_plot$x$data[[i]]$name)) {
+      pca_plot$x$data[[i]]$name <- gsub("\\(", "", str_split(pca_plot$x$data[[i]]$name, ",")[[1]][1])
+    }
+  }
+  
+  # Set layout properties
+  pca_plot %>% layout(
+    plot_bgcolor  = "#edeff4",
+    paper_bgcolor = "#edeff4",
+    fig_bgcolor   = "#edeff4",
+    legend = list(bgcolor = "#edeff4")
+  )
+}
+```
+
+```{r}
+# Call the function to create and render the PCA plot
+create_pca_plot(data, catv, input)
+```
+

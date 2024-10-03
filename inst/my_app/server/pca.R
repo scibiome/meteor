@@ -342,7 +342,7 @@ output$report_PCA <- downloadHandler(
   filename = "report_pca.html",
   content = function(file) {
     tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/report_pca.Rmd", tempReport, overwrite = TRUE)
+    file.copy(file.path("server", "report_pca.Rmd"), tempReport, overwrite = TRUE)
 
     params <- list(df_pca_RMD = df_pca(), input_RMD = input, catv_RMD = catv(), data_RMD = data())
 

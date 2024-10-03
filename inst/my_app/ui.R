@@ -424,9 +424,9 @@ ui <- dashboardPage(
             ))
           )
         ),
-        # fluidRow(
-        #
-        # ),
+        fluidRow(
+          column(width = 6, downloadButton("report_tcam", "Generate report"))
+        ),
         fluidRow(
           column(width = 6, plotlyOutput("ind_pca_long", width = "100%", height = "500px")),
           column(width = 6, plotlyOutput("ind_FC", width = "100%", height = "500px"))
