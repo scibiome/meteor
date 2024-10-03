@@ -62,7 +62,6 @@ library(easystats)
 library(performance)# TODO add to description + references
 library(see) # TODO
 library(patchwork)
-library(shinybusy)
 
 #### Python module ####
 
