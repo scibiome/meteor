@@ -1,0 +1,70 @@
+---
+title: "Dynamic report"
+output: html_document
+params:
+  lineplot_stored_RMD: NA
+  input_RMD: NA
+---
+
+```{r}
+lineplot_stored <- params$lineplot_stored_RMD
+input <- params$input_RMD
+
+```
+
+```{r}
+# Check if the computation is done for plot2
+if (lineplot_stored$computation_done_plot2) {
+
+  # Check if there is data to plot
+  if (nrow(lineplot_stored$computed_data_plot2) == 0) {
+    # Display an error message if no metabolite is selected
+    show_alert(
+      title = NULL,
+      text = tags$span(
+        tags$h3("Error", style = "color: steelblue;"),
+        "No metabolite selected!"
+      ),
+      html = TRUE
+    )
+  } else {
+    # Create the line plot
+    p <- ggplot(data = lineplot_stored$computed_data_plot2, aes(x = as.factor(time), y = values, group = factor(id))) +
+      geom_line(aes(color = factor(!!sym(input$catVars))), alpha = 0.8) +
+      theme_apa() +
+      labs(color = input$catVars) +
+      xlab("time") +
+      facet_wrap(~metabolites) +
+      theme(
+        panel.background = element_rect(fill = "transparent", colour = NA),  # Avoid drawing panel outline
+        panel.grid.major = element_blank(),  # Remove major gridlines
+        panel.grid.minor = element_blank(),  # Remove minor gridlines
+        plot.background = element_rect(fill = "transparent", colour = NA),  # Avoid drawing plot outline
+        legend.background = element_rect(fill = "transparent"),
+        legend.box.background = element_rect(fill = "transparent"),
+        legend.key = element_rect(fill = "transparent")
+      )
+
+    # Convert the ggplot to an interactive plotly plot
+    ggplotly(p)
+  }
+}
+```
+
+
+```{r}
+# Check if test data is available
+
+```
+
+```{r}
+
+
+```
+
+
+```{r}
+
+```
+
+

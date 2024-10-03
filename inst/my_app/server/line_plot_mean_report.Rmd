@@ -1,0 +1,62 @@
+---
+title: "Dynamic report"
+output: html_document
+params:
+  lineplot_stored_RMD: NA
+  input_RMD: NA
+---
+
+```{r}
+lineplot_stored <- params$lineplot_stored_RMD
+input <- params$input_RMD
+
+```
+
+```{r}
+# Check if the computation for plot4 is done
+if (lineplot_stored$computation_done_plot4) {
+
+  # Check if the data to plot is available
+  if (nrow(lineplot_stored$computed_data_plot4) == 0) {
+    # Print an error message if no metabolite is selected
+    message("Error: No metabolite selected!")
+  } else {
+    # Create the line plot with stat_summary (mean lines) and metabolites coloring
+    p <- ggplot(data = lineplot_stored$computed_data_plot4, 
+                aes(x = as.factor(time), y = values, color = metabolites)) +
+      stat_summary(aes(group = metabolites), fun = mean, geom = "line") +
+      theme_apa() +
+      xlab("time") +
+      theme(
+        panel.background = element_rect(fill = "transparent", colour = NA),  # Avoid drawing panel outline
+        panel.grid.major = element_blank(),  # Remove major gridlines
+        panel.grid.minor = element_blank(),  # Remove minor gridlines
+        plot.background = element_rect(fill = "transparent", colour = NA),  # Avoid drawing plot outline
+        legend.background = element_rect(fill = "transparent"),
+        legend.box.background = element_rect(fill = "transparent"),
+        legend.key = element_rect(fill = "transparent")
+      )
+
+    # Convert the ggplot to an interactive plotly plot
+    ggplotly(p)
+  }
+}
+```
+
+
+```{r}
+# Check if test data is available
+
+```
+
+```{r}
+
+
+```
+
+
+```{r}
+
+```
+
+

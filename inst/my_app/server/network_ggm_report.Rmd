@@ -1,0 +1,85 @@
+---
+title: "Dynamic report"
+output: html_document
+params:
+  data_RMD: NA
+  df_pca_RMD: NA
+  input_RMD: Na
+  ggm_data_stored_RMD: NA
+---
+
+```{r}
+d <- params$data_RMD
+
+ed <- params$df_pca_RMD
+
+input <- params$input_RMD
+
+ggm_data_stored <- params$ggm_data_stored_RMD
+```
+
+```{r}
+# Correlation matrix and tidy format
+stretched <- ggm_data_stored$mgm.fit
+
+# Prepare the data for visualization
+stretched <- stretched %>%
+  corrr::as_cordf() %>%
+  corrr::stretch() %>%
+  drop_na() %>%
+  filter(between(abs(r), input$abscorr_ggm[1], input$abscorr_ggm[2]))
+
+colnames(stretched) <- c("from", "to", "value")
+
+# Identify communities using igraph
+g <- graph.data.frame(stretched[, c("from", "to")], directed = FALSE)
+E(g)$weight <- stretched$value
+g <- igraph::simplify(g)
+c1 <- igraph::cluster_fast_greedy(g)
+
+# Store computed data in ggm_data_stored
+isolate({
+  ggm_data_stored$edge.ggm <- stretched %>% as.data.frame()
+  ggm_data_stored$node.ggm <- unique(stretched$from) %>% as.data.frame()
+  colnames(ggm_data_stored$node.ggm) <- "id"
+  ggm_data_stored$node.ggm$group <- membership(c1)
+  ggm_data_stored$edge.ggm$color <- ifelse(ggm_data_stored$edge.ggm$value > 0, "blue", "red")
+  ggm_data_stored$edge.ggm$value <- abs(ggm_data_stored$edge.ggm$value)
+})
+
+# Render the network visualization
+visNetwork(isolate(ggm_data_stored$node.ggm), isolate(ggm_data_stored$edge.ggm)) %>%
+  visEdges(color = isolate(ggm_data_stored$edge.ggm$color)) %>%
+  visIgraphLayout(layout = input$layoutselect.ggm) %>%
+  visOptions(
+    highlightNearest = list(enabled = TRUE, degree = list(from = 0, to = 1)),
+    nodesIdSelection = TRUE,
+    manipulation = TRUE,
+    selectedBy = "group"
+  ) %>%
+  visInteraction(multiselect = TRUE) %>%
+  visEvents(select = "function(nodes) {
+                    Shiny.onInputChange('current_node_selection', nodes.nodes);
+                    }")
+
+```
+
+```{r}
+table.dt <- ggm_data_stored$distinct_connections %>%
+  mutate(value = as.numeric(value)) %>%
+  mutate(across(value, ~ round(., 2))) # Updated to use across()
+
+datatable(table.dt, options = list(
+  rowCallback = JS("function(row, data) { /* Your JS code here */ }"), # Replace with your actual JS callback
+  lengthChange = FALSE
+))
+
+```
+
+```{r}
+if ((!is.null(input$current_node_selection)) & (nrow(ggm_data_stored$distinct_connections[0]) > 0)) {
+  ggarrange(plotlist = ggm_data_stored$scatter_plot) + bgcolor("#edeff4")
+}
+```
+
+
