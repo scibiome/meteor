@@ -99,6 +99,23 @@ output$plot2 <- renderPlotly({
   }
 })
 
+output$report_lp_individuals <- downloadHandler(
+  filename = "report_lp_individuals.html",
+  content = function(file) {
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/line_plot_individuals_report.Rmd", tempReport, overwrite = TRUE)
+
+    params <- list(lineplot_stored_RMD = lineplot_stored, input_RMD = input)
+
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
+)
+
+
+
 observeEvent(input$lp_compute3, {
   a <- catv()
   vars <- c("id", "time", a, "metabolites", "values")
@@ -152,6 +169,24 @@ output$plot3 <- renderPlotly({
     ggplotly(p)
   }
 })
+
+output$report_lp_groups <- downloadHandler(
+  filename = "report_lp_groups.html",
+  content = function(file) {
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/line_plot_groups_report.Rmd", tempReport, overwrite = TRUE)
+
+    params <- list(lineplot_stored_RMD = lineplot_stored, input_RMD = input)
+
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
+)
+
+
+
 
 observeEvent(input$lp_compute4, {
   a <- catv()
@@ -207,3 +242,20 @@ output$plot4 <- renderPlotly({
     ggplotly(p)
   }
 })
+
+
+output$report_lp_mean <- downloadHandler(
+  filename = "report_lp_mean.html",
+  content = function(file) {
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/line_plot_mean_report.Rmd", tempReport, overwrite = TRUE)
+
+    params <- list(lineplot_stored_RMD = lineplot_stored, input_RMD = input)
+
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
+)
+

@@ -153,6 +153,23 @@ observeEvent(input$clustrow1, {
 
 })
 
+output$report_clusterheatmap1 <- downloadHandler(
+  filename = "report_clusterheatmap1.html",
+  content = function(file) {
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/cluster_heatmap1_report.Rmd", tempReport, overwrite = TRUE)
+
+    params <- list(data_RMD = data(), input_RMD = input, catv_RMD = catv())
+
+
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
+)
+
+
 observe({
     req(data())
     dat.nam <- data()
@@ -223,3 +240,17 @@ observeEvent(input$timepoint, {
 })
 
 
+output$report_clusterheatmap2 <- downloadHandler(
+  filename = "report_clusterheatmap2.html",
+  content = function(file) {
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/cluster_heatmap2_report.Rmd", tempReport, overwrite = TRUE)
+
+    params <- list(heatmap_plot_stored_RMD = heatmap_plot_stored, input_RMD = input)
+
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
+)

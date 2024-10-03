@@ -1,0 +1,92 @@
+---
+title: "Dynamic report"
+output: html_document
+params:
+  data_RMD: NA
+  df_pca_RMD: NA
+  input_RMD: Na
+  stored_node_pcn_RMD: NA
+---
+
+```{r}
+d <- params$data_RMD
+
+ed <- params$df_pca_RMD
+
+input <- params$input_RMD
+
+stored_node_pcn <- params$stored_node_pcn_RMD
+```
+
+```{r}
+# Correlation matrix and tidy format
+tidy_cors <- ed %>%
+  correlate() %>%
+  stretch()
+
+# Filter correlations based on the input range
+graph_cors <- tidy_cors %>%
+  filter(between(abs(r), input$abscorr[1], input$abscorr[2]))
+
+# Rename columns to match network format
+colnames(graph_cors) <- c("from", "to", "value")
+
+# Identify communities using igraph clustering
+g <- graph.data.frame(graph_cors[, c("from", "to")], directed = FALSE)
+E(g)$weight <- abs(graph_cors$value)
+g <- igraph::simplify(g)
+c1 <- igraph::cluster_fast_greedy(g)
+
+# Store nodes and edges for visNetwork
+stored_node_pcn$edge.pcn <- graph_cors %>% as.data.frame()
+stored_node_pcn$node.pcn <- unique(graph_cors$from) %>% as.data.frame()
+colnames(stored_node_pcn$node.pcn) <- "id"
+stored_node_pcn$node.pcn$group <- membership(c1)
+stored_node_pcn$edge.pcn$color <- ifelse(stored_node_pcn$edge.pcn$value > 0, "blue", "red")
+
+# Plot network using visNetwork
+visNetwork(stored_node_pcn$node.pcn, stored_node_pcn$edge.pcn) %>%
+  visEdges(color = stored_node_pcn$edge.pcn$color) %>%
+  visIgraphLayout(layout = input$layoutselect.pcn) %>%
+  visOptions(
+    highlightNearest = list(enabled = TRUE, degree = list(from = 0, to = 1)),
+    nodesIdSelection = TRUE,
+    manipulation = TRUE,
+    selectedBy = "group"
+  ) %>%
+  visInteraction(multiselect = TRUE) %>%
+  visIgraphLayout() %>%
+  visEvents(select = "function(nodes) {
+                      Shiny.onInputChange('current_node_selection', nodes.nodes);
+                      ;}")
+```
+
+```{r}
+library(dplyr)
+library(DT)
+
+# Assuming 'stored_node_pcn' and 'input' are defined elsewhere in your application
+
+table.dt <- stored_node_pcn$edge.pcn %>%
+  filter(from %in% input$current_node_selection) %>%
+  rowwise() %>%
+  mutate(results = paste(sort(c(from, to)), collapse = ",")) %>%
+  ungroup() %>%
+  distinct(results, .keep_all = TRUE) %>%
+  select(-results, -color) %>%
+  mutate(value = as.numeric(value)) %>%
+  mutate(across(value, ~ round(., 2))) # Updated to use across()
+
+datatable(table.dt, options = list(
+  rowCallback = JS("function(row, data) { /* Your JS code here */ }"), # Replace with your actual JS callback
+  lengthChange = FALSE
+))
+```
+
+```{r}
+if ((!is.null(input$current_node_selection)) & (nrow(stored_node_pcn$distinct_connections[0]) > 0)) {
+  ggarrange(plotlist = stored_node_pcn$scatter_plot) + bgcolor("#edeff4")
+}
+```
+
+
