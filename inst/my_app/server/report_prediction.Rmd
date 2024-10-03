@@ -2,7 +2,6 @@
 title: "Dynamic report"
 output: html_document
 params:
-  n: NA
   prediction_stored_RMD: NA
   input_RMD: NA
 ---
@@ -11,7 +10,7 @@ params:
 # The `params` object is available in the document.
 prediction_stored <- params$prediction_stored_RMD
 input <- params$input_RMD
-print(params$prediction_stored)
+print(prediction_stored)
 ```
 
 ```{r}
