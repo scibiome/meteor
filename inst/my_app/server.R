@@ -82,33 +82,13 @@ if (IS_IN_CONTAINER == "TRUE") {
   if (os_name == "Windows") {
     # Check if directory my_env exists
     if (!dir.exists("../my_env")) {
-      # Show a busy modal dialog while the environment is being set up
-      showModal(modalDialog(
-        title = "Setting up the Python environment",
-        "This may take a few minutes. Please wait...",
-        footer = NULL
-      ))
-
-      # Create the conda environment and install the necessary packages
-      withProgress(message = "Installing Python environment", value = 0, {
-        incProgress(0.2, detail = "Locating Miniconda...")
-        reticulate::use_python(rminiconda::find_miniconda_python("miniconda_for_meteor", path = "C:\\miniconda_py_r"), required = TRUE)
-
-        incProgress(0.4, detail = "Creating Conda environment...")
-        reticulate::conda_create(envname = "../my_env", python = rminiconda::find_miniconda_python("miniconda_for_meteor", path = "C:\\miniconda_py_r"))
-
-        incProgress(0.7, detail = "Installing required packages...")
-        reticulate::use_condaenv("../my_env", required = TRUE)
-        reticulate::py_install(packages = c("pandas", "mprod-package", "numpy"))
-
-        incProgress(1, detail = "Environment setup complete")
-      })
-
-      # Remove the modal after the setup is complete
-      removeModal()
+      reticulate::use_python(rminiconda::find_miniconda_python("miniconda_for_meteor", path = "C:\\miniconda_py_r"), required = TRUE)
+      reticulate::conda_create(envname = "../my_env", python = rminiconda::find_miniconda_python("miniconda_for_meteor", path = "C:\\miniconda_py_r"))
+      reticulate::use_condaenv("../my_env", required = T)
+      #reticulate::py_install(packages = c(c("pandas == 1.5.2"), "mprod-package", c("numpy == 1.23.0")))
+      reticulate::py_install(packages = c("pandas", "mprod-package", "numpy"), pip = T)
     } else {
-      # Use the existing conda environment if it already exists
-      reticulate::use_condaenv("../my_env", required = TRUE)
+      reticulate::use_condaenv("../my_env", required = T)
     }
   } else if (os_name == "Linux") {
     # Check if directory my_env exists
@@ -150,7 +130,7 @@ server <- function(input, output, session) {
   data("example_data", package = "MeTEor")
 
   #### Source: tcam_shiny.py ----
-  # reticulate::source_python("tcam_shiny.py")
+  reticulate::source_python("tcam_shiny.py")
 
   #### source: tutorial.R ====
   source(file.path("server", "tutorial.R"), local = TRUE)$value
