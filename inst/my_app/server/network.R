@@ -52,7 +52,7 @@ rowCallback <- c(
           }"
 )
 
-stored_node_pcn <- reactiveValues(node.pcn = NULL, edge.pcn = NULL)
+stored_node_pcn <- reactiveValues(node.pcn = NULL, edge.pcn = NULL, scatter_plot = NULL)
 
 #### Correlation network ----
 
@@ -122,6 +122,22 @@ output$tbl <- renderDT(
     rowCallback = JS(rowCallback),
     lengthChange = FALSE
   )
+)
+
+output$report_network_pearson <- downloadHandler(
+  filename = "network_pearson_report.html",
+  content = function(file) {
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/network_pearson_report.Rmd", tempReport, overwrite = TRUE)
+
+    params <- list(data_RMD = data(), input_RMD = input, df_pca_RMD = df_pca(), stored_node_pcn_RMD = stored_node_pcn)
+
+    input <- params$input_RMD
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
 )
 
 #### Export Network: https://github.com/datastorm-open/visNetwork/issues/138 ====
@@ -231,8 +247,19 @@ output$scatterplot <- renderPlot({
 
               data_timepoint_selected <- df_pca()
 
-              plot_list = compute_scatter_plots(stored_node_pcn$distinct_connections, data_timepoint_selected)
-              ggarrange(plotlist = plot_list) + bgcolor("#edeff4")
+              # plot_list = compute_scatter_plots(stored_node_pcn$distinct_connections, data_timepoint_selected)
+              # ggarrange(plotlist = plot_list) + bgcolor("#edeff4")
+
+
+              # compute_scatter_plots(stored_node_pcn$distinct_connections, data_timepoint_selected)
+
+
+              stored_node_pcn$scatter_plot <- compute_scatter_plots(stored_node_pcn$distinct_connections, data_timepoint_selected)
+
+              # Render the plots using ggarrange
+              ggarrange(plotlist = stored_node_pcn$scatter_plot) + bgcolor("#edeff4")
+
+
             }
           })
 
@@ -327,7 +354,7 @@ observeEvent(input$ggm_compute, {
 #### display the network ====
 
 ggm_data_stored <- reactiveValues(mgm.fit = NULL, computation_done = FALSE,
-                                  edge.ggm=NULL, node.ggm = NULL)
+                                  edge.ggm=NULL, node.ggm = NULL, scatter_plot = NULL)
 
 observeEvent(input$ggm_compute, {
   if(ggm_data_stored$computation_done)
@@ -485,9 +512,30 @@ output$scatterplot_ggm <- renderPlot({
 
       data_timepoint_selected <- df_pca()
 
-      plot_list = compute_scatter_plots(ggm_data_stored$distinct_connections, data_timepoint_selected)
 
-      ggarrange(plotlist = plot_list) + bgcolor("#edeff4")
+      ggm_data_stored$scatter_plot <- compute_scatter_plots(ggm_data_stored$distinct_connections, data_timepoint_selected)
+
+      # Render the plots using ggarrange
+      ggarrange(plotlist = ggm_data_stored$scatter_plot) + bgcolor("#edeff4")
+
   }
   }
 })
+
+output$report_network_ggm <- downloadHandler(
+  filename = "report_pca.html",
+  content = function(file) {
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/network_ggm_report.Rmd", tempReport, overwrite = TRUE)
+
+    params <- list(df_pca_RMD = df_pca(), input_RMD = input, catv_RMD = catv(), data_RMD = data())
+    params <- list(data_RMD = data(), input_RMD = input, df_pca_RMD = df_pca(), ggm_data_stored_RMD = ggm_data_stored)
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
+)
+
+
+
