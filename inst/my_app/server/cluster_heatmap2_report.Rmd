@@ -1,0 +1,57 @@
+---
+title: "Dynamic report"
+output: html_document
+params:
+  heatmap_plot_stored_RMD: NA
+  input_RMD: NA
+---
+
+```{r}
+heatmap_plot_stored <- params$heatmap_plot_stored_RMD
+input <- params$input_RMD
+```
+
+```{r}
+if(heatmap_plot_stored$computation_done_plot) {
+  if (nrow(heatmap_plot_stored$computed_data_plot) == 0) {
+    # Display an error message if no data is available
+    print("No metabolites selected!")
+  } else {
+    # Create the background theme for the plot
+    gg_back_box <- theme(
+      panel.background = element_rect(fill = "#edeff4"),
+      plot.background = element_rect(fill = "#edeff4"),
+      legend.background = element_rect(fill = "#edeff4")
+    )
+
+    # Generate the heatmaply plot
+    heatmap <- heatmaply(
+      heatmap_plot_stored$computed_data_plot,
+      k_col = input$clustcol,
+      k_row = input$clustrow,
+      heatmap_layers = gg_back_box
+    )
+
+    # Render the plotly heatmap
+    heatmap
+  }
+}
+```
+
+
+```{r}
+# Check if test data is available
+
+```
+
+```{r}
+
+
+```
+
+
+```{r}
+
+```
+
+

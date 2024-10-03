@@ -1115,7 +1115,10 @@ ui <- dashboardPage(
             min = 2, max = 10, value = 2
           ))
         ),
-        imageOutput("clustheatmap", width = "300%", height = "200%")
+        imageOutput("clustheatmap", width = "300%", height = "200%"),
+        fluidRow(
+          column(width = 6, downloadButton("report_clusterheatmap1", "Generate report"))
+        ),
       ),
       tabItem(
         tabName = "bt",
@@ -1138,7 +1141,10 @@ ui <- dashboardPage(
             min = 2, max = 10, value = 2
           ))
         ),
-        plotlyOutput("clustheatmap2", height = "1000px")
+        plotlyOutput("clustheatmap2", height = "1000px"),
+        fluidRow(
+          column(width = 6, downloadButton("report_clusterheatmap2", "Generate report"))
+        ),
       ),
       tabItem(
         tabName = "volcano",

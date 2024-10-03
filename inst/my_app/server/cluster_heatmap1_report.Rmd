@@ -1,0 +1,101 @@
+---
+title: "Dynamic report"
+output: html_document
+params:
+  data_RMD: NA
+  catv_RMD: NA
+  input_RMD: NA
+---
+
+```{r}
+data <- params$data_RMD
+catv <- params$catv_RMD
+input <- params$input_RMD
+```
+
+```{r}
+renderImage({
+
+  # Get the variable names for clustering
+  a <- catv # Assume catv() is defined elsewhere
+
+  vars <- c("id", "time", a, "metabolites", "values")
+  ids <- c("id", a)
+
+  # Filter data for id == 24
+  data_filtered <- data() %>% 
+    filter(id == 24)
+
+  # Prepare the data for the heatmap
+  data1 <- data() %>%
+    as.data.frame() %>%
+    select(all_of(vars)) %>%
+    filter(metabolites %in% input$id6) %>%
+    select(-metabolites) %>%
+    pivot_wider(names_from = "time", values_from = "values", id_cols = ids) %>%
+    column_to_rownames(var = "id")
+
+  # Check for cases with missing data
+  cases_not_all_timepoints <- data1[!complete.cases(data1), ]
+  print("39 cases do not have all data") # Replace with a more robust message
+  nrow(cases_not_all_timepoints)
+  print(cases_not_all_timepoints)
+  
+  data1 <- data1[complete.cases(data1), ]
+  data2 <- data1[, -1]
+
+  req(input$clustrow1) # Ensure input is available
+  req(input$clustcol1)
+
+  # Create heatmap and clustering
+  res <- pheatmap(data2)
+
+  # Row clustering
+  my_pat_row <- cutree(res$tree_row, k = input$clustrow1)
+  clust.name <- data.frame(cluster = paste0("Cluster ", my_pat_row), row = data1[, 1])
+
+  # Column clustering
+  my_pat_col <- cutree(res$tree_col, k = input$clustcol1)
+  clust.name.col <- data.frame(cluster = paste0("Cluster ", my_pat_col))
+
+  # Generate the heatmap with annotations
+  map <- pheatmap(data2, 
+                  annotation_row = clust.name,
+                  annotation_col = clust.name.col,
+                  fontsize_row = 3,
+                  cutree_rows = input$clustrow1,
+                  cutree_cols = input$clustcol1)
+
+  # Save the heatmap as a temporary PNG file
+  outfile <- tempfile(fileext = '.png')
+  png(outfile, width = 30, height = 25, res = 600, units = "cm")
+  grid.draw(rectGrob(gp = gpar(fill = "#edeff4", lwd = 0))) # Background color
+  grid.draw(map) # Draw the heatmap
+  dev.off()
+
+  # Return a list containing the filename and properties for rendering the image
+  list(src = outfile,
+       contentType = 'image/png',
+       width = 1400,
+       height = 1000,
+       alt = "This is alternate text")
+}, deleteFile = TRUE)
+```
+
+
+```{r}
+# Check if test data is available
+
+```
+
+```{r}
+
+
+```
+
+
+```{r}
+
+```
+
+
