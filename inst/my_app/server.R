@@ -62,7 +62,7 @@ library(easystats)
 library(performance)# TODO add to description + references
 library(see) # TODO
 library(patchwork)
-library(shinybusy)
+
 
 #### Python module ####
 
@@ -85,10 +85,7 @@ if (IS_IN_CONTAINER == "TRUE") {
       reticulate::use_python(rminiconda::find_miniconda_python("miniconda_for_meteor", path = "C:\\miniconda_py_r"), required = TRUE)
       reticulate::conda_create(envname = "../my_env", python = rminiconda::find_miniconda_python("miniconda_for_meteor", path = "C:\\miniconda_py_r"))
       reticulate::use_condaenv("../my_env", required = T)
-      reticulate::py_install(packages = c("pandas == 1.5.2"), pip = T)
-      reticulate::py_install(packages = c("mprod-package"))
-      reticulate::py_install(packages = c("scipy == 1.10.0"), pip = T)
-      reticulate::py_install(packages = c("numpy == 1.23.0"), pip = T)
+      reticulate::py_install(packages = c(c("pandas == 1.5.2"), "mprod-package", c("numpy == 1.23.0")))
     } else {
       reticulate::use_condaenv("../my_env", required = T)
     }
@@ -98,11 +95,7 @@ if (IS_IN_CONTAINER == "TRUE") {
       reticulate::use_python(rminiconda::find_miniconda_python("miniconda_for_meteor"), required = TRUE)
       reticulate::conda_create(envname = "../my_env", python = rminiconda::find_miniconda_python("miniconda_for_meteor"))
       reticulate::use_condaenv("../my_env", required = T)
-      reticulate::use_condaenv("../my_env", required = T)
-      reticulate::py_install(packages = c("pandas == 1.5.2"), pip = T)
-      reticulate::py_install(packages = c("mprod-package"))
-      reticulate::py_install(packages = c("scipy == 1.10.0"), pip = T)
-      reticulate::py_install(packages = c("numpy == 1.23.0"), pip = T)
+      reticulate::py_install(packages = c(c("pandas == 1.5.2"), "mprod-package", c("numpy == 1.23.0")))
     } else {
       reticulate::use_condaenv("../my_env", required = T)
     }
@@ -112,10 +105,7 @@ if (IS_IN_CONTAINER == "TRUE") {
       reticulate::use_python(rminiconda::find_miniconda_python("miniconda_for_meteor"), required = TRUE)
       reticulate::conda_create(envname = "../my_env", python = rminiconda::find_miniconda_python("miniconda_for_meteor"))
       reticulate::use_condaenv("../my_env", required = T)
-      reticulate::py_install(packages = c("pandas == 1.5.2"), pip = T)
-      reticulate::py_install(packages = c("mprod-package"))
-      reticulate::py_install(packages = c("scipy == 1.10.0"), pip = T)
-      reticulate::py_install(packages = c("numpy == 1.23.0"), pip = T)
+      reticulate::py_install(packages = c(c("pandas == 1.5.2"), "mprod-package", c("numpy == 1.23.0")))
     } else {
       reticulate::use_condaenv("../my_env", required = T)
     }
@@ -139,7 +129,7 @@ server <- function(input, output, session) {
   data("example_data", package = "MeTEor")
 
   #### Source: tcam_shiny.py ----
-  reticulate::source_python("tcam_shiny.py")
+  # reticulate::source_python("tcam_shiny.py")
 
   #### source: tutorial.R ====
   source(file.path("server", "tutorial.R"), local = TRUE)$value
@@ -154,7 +144,7 @@ server <- function(input, output, session) {
   source(file.path("server", "pca.R"), local = TRUE)$value
 
   #### source: tcam.R ====
-  source(file.path("server", "tcam.R"), local = TRUE)$value
+  # source(file.path("server", "tcam.R"), local = TRUE)$value
 
   #### source: ridge_plot.R ====
   source(file.path("server", "ridge_plot.R"), local = TRUE)$value
