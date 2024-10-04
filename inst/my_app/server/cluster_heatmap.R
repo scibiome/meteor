@@ -157,7 +157,7 @@ output$report_clusterheatmap1 <- downloadHandler(
   filename = "report_clusterheatmap1.html",
   content = function(file) {
     tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/cluster_heatmap1_report.Rmd", tempReport, overwrite = TRUE)
+    file.copy(file.path("server", "cluster_heatmap1_report.Rmd"), tempReport, overwrite = TRUE)
 
     params <- list(data_RMD = data(), input_RMD = input, catv_RMD = catv())
 
