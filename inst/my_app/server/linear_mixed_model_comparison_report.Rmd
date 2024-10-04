@@ -2,28 +2,16 @@
 title: "Dynamic report"
 output: html_document
 params:
-  repeated.anova.feat.selection_RMD: NA
   input_RMD: NA
-  data_RMD: NA
 ---
 
 ```{r}
-repeated.anova.feat.selection <- params$repeated.anova.feat.selection_RMD
+
 input <- params$input_RMD
 ```
 
 ```{r}
-datatable(repeated.anova.feat.selection$ranking.sorted,
-  caption = "Ranked metabolites by p-values",
-  extensions = "Buttons",
-  options = list(
-    searching = FALSE,
-    lengthChange = FALSE,
-    paging = TRUE,
-    dom = "Bfrtip",
-    buttons = c("copy", "print", "csv", "excel")
-  )
-)
+
 ```
 
 ```{r}

@@ -862,7 +862,7 @@ ui <- dashboardPage(
               )
             ),
             fluidRow(
-              column(width = 6, downloadButton("report_rp_time", "Generate report"))
+              column(width = 6, downloadButton("report_linear_mixed_model_comparison_report", "Generate report"))
             ),
             fluidRow(
               column(

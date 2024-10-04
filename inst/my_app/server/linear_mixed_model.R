@@ -123,9 +123,7 @@ lmm.res <- reactiveValues(result = NULL,
                           model.code = NULL,
                           res.anova = NULL,
                           multi_tab = NULL,
-                          check.mod = NULL,
-                          data.filtered = NULL,
-                          check_model_finished = NULL)
+                          check.mod = NULL)
 
 stored_lm <- reactiveValues(lm1 = NULL, lm2=NULL, lm3=NULL)
 
@@ -186,10 +184,28 @@ observeEvent(input$act_lmm,{
 
   lmm.res$result <- HTML(tab_model(mixed.lm)$knitr)
   c <- 1
-
-  lmm.res$data.filtered <- data.filtered
-  lmm.res$check_model_finished <- check_model(lmm.res$check.mod, base_size = 13.5)
-
+  # sub_samp <- sample(data.filtered$id, 10)
+  #
+  # lmm.res$vis_grid <- data.filtered %>%
+  #                       filter(id %in% sub_samp) %>%
+  #                            ggplot(.,aes(time, values, colour = factor(!!sym(input$catVars)))) +
+  #                               labs(color = input$catVars) +
+  #                               facet_wrap(~id) +
+  #                               geom_line(aes(y=fit), size=0.8) +
+  #                               geom_point(alpha = 0.3) +
+  #                               geom_hline(yintercept=0, linetype="dashed") +
+  #                                   theme_apa() +
+  #                                   theme(
+  #                                     panel.background = element_rect(fill = "transparent",
+  #                                                                     colour = NA_character_), # necessary to avoid drawing panel outline
+  #                                     panel.grid.major = element_blank(), # get rid of major grid
+  #                                     panel.grid.minor = element_blank(), # get rid of minor grid
+  #                                     plot.background = element_rect(fill = "transparent",
+  #                                                                    colour = NA_character_), # necessary to avoid drawing plot outline
+  #                                     legend.background = element_rect(fill = "transparent"),
+  #                                     legend.box.background = element_rect(fill = "transparent"),
+  #                                     legend.key = element_rect(fill = "transparent")
+  #                                   )
 
   lmm.res$lmm_model <- ggplot(data.filtered, aes(x=time, y=values,  color = factor(!!sym(input$catVars)) ,group=factor(id)))+
                                 labs(color = input$catVars) +
@@ -226,29 +242,27 @@ observeEvent(input$act_lmm,{
                                       legend.box.background = element_rect(fill = "transparent"),
                                       legend.key = element_rect(fill = "transparent")
                                     )
-output$check.mod.lmm <- renderPlot({check_model(lmm.res$check.mod, base_size = 13.5)})
-output$model.code <- renderText({paste0("Model: ", lmm.res$model.code)})
-output$result.single <- renderUI({lmm.res$result})
 
-output$report_linear_mixed_model <- downloadHandler(
-  filename = "report_linear_mixed_model.html",
-  content = function(file) {
-    tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/linear_mixed_model_report.Rmd", tempReport, overwrite = TRUE)
+  output$report_linear_mixed_model <- downloadHandler(
+    filename = "report_linear_mixed_model.html",
+    content = function(file) {
+      tempReport <- file.path(tempdir(), "report.Rmd")
+      file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/linear_mixed_model_report.Rmd", tempReport, overwrite = TRUE)
 
-    params <- list(input_RMD = input, lmm.res_RMD = lmm.res)
+      params <- list(input_RMD = input, lmm.res_RMD = lmm.res)
 
-    rmarkdown::render(tempReport, output_file = file,
-                      params = params,
-                      envir = new.env(parent = globalenv())
-    )
-  }
-)
+      rmarkdown::render(tempReport, output_file = file,
+                        params = params,
+                        envir = new.env(parent = globalenv())
+      )
+    }
+  )
 
 
+})
 
 
-##### Model comparison ####
+  ##### Model comparison ####
   observeEvent(input$act_lmm2,{
 
 
@@ -281,13 +295,15 @@ output$report_linear_mixed_model <- downloadHandler(
 
 
 
-
+  output$model.code <- renderText({paste0("Model: ", lmm.res$model.code)})
   output$lmm_model <- renderPlotly({ggplotly(lmm.res$lmm_model)})
   output$line_plot <- renderPlotly({ggplotly(lmm.res$line_plot)})
-
+  output$result.single <- renderUI({lmm.res$result})
   #output$vis_grid <- renderPlotly({ggplotly(lmm.res$vis_grid)})
   output$res.anova <- renderPrint({lmm.res$res.anova})
   output$multi_tab <- renderUI({lmm.res$multi_tab})
+  output$check.mod.lmm <- renderPlot({
+   # browser()
+    check_model(lmm.res$check.mod, base_size = 13.5)})
 
-})
 
