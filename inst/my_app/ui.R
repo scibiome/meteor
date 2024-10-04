@@ -595,6 +595,9 @@ ui <- dashboardPage(
           width = 4,
           actionButton("act_fried", "Compute")
         )),
+        fluidRow(
+          column(width = 6, downloadButton("report_friedman", "Generate report"))
+        ),
         fluidRow(column(width = 12, DTOutput("summary_stat"))),
         fluidRow(column(width = 6, DTOutput("res_fried")), column(width = 6, DTOutput("res_fried_eff"))),
         # fluidRow(),
@@ -629,6 +632,9 @@ ui <- dashboardPage(
               width = 4,
               actionButton("act_mixed_anova", "Compute")
             )),
+            fluidRow(
+              column(width = 6, downloadButton("report_mixed_anova", "Generate report"))
+            ),
             fluidRow(column(width = 12, DT::DTOutput("summary_stats_mixed_anova"))),
             fluidRow(column(width = 12, DT::DTOutput("outliers_mixed_anova"))),
             fluidRow(column(width = 12, DT::DTOutput("normality_mixed_anova"))),
