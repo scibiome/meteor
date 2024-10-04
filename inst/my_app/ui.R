@@ -1191,8 +1191,6 @@ ui <- dashboardPage(
             actionButton("act_volc", "Compute")
           ),
           column(width = 2, actionButton("load_top_features_volcano", "Add top features to selection"))
-
-
         ),
         fluidRow(
           column(width = 6, downloadButton("report_volcano", "Generate report"))
@@ -1243,7 +1241,10 @@ ui <- dashboardPage(
           )
         ),
         fluidRow(column(width = 12, DTOutput("export.dt"))),
-        fluidRow(column(width = 12, DTOutput("pathways.dt")))
+        fluidRow(column(width = 12, DTOutput("pathways.dt"))),
+        fluidRow(
+          column(width = 6, downloadButton("report_query", "Generate report"))
+        )
       ),
       tabItem(
         tabName = "packages",

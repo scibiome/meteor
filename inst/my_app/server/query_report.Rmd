@@ -1,0 +1,47 @@
+---
+title: "Dynamic report"
+output: html_document
+params:
+  DT_pathways_RMD: NA
+  input_RMD: NA
+  stored_enriched_kegg_pathways_RMD: NA
+  raw_list_RMD: NA
+---
+
+```{r}
+# DT_pathways <- params$DT_pathways_RMD
+input <- params$input_RMD
+stored_enriched_kegg_pathways <- params$stored_enriched_kegg_pathways_RMD
+raw_list <- params$raw_list_RMD
+```
+
+```{r}
+datatable(data.frame(metabolites = raw_list$data$metabolites), editable = TRUE)
+```
+
+```{r}
+datatable(stored_enriched_kegg_pathways$query_results.df, editable = TRUE,
+          extensions = "Buttons",
+          options = list(paging = TRUE,
+                         scrollX=TRUE,
+                         searching = TRUE,
+                         ordering = TRUE,
+                         dom = 'Bfrtip',
+                         buttons = c("copy", "print", "csv", "excel")
+          ), escape = FALSE)
+```
+
+```{r}
+library(DT)
+
+# Assuming 'enriched_kegg_pathways' is available in your environment
+datatable(data.frame(stored_enriched_kegg_pathways$data), escape = FALSE, extensions = "Buttons", options = list(
+  paging = TRUE,
+  scrollX = TRUE,
+  searching = TRUE,
+  dom = 'Bfrtip',
+  buttons = c("copy", "print", "csv", "excel")
+))
+```
+
+
