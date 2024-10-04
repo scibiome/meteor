@@ -709,6 +709,9 @@ ui <- dashboardPage(
               width = 4,
               actionButton("act_repeated_anova", "Compute")
             )),
+            fluidRow(
+              column(width = 6, downloadButton("report_repeated_measures_anova", "Generate report"))
+            ),
             fluidRow(column(width = 12, DT::DTOutput("summary_stats_repeated_anova"))),
             fluidRow(column(width = 12, DT::DTOutput("outliers_repeated_anova"))),
             fluidRow(column(width = 12, DT::DTOutput("normality_repeated_anova"))),
