@@ -262,7 +262,7 @@ observeEvent(input$add_graph_pc_3d,{
 
         # 3D plot
         p <- plot_ly(dt.pltly, x = ~x, y = ~y, z = ~z, color = ~ifelse(is.na(dt.pltly[[a]]), "NA", as.character(dt.pltly[[a]])),
-                     # colors = c( "green", "blue", "red"),
+                     colors = c('#BF382A', '#0C4B8E'),
                      type = "scatter3d" , mode = "markers")        %>%
           layout(scene = list(xaxis = list(title = paste0("PC", dim1[1])),
                               yaxis = list(title = paste0("PC", dim2[1])),
