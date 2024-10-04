@@ -167,6 +167,7 @@ ui <- dashboardPage(
     #   ")
     #   )
     # ),
+    tags$style(type="text/css", ".selectize-input{ z-index: 0; }"),
     tags$head(tags$style(HTML("
                                 /* logo */
                                 .skin-blue .main-header .logo {
@@ -1104,9 +1105,8 @@ ui <- dashboardPage(
           choices = "",
           selected = "",
           width = "800px",
-          multiple = F,
-          selectize = TRUE
-        ),
+          multiple = F
+          ),
         fluidRow(
           column(width = 6, sliderInput("clustrow1", "Number of clusters (rows):",
             min = 2, max = 10, value = 2
