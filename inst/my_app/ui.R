@@ -803,6 +803,9 @@ ui <- dashboardPage(
               )
             ),
             fluidRow(
+              column(width = 6, downloadButton("report_linear_mixed_model", "Generate report"))
+            ),
+            fluidRow(
               column(
                 width = 12,
                 box(title = "Check model assumptions:",
@@ -857,6 +860,9 @@ ui <- dashboardPage(
                 actionButton("act_lmm2", "Compute"),
                 style = "padding-bottom:17px",
               )
+            ),
+            fluidRow(
+              column(width = 6, downloadButton("report_rp_time", "Generate report"))
             ),
             fluidRow(
               column(
