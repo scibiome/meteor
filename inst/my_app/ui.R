@@ -750,6 +750,9 @@ ui <- dashboardPage(
             ),
             fluidRow(
               column(width = 1, actionButton("act_repeated_anova_selection", "Compute")),
+              fluidRow(
+                column(width = 6, downloadButton("report_repeated_anova_selection", "Generate report"))
+              ),
               column(width = 2, actionButton("load_top_features_repeated_anova", "Add top features to selection"))
             ),
             fluidRow(column(width = 4, DTOutput("repeated.ranking.sorted"))),
