@@ -242,25 +242,31 @@ observeEvent(input$act_lmm,{
                                       legend.box.background = element_rect(fill = "transparent"),
                                       legend.key = element_rect(fill = "transparent")
                                     )
+  lmm.res$data.filtered <- data.filtered
+  lmm.res$check_model_finished <- check_model(lmm.res$check.mod, base_size = 13.5)
 
-  output$report_linear_mixed_model <- downloadHandler(
-    filename = "report_linear_mixed_model.html",
-    content = function(file) {
-      tempReport <- file.path(tempdir(), "report.Rmd")
-      file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/linear_mixed_model_report.Rmd", tempReport, overwrite = TRUE)
-
-      params <- list(input_RMD = input, lmm.res_RMD = lmm.res)
-
-      rmarkdown::render(tempReport, output_file = file,
-                        params = params,
-                        envir = new.env(parent = globalenv())
-      )
-    }
-  )
+  output$model.code <- renderText({paste0("Model: ", lmm.res$model.code)})
+  output$lmm_model <- renderPlotly({ggplotly(lmm.res$lmm_model)})
+  output$line_plot <- renderPlotly({ggplotly(lmm.res$line_plot)})
+  output$result.single <- renderUI({lmm.res$result})
 
 
 })
 
+output$report_linear_mixed_model <- downloadHandler(
+  filename = "report_linear_mixed_model.html",
+  content = function(file) {
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/linear_mixed_model_report.Rmd", tempReport, overwrite = TRUE)
+
+    params <- list(input_RMD = input, lmm.res_RMD = lmm.res)
+
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
+)
 
   ##### Model comparison ####
   observeEvent(input$act_lmm2,{
@@ -295,15 +301,27 @@ observeEvent(input$act_lmm,{
 
 
 
-  output$model.code <- renderText({paste0("Model: ", lmm.res$model.code)})
-  output$lmm_model <- renderPlotly({ggplotly(lmm.res$lmm_model)})
-  output$line_plot <- renderPlotly({ggplotly(lmm.res$line_plot)})
-  output$result.single <- renderUI({lmm.res$result})
-  #output$vis_grid <- renderPlotly({ggplotly(lmm.res$vis_grid)})
-  output$res.anova <- renderPrint({lmm.res$res.anova})
-  output$multi_tab <- renderUI({lmm.res$multi_tab})
-  output$check.mod.lmm <- renderPlot({
-   # browser()
-    check_model(lmm.res$check.mod, base_size = 13.5)})
+
+#output$vis_grid <- renderPlotly({ggplotly(lmm.res$vis_grid)})
+output$res.anova <- renderPrint({lmm.res$res.anova})
+output$multi_tab <- renderUI({lmm.res$multi_tab})
+output$check.mod.lmm <- renderPlot({
+ # browser()
+  check_model(lmm.res$check.mod, base_size = 13.5)})
+
+output$report_linear_mixed_model_comparison_report <- downloadHandler(
+  filename = "report_pca.html",
+  content = function(file) {
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/linear_mixed_model_comparison_report.Rmd", tempReport, overwrite = TRUE)
+
+    params <- list(input_RMD = input)
+
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
+)
 
 
