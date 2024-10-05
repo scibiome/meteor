@@ -1,6 +1,6 @@
 # MeTEor - MEtabolite Trajectory ExplORer <img src="man/figures/logo.png" align="right" width="120"/>
 
-[![R CMD Check](https://github.com/scibiome/meteor/actions/workflows/R-CMD-check.yml/badge.svg)](https://github.com/scibiome/meteor/actions/workflows/R-CMD-check.yml)
+[![R CMD Check](https://github.com/scibiome/meteor/actions/workflows/R-CMD-check.yml/badge.svg?branch=main)](https://github.com/scibiome/meteor/actions/workflows/R-CMD-check.yml)
 
 # Overview
 
