@@ -126,7 +126,7 @@ output$report_rp_time <- downloadHandler(
   filename = "report_rp_time.html",
   content = function(file) {
     tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/report_rp_time.Rmd", tempReport, overwrite = TRUE)
+    file.copy(file.path("server", "report_rp_time.Rmd"), tempReport, overwrite = TRUE)
 
     params <- list(ridgeplot_stored_RMD = ridgeplot_stored)
 
@@ -205,7 +205,7 @@ output$report_rp_groups <- downloadHandler(
   filename = "report_rp_groups.html",
   content = function(file) {
     tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/report_rp_groups.Rmd", tempReport, overwrite = TRUE)
+    file.copy(file.path("server", "report_rp_groups.Rmd"), tempReport, overwrite = TRUE)
 
     params <- list(ridgeplot_stored_RMD = ridgeplot_stored, catv_RMD = catv())
 

@@ -128,7 +128,7 @@ output$report_network_pearson <- downloadHandler(
   filename = "network_pearson_report.html",
   content = function(file) {
     tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/network_pearson_report.Rmd", tempReport, overwrite = TRUE)
+    file.copy(file.path("server", "network_pearson_report.Rmd"), tempReport, overwrite = TRUE)
 
     params <- list(data_RMD = data(), input_RMD = input, df_pca_RMD = df_pca(), stored_node_pcn_RMD = stored_node_pcn)
 
@@ -526,7 +526,7 @@ output$report_network_ggm <- downloadHandler(
   filename = "report_pca.html",
   content = function(file) {
     tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/network_ggm_report.Rmd", tempReport, overwrite = TRUE)
+    file.copy(file.path("server", "network_ggm_report.Rmd"), tempReport, overwrite = TRUE)
 
     params <- list(df_pca_RMD = df_pca(), input_RMD = input, catv_RMD = catv(), data_RMD = data())
     params <- list(data_RMD = data(), input_RMD = input, df_pca_RMD = df_pca(), ggm_data_stored_RMD = ggm_data_stored)

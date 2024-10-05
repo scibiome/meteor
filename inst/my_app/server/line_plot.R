@@ -103,7 +103,7 @@ output$report_lp_individuals <- downloadHandler(
   filename = "report_lp_individuals.html",
   content = function(file) {
     tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/line_plot_individuals_report.Rmd", tempReport, overwrite = TRUE)
+    file.copy(file.path("server", "line_plot_individuals_report.Rmd"), tempReport, overwrite = TRUE)
 
     params <- list(lineplot_stored_RMD = lineplot_stored, input_RMD = input)
 
@@ -174,7 +174,7 @@ output$report_lp_groups <- downloadHandler(
   filename = "report_lp_groups.html",
   content = function(file) {
     tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/line_plot_groups_report.Rmd", tempReport, overwrite = TRUE)
+    file.copy(file.path("server", "line_plot_groups_report.Rmd"), tempReport, overwrite = TRUE)
 
     params <- list(lineplot_stored_RMD = lineplot_stored, input_RMD = input)
 
@@ -248,7 +248,7 @@ output$report_lp_mean <- downloadHandler(
   filename = "report_lp_mean.html",
   content = function(file) {
     tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/line_plot_mean_report.Rmd", tempReport, overwrite = TRUE)
+    file.copy(file.path("server", "line_plot_mean_report.Rmd"), tempReport, overwrite = TRUE)
 
     params <- list(lineplot_stored_RMD = lineplot_stored, input_RMD = input)
 

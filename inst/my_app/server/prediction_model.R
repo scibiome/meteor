@@ -437,7 +437,7 @@ output$report_prediction <- downloadHandler(
     # case we don't have write permissions to the current working dir (which
     # can happen when deployed).
     tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/report_prediction.Rmd", tempReport, overwrite = TRUE)
+    file.copy(file.path("server", "report_prediction.Rmd"), tempReport, overwrite = TRUE)
 
     # Set up parameters to pass to Rmd document
     params <- list(prediction_stored_RMD = prediction_stored$computation_done)
