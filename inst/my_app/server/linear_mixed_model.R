@@ -249,14 +249,14 @@ observeEvent(input$act_lmm,{
   plot_object <- check_model(lmm.res$check.mod, base_size = 13.5)
 
   # Define the file path
-  image_path <- "~/PycharmProjects/meteor_github/inst/my_app/server/check_model_plot.png"
-
+  # image_path <- "~/PycharmProjects/meteor_github/inst/my_app/server/check_model_plot.png"
+  outfile2 <-  tempfile(fileext = ".png")
   # Save the plot as a PNG image
-  png(image_path, width = 800, height = 600)
+  png(outfile2, width = 800, height = 600)
   print(plot_object)
   dev.off()
 
-  lmm.res$check_model_path <- image_path
+  lmm.res$outfile2 <- outfile2
 
   output$model.code <- renderText({paste0("Model: ", lmm.res$model.code)})
   output$lmm_model <- renderPlotly({ggplotly(lmm.res$lmm_model)})
