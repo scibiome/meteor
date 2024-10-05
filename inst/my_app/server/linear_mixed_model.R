@@ -123,7 +123,8 @@ lmm.res <- reactiveValues(result = NULL,
                           model.code = NULL,
                           res.anova = NULL,
                           multi_tab = NULL,
-                          check.mod = NULL)
+                          check.mod = NULL,
+                          check_model_path = NULL)
 
 stored_lm <- reactiveValues(lm1 = NULL, lm2=NULL, lm3=NULL)
 
@@ -242,51 +243,92 @@ observeEvent(input$act_lmm,{
                                       legend.box.background = element_rect(fill = "transparent"),
                                       legend.key = element_rect(fill = "transparent")
                                     )
+  lmm.res$data.filtered <- data.filtered
 
+  # Generate and save the plot
+  plot_object <- check_model(lmm.res$check.mod, base_size = 13.5)
 
-  ##### Model comparison ####
-  observeEvent(input$act_lmm2,{
+  # Define the file path
+  # image_path <- "~/PycharmProjects/meteor_github/inst/my_app/server/check_model_plot.png"
+  outfile2 <-  tempfile(fileext = ".png")
+  # Save the plot as a PNG image
+  png(outfile2, width = 800, height = 600)
+  print(plot_object)
+  dev.off()
 
-
-    data.filtered <- data() %>%
-                     filter(metabolites %in% input$id9)
-
-    formula.lm1 <- paste("values ~ ","time"," + ",input$catVars," + ", "time:", input$catVars, " + (1 | id)")
-    formula.lm2 <- paste("values ~ ","time"," + ",input$catVars," + ", "time:", input$catVars, " + (0 + time | id)")
-
-
-    mixed.lm1 <- lmer(formula.lm1, data = data.filtered)
-    mixed.lm2 <- lmer(formula.lm2, data = data.filtered)
-
-    # need the check that we don't have too many random effects
-    if(length(unique(data.filtered$id)) * 2 < nrow(data.filtered)) {
-      formula.lm3 <- paste("values ~ ","time"," + ",input$catVars," + ", "time:", input$catVars, " + (1 + time | id)")
-      mixed.lm3 <- lmer(formula.lm3, data = data.filtered)
-
-      lmm.res$res.anova <- anova(mixed.lm1, mixed.lm2, mixed.lm3)
-      lmm.res$multi_tab <- HTML(tab_model(mixed.lm1, mixed.lm2, mixed.lm3)$knitr)
-    } else{
-      lmm.res$res.anova <- anova(mixed.lm1, mixed.lm2)
-      lmm.res$multi_tab <- HTML(tab_model(mixed.lm1, mixed.lm2)$knitr)
-    }
-
-
-  })
-
-
-
-
+  lmm.res$outfile2 <- outfile2
 
   output$model.code <- renderText({paste0("Model: ", lmm.res$model.code)})
   output$lmm_model <- renderPlotly({ggplotly(lmm.res$lmm_model)})
   output$line_plot <- renderPlotly({ggplotly(lmm.res$line_plot)})
   output$result.single <- renderUI({lmm.res$result})
-  #output$vis_grid <- renderPlotly({ggplotly(lmm.res$vis_grid)})
-  output$res.anova <- renderPrint({lmm.res$res.anova})
-  output$multi_tab <- renderUI({lmm.res$multi_tab})
-  output$check.mod.lmm <- renderPlot({
-   # browser()
-    check_model(lmm.res$check.mod, base_size = 13.5)})
+  output$check.mod.lmm <- renderPlot({check_model(lmm.res$check.mod, base_size = 13.5)})
 
 })
+
+output$report_linear_mixed_model <- downloadHandler(
+  filename = "report_linear_mixed_model.html",
+  content = function(file) {
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/linear_mixed_model_report.Rmd", tempReport, overwrite = TRUE)
+
+    params <- list(input_RMD = input, lmm.res_RMD = lmm.res)
+
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
+)
+
+  ##### Model comparison ####
+observeEvent(input$act_lmm2,{
+
+
+  data.filtered <- data() %>%
+                   filter(metabolites %in% input$id9)
+
+  formula.lm1 <- paste("values ~ ","time"," + ",input$catVars," + ", "time:", input$catVars, " + (1 | id)")
+  formula.lm2 <- paste("values ~ ","time"," + ",input$catVars," + ", "time:", input$catVars, " + (0 + time | id)")
+
+
+  mixed.lm1 <- lmer(formula.lm1, data = data.filtered)
+  mixed.lm2 <- lmer(formula.lm2, data = data.filtered)
+
+  # need the check that we don't have too many random effects
+  if(length(unique(data.filtered$id)) * 2 < nrow(data.filtered)) {
+    formula.lm3 <- paste("values ~ ","time"," + ",input$catVars," + ", "time:", input$catVars, " + (1 + time | id)")
+    mixed.lm3 <- lmer(formula.lm3, data = data.filtered)
+
+    lmm.res$res.anova <- anova(mixed.lm1, mixed.lm2, mixed.lm3)
+    lmm.res$multi_tab <- HTML(tab_model(mixed.lm1, mixed.lm2, mixed.lm3)$knitr)
+  } else{
+    lmm.res$res.anova <- anova(mixed.lm1, mixed.lm2)
+    lmm.res$multi_tab <- HTML(tab_model(mixed.lm1, mixed.lm2)$knitr)
+  }
+
+
+})
+
+
+#output$vis_grid <- renderPlotly({ggplotly(lmm.res$vis_grid)})
+output$res.anova <- renderPrint({lmm.res$res.anova})
+output$multi_tab <- renderUI({lmm.res$multi_tab})
+
+
+output$report_linear_mixed_model_comparison_report <- downloadHandler(
+  filename = "report_pca.html",
+  content = function(file) {
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/linear_mixed_model_comparison_report.Rmd", tempReport, overwrite = TRUE)
+
+    params <- list(input_RMD = input, lmm.res_RMD = lmm.res)
+
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
+)
+
 

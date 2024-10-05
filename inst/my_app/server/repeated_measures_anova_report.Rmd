@@ -1,0 +1,77 @@
+---
+title: "Dynamic report"
+output: html_document
+params:
+  reactive_repeated_anova_RMD: NA
+  input_RMD: NA
+  data_RMD: NA
+---
+
+```{r}
+reactive_repeated_anova <- params$reactive_repeated_anova_RMD
+input <- params$input_RMD
+```
+
+```{r}
+datatable(reactive_repeated_anova$summary_stats,
+  caption = "Summary statistics",
+  options = list(
+    searching = FALSE,
+    lengthChange = FALSE,
+    paging = TRUE
+  )
+)
+```
+
+```{r}
+datatable(reactive_repeated_anova$outliers,
+  caption = "Outlier detection (Univariate outlier detection using boxplot methods):",
+  options = list(
+    searching = FALSE,
+    lengthChange = FALSE,
+    paging = TRUE
+  )
+)
+```
+
+```{r}
+datatable(reactive_repeated_anova$shapiro,
+  caption = "Normality test (Shapiro-Wilk test for all time points):",
+  options = list(
+    searching = FALSE,
+    lengthChange = FALSE,
+    paging = TRUE
+  )
+)
+```
+
+
+
+```{r}
+# Display the repeated measures ANOVA results
+print(reactive_repeated_anova$res_mixed_anova)
+```
+
+```{r}
+# Create the boxplot
+boxplot <- reactive_repeated_anova$data.filtered %>%
+  as.data.frame() %>%
+  ggboxplot(
+    x = "time", y = "values",
+    color = "time", palette = "jco"
+  ) +
+  stat_pvalue_manual(reactive_repeated_anova$pairwise.filtered, tip.length = 0, hide.ns = TRUE) +
+  labs(
+    subtitle = get_test_label(reactive_repeated_anova$res_mixed_anova, detailed = TRUE),
+    caption = get_pwc_label(reactive_repeated_anova$pairwise)
+  )
+
+# Render the plot
+print(boxplot)
+```
+
+```{r}
+
+```
+
+

@@ -596,6 +596,9 @@ ui <- dashboardPage(
           width = 4,
           actionButton("act_fried", "Compute")
         )),
+        fluidRow(
+          column(width = 6, downloadButton("report_friedman", "Generate report"))
+        ),
         fluidRow(column(width = 12, DTOutput("summary_stat"))),
         fluidRow(column(width = 6, DTOutput("res_fried")), column(width = 6, DTOutput("res_fried_eff"))),
         # fluidRow(),
@@ -630,6 +633,9 @@ ui <- dashboardPage(
               width = 4,
               actionButton("act_mixed_anova", "Compute")
             )),
+            fluidRow(
+              column(width = 6, downloadButton("report_mixed_anova", "Generate report"))
+            ),
             fluidRow(column(width = 12, DT::DTOutput("summary_stats_mixed_anova"))),
             fluidRow(column(width = 12, DT::DTOutput("outliers_mixed_anova"))),
             fluidRow(column(width = 12, DT::DTOutput("normality_mixed_anova"))),
@@ -704,6 +710,9 @@ ui <- dashboardPage(
               width = 4,
               actionButton("act_repeated_anova", "Compute")
             )),
+            fluidRow(
+              column(width = 6, downloadButton("report_repeated_measures_anova", "Generate report"))
+            ),
             fluidRow(column(width = 12, DT::DTOutput("summary_stats_repeated_anova"))),
             fluidRow(column(width = 12, DT::DTOutput("outliers_repeated_anova"))),
             fluidRow(column(width = 12, DT::DTOutput("normality_repeated_anova"))),
@@ -742,6 +751,9 @@ ui <- dashboardPage(
             ),
             fluidRow(
               column(width = 1, actionButton("act_repeated_anova_selection", "Compute")),
+              fluidRow(
+                column(width = 6, downloadButton("report_repeated_anova_selection", "Generate report"))
+              ),
               column(width = 2, actionButton("load_top_features_repeated_anova", "Add top features to selection"))
             ),
             fluidRow(column(width = 4, DTOutput("repeated.ranking.sorted"))),
@@ -790,6 +802,9 @@ ui <- dashboardPage(
                 actionButton("act_lmm", "Compute"),
                 style = "padding-bottom:17px",
               )
+            ),
+            fluidRow(
+              column(width = 6, downloadButton("report_linear_mixed_model", "Generate report"))
             ),
             fluidRow(
               column(
@@ -848,6 +863,9 @@ ui <- dashboardPage(
               )
             ),
             fluidRow(
+              column(width = 6, downloadButton("report_linear_mixed_model_comparison_report", "Generate report"))
+            ),
+            fluidRow(
               column(
                 width = 8,
                 box(
@@ -871,17 +889,6 @@ ui <- dashboardPage(
               ))
             )
         ),
-        # fluidRow(
-        #   column(
-        #     width = 12,
-        #     box(
-        #       title = "Model summary comparison:",
-        #       status = "primary", solidHeader = TRUE,
-        #       collapsible = TRUE,
-        #       htmlOutput("multi_tab")
-        #     )
-        #   )
-        # )
       ),
       tabItem(tabName = "net"),
       tabItem(
@@ -1191,8 +1198,9 @@ ui <- dashboardPage(
             actionButton("act_volc", "Compute")
           ),
           column(width = 2, actionButton("load_top_features_volcano", "Add top features to selection"))
-
-
+        ),
+        fluidRow(
+          column(width = 6, downloadButton("report_volcano", "Generate report"))
         ),
         fluidRow(column(width = 12, height = 20, withSpinner(plotOutput("volcano.plot", width = "100%", height = "1000px"))))
       ),
@@ -1240,7 +1248,10 @@ ui <- dashboardPage(
           )
         ),
         fluidRow(column(width = 12, DTOutput("export.dt"))),
-        fluidRow(column(width = 12, DTOutput("pathways.dt")))
+        fluidRow(column(width = 12, DTOutput("pathways.dt"))),
+        fluidRow(
+          column(width = 6, downloadButton("report_query", "Generate report"))
+        )
       ),
       tabItem(
         tabName = "packages",

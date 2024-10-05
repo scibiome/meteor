@@ -1,0 +1,64 @@
+---
+title: "Dynamic report"
+output: html_document
+params:
+    input_RMD: NA
+    lmm.res_RMD: NA
+---
+
+```{r}
+input <- params$input_RMD
+lmm.res <- params$lmm.res_RMD
+```
+
+```{r}
+paste0("Model: ", lmm.res$model.code)
+```
+
+```{r}
+knitr::include_graphics(lmm.res$outfile2)
+```
+
+```{r}
+lmm.res$check_model_finished
+```
+
+```{r}
+lmm_model <- ggplot(lmm.res$data.filtered, aes(x = time, y = values, color = factor(!!sym(input$catVars)), group = factor(id))) +
+  labs(color = input$catVars) +
+  geom_point(size = 1) +
+  geom_line(aes(y = fit, color = factor(!!sym(input$catVars)))) +
+  theme_apa() +
+  ggtitle("Fitted Model") +
+  theme(
+    panel.background = element_rect(fill = "transparent", colour = NA_character_),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    plot.background = element_rect(fill = "transparent", colour = NA_character_),
+    legend.background = element_rect(fill = "transparent"),
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.key = element_rect(fill = "transparent")
+  )
+
+print(lmm_model)
+```
+
+```{r}
+line_plot <- ggplot(lmm.res$data.filtered, aes(x = time, y = values, color = factor(!!sym(input$catVars)), group = factor(id))) +
+  labs(color = input$catVars) +
+  geom_point(size = 1) +
+  geom_line() +
+  theme_apa() +
+  ggtitle("Line Plot") +
+  theme(
+    panel.background = element_rect(fill = "transparent", colour = NA_character_),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    plot.background = element_rect(fill = "transparent", colour = NA_character_),
+    legend.background = element_rect(fill = "transparent"),
+    legend.box.background = element_rect(fill = "transparent"),
+    legend.key = element_rect(fill = "transparent")
+  )
+
+print(line_plot)
+```

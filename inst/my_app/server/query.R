@@ -62,6 +62,8 @@ raw_list.event <- eventReactive(input$api.go, {
   })
 
 DT_pathways <- reactiveVal()
+stored_enriched_kegg_pathways <- reactiveValues(data = NULL)
+
 
 observeEvent(input$metabolite_Picker, {
     updateTextAreaInput(session, "editableField", value = paste(raw_list$data$metabolites, collapse = "\n"))
@@ -223,8 +225,8 @@ output$export.dt <-   renderDT({
                         ), escape = FALSE
                         ))
 
-
-
+              # enriched kegg pathways
+              stored_enriched_kegg_pathways$data <- enriched_kegg_pathways
 
 
 
@@ -238,6 +240,7 @@ output$export.dt <-   renderDT({
               }
               query_results.df$KEGG <- sapply(query_results.df$KEGG, generate_url)
 
+              stored_enriched_kegg_pathways$query_results.df <- query_results.df
 
               datatable(query_results.df, editable = TRUE,
                         extensions = "Buttons",
@@ -252,5 +255,19 @@ output$export.dt <-   renderDT({
 
 })
 
-output$pathways.dt <-   renderDT({DT_pathways()
-  })
+output$pathways.dt <-   renderDT({DT_pathways()})
+
+output$report_query <- downloadHandler(
+  filename = "report_query.html",
+  content = function(file) {
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/query_report.Rmd", tempReport, overwrite = TRUE)
+
+    params <- list(DT_pathways_RMD = DT_pathways(), input_RMD = input, stored_enriched_kegg_pathways_RMD = stored_enriched_kegg_pathways, raw_list_RMD = raw_list)
+
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
+)

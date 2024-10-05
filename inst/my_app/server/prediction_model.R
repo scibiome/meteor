@@ -440,7 +440,7 @@ output$report_prediction <- downloadHandler(
     file.copy(file.path("server", "report_prediction.Rmd"), tempReport, overwrite = TRUE)
 
     # Set up parameters to pass to Rmd document
-    params <- list(prediction_stored_RMD = prediction_stored$computation_done)
+    params <- list(prediction_stored_RMD = prediction_stored, input_RMD = input)
 
     # Knit the document, passing in the `params` list, and eval it in as
     # child of the global environment (this isolates the code in the document

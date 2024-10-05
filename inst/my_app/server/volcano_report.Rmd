@@ -1,0 +1,42 @@
+---
+title: "Dynamic report"
+output: html_document
+params:
+  volcano.dat_RMD: NA
+  input_RMD: NA
+---
+
+```{r}
+volcano.dat <- params$volcano.dat_RMD
+input <- params$input_RMD
+
+```
+
+```{r}
+# Render the data table
+datatable(volcano.dat$res)
+
+# Render the volcano plot
+plot(volcano.dat$volcano)
+
+# Render the selected categorical variable
+cat("Selected Categorical Variable:", input$catVars)
+```
+
+
+```{r}
+print("Cutoff:", input$pcut)
+print("FCcutoff:", input$fccut)
+```
+
+```{r}
+
+
+```
+
+
+```{r}
+
+```
+
+

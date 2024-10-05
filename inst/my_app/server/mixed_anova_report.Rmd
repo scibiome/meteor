@@ -1,0 +1,97 @@
+---
+title: "Dynamic report"
+output: html_document
+params:
+  reactive_mixed_anova_RMD: NA
+  input_RMD: NA
+---
+
+```{r}
+reactive_mixed_anova <- params$reactive_mixed_anova_RMD
+input <- params$input_RMD
+```
+
+```{r}
+# Summary statistics
+datatable(reactive_mixed_anova$summary_stats,
+  caption = "Summary statistics",
+  options = list(
+    searching = FALSE,
+    lengthChange = FALSE,
+    paging = TRUE
+  )
+)
+```
+
+```{r}
+# Outlier detection (Univariate outlier detection using boxplot methods):
+datatable(reactive_mixed_anova$outliers,
+          caption = "Outlier detection (Univariate outlier detection using boxplot methods):",
+          options = list(
+            searching = FALSE,
+            lengthChange = FALSE,
+            paging = TRUE
+          ))
+```
+
+```{r}
+# Normality test (Shapiro-Wilk test for all possible combinations of factor levels):
+datatable(reactive_mixed_anova$shapiro,
+          caption = "Normality test (Shapiro-Wilk test for all possible combinations of factor levels):",
+          options = list(
+            searching = FALSE,
+            lengthChange = FALSE,
+            paging = TRUE
+          )
+)
+
+```
+
+
+
+```{r}
+# Homogeneity of variance (Levene's test checks for equal variances across groups):
+datatable(reactive_mixed_anova$levene,
+          caption = "Homogeneity of variance (Levene's test checks for equal variances across groups):",
+          options = list(
+            searching = FALSE,
+            lengthChange = FALSE,
+            paging = TRUE
+          )
+)
+```
+
+```{r}
+print(reactive_mixed_anova$res_mixed_anova)
+```
+
+```{r}
+# Check if computation is done
+if (reactive_mixed_anova$computation_done) {
+  
+  # Generate the boxplot
+  boxplot <- reactive_mixed_anova$data.filtered %>%
+    as.data.frame() %>%
+    mutate(!!sym(input$catVars) := factor(!!sym(input$catVars))) %>%
+    ggboxplot(
+      x = "time", y = "values", color = input$catVars, 
+      palette = "jco", fill = "#edeff4", size = 2
+    ) +
+    stat_pvalue_manual(reactive_mixed_anova$pairwise.filtered, tip.length = 0, hide.ns = TRUE) +
+    labs(
+      subtitle = get_test_label(reactive_mixed_anova$res_mixed_anova, detailed = TRUE),
+      caption = get_pwc_label(reactive_mixed_anova$pairwise.filtered)
+    ) +
+    theme(
+      text = element_text(size = 16),
+      panel.grid.major = element_blank(),  # Remove major gridlines
+      panel.grid.minor = element_blank(),  # Remove minor gridlines
+    )
+  
+  # Print the boxplot
+  print(boxplot)
+}
+
+```
+
+

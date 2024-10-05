@@ -170,3 +170,18 @@ output$volcano.plot <- renderPlot({
 output$printcatvar <- renderText({
   input$catVars
 })
+
+output$report_volcano <- downloadHandler(
+  filename = "report_volcano.html",
+  content = function(file) {
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/volcano_report.Rmd", tempReport, overwrite = TRUE)
+
+    params <- list(volcano.dat_RMD = volcano.dat, input_RMD = input)
+
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
+)

@@ -13,94 +13,83 @@ catv <- params$catv_RMD
 input <- params$input_RMD
 ```
 
+```{r}
+renderImage({
 
-```{r include = FALSE}
-# Get the variable names for clustering
-a <- catv # Assume catv() is defined elsewhere
+  # Get the variable names for clustering
+  a <- catv # Assume catv() is defined elsewhere
 
-vars <- c("id", "time", a, "metabolites", "values")
-ids <- c("id", a)
+  vars <- c("id", "time", a, "metabolites", "values")
+  ids <- c("id", a)
 
-# Prepare the data for the heatmap
-data1 <- data %>%
-  as.data.frame() %>%
-  select(all_of(vars)) %>%
-  filter(metabolites %in% input$id6) %>%
-  select(-metabolites) %>%
-  pivot_wider(names_from = "time", values_from = "values", id_cols = ids) %>%
-  column_to_rownames(var = "id")
+  # Filter data for id == 24
+  data_filtered <- data() %>% 
+    filter(id == 24)
 
-# Remove rows with incomplete cases
-data1 <- data1[complete.cases(data1), ]
-data2 <- data1[, -1] # Data for heatmap (excluding the first column)
+  # Prepare the data for the heatmap
+  data1 <- data() %>%
+    as.data.frame() %>%
+    select(all_of(vars)) %>%
+    filter(metabolites %in% input$id6) %>%
+    select(-metabolites) %>%
+    pivot_wider(names_from = "time", values_from = "values", id_cols = ids) %>%
+    column_to_rownames(var = "id")
 
-# Ensure inputs for clustering are available
-req(input$clustrow1)
-req(input$clustcol1)
+  # Check for cases with missing data
+  cases_not_all_timepoints <- data1[!complete.cases(data1), ]
+  print("39 cases do not have all data") # Replace with a more robust message
+  nrow(cases_not_all_timepoints)
+  print(cases_not_all_timepoints)
+  
+  data1 <- data1[complete.cases(data1), ]
+  data2 <- data1[, -1]
 
-# Create heatmap and perform clustering
-res <- pheatmap(data2)
+  req(input$clustrow1) # Ensure input is available
+  req(input$clustcol1)
 
-my_pat_row <- cutree(res$tree_row, k = input$clustrow1)
+  # Create heatmap and clustering
+  res <- pheatmap(data2)
 
-clust.name <- c()
+  # Row clustering
+  my_pat_row <- cutree(res$tree_row, k = input$clustrow1)
+  clust.name <- data.frame(cluster = paste0("Cluster ", my_pat_row), row = data1[, 1])
 
-for (i in 1:length(my_pat_row)) {
-  clust.name[i] <- paste0("Cluster ", my_pat_row[i])
-}
+  # Column clustering
+  my_pat_col <- cutree(res$tree_col, k = input$clustcol1)
+  clust.name.col <- data.frame(cluster = paste0("Cluster ", my_pat_col))
 
-clust.name <- cbind(my_pat_row, clust.name, data1[, 1])
-clust.name <- clust.name[, -1] %>% as.data.frame()
-colnames(clust.name) <- c("cluster rows", a)
+  # Generate the heatmap with annotations
+  map <- pheatmap(data2, 
+                  annotation_row = clust.name,
+                  annotation_col = clust.name.col,
+                  fontsize_row = 3,
+                  cutree_rows = input$clustrow1,
+                  cutree_cols = input$clustcol1)
 
-clust.name <- clust.name %>% mutate_all(~ (as.factor(.)))
+  # Save the heatmap as a temporary PNG file
+  outfile <- tempfile(fileext = '.png')
+  png(outfile, width = 30, height = 25, res = 600, units = "cm")
+  grid.draw(rectGrob(gp = gpar(fill = "#edeff4", lwd = 0))) # Background color
+  grid.draw(map) # Draw the heatmap
+  dev.off()
 
-my_pat_col <- cutree(res$tree_col, k = input$clustcol)
-
-clust.name.col <- c()
-for (i in 1:length(my_pat_col)) {
-  clust.name.col[i] <- paste0("Cluster ", my_pat_col[i])
-}
-clust.name.col <- as.data.frame(clust.name.col)
-colnames(clust.name.col) <- c("cluster cols")
-
-clust.name.col <- clust.name.col %>% mutate_all(~ (as.factor(.)))
-
-# Generate the heatmap with row and column annotations
-map <- pheatmap(
-  data2,
-  annotation_row = clust.name,
-  annotation_col = clust.name.col,
-  fontsize_row = 3,
-  cutree_rows = input$clustrow1,
-  cutree_cols = input$clustcol1,
-  annotation_colors = NULL # Optional: Define if specific colors are needed
-)
-map
-
-# A temp file to save the output.
-# This file will be removed later by renderImage
-outfile <- tempfile(fileext = ".png")
-
-# Generate the PNG
-png(outfile, width = 30, height = 25, res = 600, units = "cm")
-grid.draw(rectGrob(gp = gpar(fill = "#edeff4", lwd = 0)))
-grid.draw(map)
-dev.off()
-
-# Return a list containing the filename
-list(
-  src = outfile,
-  contentType = "image/png",
-  width = 1400,
-  height = 1000,
-  alt = "This is alternate text"
-)
-
-
+  # Return a list containing the filename and properties for rendering the image
+  list(src = outfile,
+       contentType = 'image/png',
+       width = 1400,
+       height = 1000,
+       alt = "This is alternate text")
+}, deleteFile = TRUE)
 ```
 
 
 ```{r}
-knitr::include_graphics(outfile)
+# Check if test data is available
+
 ```
+
+```{r}
+
+
+```
+

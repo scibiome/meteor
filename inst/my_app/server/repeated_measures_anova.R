@@ -228,6 +228,23 @@ output$res_repeated_anova <- renderPrint({
 })
 
 
+output$report_repeated_measures_anova <- downloadHandler(
+  filename = "report_repeated_measures_anova.html",
+  content = function(file) {
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/repeated_measures_anova_report.Rmd", tempReport, overwrite = TRUE)
+
+    params <- list(reactive_repeated_anova_RMD = reactive_repeated_anova, input_RMD = input)
+
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
+)
+
+
+
 ### repeated measures ANOVA for feature selection
 
 reactive_repeated_anova_selection <- reactiveValues(
@@ -423,8 +440,20 @@ output$info_box_repeated_anova_selection <- renderUI({
   ")
 })
 
+output$report_repeated_anova_selection <- downloadHandler(
+  filename = "report_repeated_anova_selection.html",
+  content = function(file) {
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/repeated_measures_anova_report_feature_selection.Rmd", tempReport, overwrite = TRUE)
 
+    params <- list(repeated.anova.feat.selection_RMD = repeated.anova.feat.selection, input_RMD = input)
 
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
+)
 
 
 
