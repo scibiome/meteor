@@ -29,8 +29,8 @@ observeEvent(input$catVars, {
   trt.names <- unique(dat.nam[, 1]) %>% as.list()
 
   choices <- trt.names[!is.na(trt.names)]
-  updateSelectInput(session, "feature1", choices = choices, selected = choices)
-  updateSelectInput(session, "feature2", choices = choices, selected = NULL)
+  updateSelectInput(session, "feature1", choices = choices, selected = choices[[1]])
+  updateSelectInput(session, "feature2", choices = choices, selected = choices[[2]])
 })
 
 

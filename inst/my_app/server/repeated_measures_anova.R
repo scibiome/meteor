@@ -65,7 +65,7 @@ observe({
   dat.nam <- data()
   metabolite.names <- unique(dat.nam[, 3]) %>% as.list()
 
-  updateMultiInput(session, "repeated_anova_metabolite", choices = metabolite.names, selected = metabolite.names)
+  updateMultiInput(session, "repeated_anova_metabolite", choices = metabolite.names, selected = NULL)
 })
 
 
