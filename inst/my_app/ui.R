@@ -888,17 +888,6 @@ ui <- dashboardPage(
               ))
             )
         ),
-        # fluidRow(
-        #   column(
-        #     width = 12,
-        #     box(
-        #       title = "Model summary comparison:",
-        #       status = "primary", solidHeader = TRUE,
-        #       collapsible = TRUE,
-        #       htmlOutput("multi_tab")
-        #     )
-        #   )
-        # )
       ),
       tabItem(tabName = "net"),
       tabItem(

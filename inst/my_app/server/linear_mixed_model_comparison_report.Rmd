@@ -2,38 +2,20 @@
 title: "Dynamic report"
 output: html_document
 params:
-  input_RMD: NA
+    input_RMD: NA
+    lmm.res_RMD: NA
 ---
 
 ```{r}
-
 input <- params$input_RMD
+lmm.res <- params$lmm.res_RMD
 ```
 
 ```{r}
-
+lmm.res$multi_tab
 ```
-
-```{r}
-
-```
-
-```{r}
-
-```
-
 
 
 ```{r}
-
+lmm.res$res.anova
 ```
-
-```{r}
-
-```
-
-```{r}
-
-```
-
-

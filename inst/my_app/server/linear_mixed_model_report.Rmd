@@ -9,7 +9,6 @@ params:
 ```{r}
 input <- params$input_RMD
 lmm.res <- params$lmm.res_RMD
-# browser()
 ```
 
 ```{r}
@@ -17,11 +16,14 @@ paste0("Model: ", lmm.res$model.code)
 ```
 
 ```{r}
-lmm.res$result
+knitr::include_graphics("./check_model_plot.png")
 ```
 
 ```{r}
-check_model(lmm.res$check.mod, base_size = 13.5)
+
+knitr::include_graphics(lmm.res$check_model_path)
+print(lmm.res$check_model_path)
+
 ```
 
 ```{r setup, include=FALSE}
@@ -29,7 +31,7 @@ library(performance)  # Adjust the package name as necessary
 ```
 
 ```{r}
-lmm.res$check.mod
+# check_model$result
 ```
 
 ```{r}
