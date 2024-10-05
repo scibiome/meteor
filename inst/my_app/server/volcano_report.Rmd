@@ -38,6 +38,6 @@ cat("Selected Categorical Variable:", input$catVars)
 
 
 ```{r}
-print("Cutoff:", input$pcut)
-print("FCcutoff:", input$fccut)
+print(paste("Cutoff:", input$pcut))
+print(paste("FCcutoff:", input$fccut))
 ```
