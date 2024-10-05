@@ -73,14 +73,12 @@ observeEvent(input$clustrow1, {
 
                     ids <- c("id", a)
 
-                    data() %>% #filter(metabolites %in% c("meso_erythritol")) %>%
-                      filter(id == 24)
+
 
 
                     data1 <- data() %>%
                               as.data.frame() %>%
                               dplyr::select(all_of(vars)) %>%
-                              # mutate(.[[3]] <- as.factor(.[[3]])) %>%
                               filter(metabolites %in% input$id6) %>%
                               select(-metabolites) %>%
                               pivot_wider( names_from = "time",
@@ -89,7 +87,6 @@ observeEvent(input$clustrow1, {
                               column_to_rownames(var="id")
 
                     cases_not_all_timepoints <- (data1[!complete.cases(data1), ])
-                    print("39 cases do not have all data") # TODO noch besser umsetzen?
                     nrow(cases_not_all_timepoints)
                     print(cases_not_all_timepoints)
                     data1 <- data1[complete.cases(data1), ]
