@@ -235,48 +235,151 @@ observeEvent(input$rf_prediction, {
 
   #### prediction methods ====
 
-  # metric: AUC, Accuracy, F1
-  # gridsearch? or specify parameter.
   y_train_names <- make.names(as.integer(unlist(y_train)))
 
   if (input$prediction_method == "LR") {
-    # train the model on training set
+    # Train the model on the training set using glmnet for L1 regularization
     rfFit <- train(
-      y = y_train_names, x = x_train,
+      y = y_train_names,
+      x = x_train,
       trControl = train_control,
-      method = "glm",
-      family = binomial(),
-      metric = input$metric
+      method = "glmnet",  # Change to glmnet for L1 and L2 regularization
+      metric = input$metric,
+      tuneGrid = expand.grid(
+        alpha = 0.5,  # Elastic net mixing parameter (0 = L2, 1 = L1)
+        lambda = seq(0.1, 0.7, 0.05)  # Range of lambda values for regularization
+      )
     )
   }
 
-  # Define the grid for hyperparameter tuning
+
+
+  parse_param_grid <- function(param_grid_input) {
+    # Split by space to separate each parameter (adjusted to handle the new format)
+    param_pairs <- strsplit(param_grid_input, "\\s+")[[1]]
+    param_list <- list()
+
+    for (pair in param_pairs) {
+      # Split the parameter name and values
+      param_name_value <- strsplit(pair, "=")[[1]]
+      if (length(param_name_value) == 2) {
+        param_name <- trimws(param_name_value[1])  # Parameter name
+        param_values <- gsub("[()]", "", trimws(param_name_value[2]))  # Remove parentheses
+        param_values <- as.numeric(unlist(strsplit(param_values, ",")))  # Split by comma and convert to numeric
+
+        # Assign to list
+        param_list[[param_name]] <- param_values
+      }
+    }
+
+    return(param_list)
+  }
+  param_grid <- parse_param_grid(input$param_grid)
+
+
+
+  valid_params <- list(
+    max_depth = 1,
+    nrounds = 1,
+    eta = 1,
+    gamma = 1,
+    subsample = 1,
+    min_child_weight = 1,
+    colsample_bytree = 1
+  )
+
+  # Function to validate the parameters in param_grid
+  validate_params <- function(param_grid, prediction_method) {
+    valid <- TRUE
+    message <- "Validation successful."
+
+    # Define valid parameters for XGBoost
+    valid_params_xgb <- c("max_depth", "nrounds", "eta", "gamma", "subsample", "min_child_weight", "colsample_bytree")
+
+    if (prediction_method == "XGB") {
+      # List of valid parameter names for XGBoost
+      valid_param_names <- valid_params_xgb
+
+      # Check if all parameters in param_grid are valid
+      invalid_params <- setdiff(names(param_grid), valid_param_names)
+
+      if (length(invalid_params) > 0) {
+        valid <- FALSE
+        message <- paste("Invalid parameters found for XGB:", paste(invalid_params, collapse = ", "))
+      }
+
+      # Optional: Check if any valid parameters are missing in param_grid
+      missing_params <- setdiff(valid_param_names, names(param_grid))
+      if (length(missing_params) > 0) {
+        valid <- FALSE
+        message <- paste(message, "Missing parameters for XGB:", paste(missing_params, collapse = ", "))
+      }
+    }
+
+    # Check for prediction method "RF"
+    if (prediction_method == "RF") {
+      # Ensure that only 'mtry' is in param_grid
+      if (!("mtry" %in% names(param_grid))) {
+        valid <- FALSE
+        message <- "For RF method, 'mtry' must be specified."
+      }
+
+      # Check if there are any additional parameters besides 'mtry'
+      if (length(names(param_grid)) > 1 || !("mtry" %in% names(param_grid))) {
+        valid <- FALSE
+        message <- "For RF method, only 'mtry' should be provided."
+      }
+    }
+
+    return(list(valid = valid, message = message))
+  }
+
+  result <- validate_params(param_grid, input$prediction_method)
+  print(result)
+
+  if (!result$valid) {
+    show_alert(
+      title = NULL,
+      text = tags$span(
+        tags$h3("Error",
+                style = "color: steelblue;"),
+        result$message
+      ),
+      html = TRUE
+    )
+    return()
+  }
+
+    # Convert the parsed parameters into a grid for grid search
+  if (length(param_grid) > 0) {
+    output$grid_output <- renderPrint({
+      gbmGrid  # Show the generated grid
+    })
+    gbmGrid <- expand.grid(param_grid)
+  } else {
+    output$grid_output <- renderPrint({
+      "Invalid parameter grid input, using base grid"
+    })
     gbmGrid <- expand.grid(
-      max_depth = c(3, 5, 7, 10),#, 5, 7, 10),
-      nrounds = (1:10) * 50, # number of trees
-      # default values below
+      max_depth = c(3, 5, 7, 10),
+      nrounds = (1:10) * 50,
       eta = 0.3,
       gamma = 0,
       subsample = 1,
       min_child_weight = 1,
       colsample_bytree = 0.6
     )
+  }
+
+  output$grid_output <- renderPrint({
+    input$param_grid  # Display the parameter grid input
+  })
+
   rfGrid <- expand.grid(
     mtry = c(3, 5, 7, 10)  # Number of variables randomly sampled as candidates at each split
   )
 
   if (input$prediction_method == "RF") {
-    # Use either tuneGrid or tuneLength based on user input
-    if (input$tuneLength > 0) {
-      rfFit <- train(
-        y = y_train_names,
-        x = x_train,
-        method = "rf",
-        trControl = train_control,
-        tuneLength = input$tuneLength,  # Use input$tuneLength for Random Forest
-        metric = input$metric
-      )
-    } else {
       rfFit <- train(
         y = y_train_names,
         x = x_train,
@@ -285,23 +388,12 @@ observeEvent(input$rf_prediction, {
         tuneGrid = rfGrid,  # Use gbmGrid if tuneLength is not specified
         metric = input$metric
       )
-    }
   }
 
   if (input$prediction_method == "XGB") {
     mtry <- round(sqrt(18), 0)
 
-    # Use either tuneGrid or tuneLength based on user input
-    if (input$tuneLength > 0) {
-      rfFit <- train(
-        y = y_train_names,
-        x = x_train,
-        method = "xgbTree",
-        trControl = train_control,
-        tuneLength = input$tuneLength,  # Use input$tuneLength for XGBoost
-        metric = input$metric
-      )
-    } else {
+
       rfFit <- train(
         y = y_train_names,
         x = x_train,
@@ -311,7 +403,7 @@ observeEvent(input$rf_prediction, {
         verbose = FALSE,
         metric = input$metric
       )
-    }
+
   }
 
 
@@ -327,9 +419,9 @@ observeEvent(input$rf_prediction, {
     predition1 <- rfFit[["pred"]][, 3:4]
     predition1$obs <- as.factor(y_train_names)
 
-    if (input$prediction_method != "LR") {
-      rfFit[["results"]] <- rfFit[["results"]][rownames(rfFit[["bestTune"]]), ]
-    }
+
+    rfFit[["results"]] <- rfFit[["results"]][rownames(rfFit[["bestTune"]]), ]
+
 
     prediction_stored$scores <- t(round(as.matrix(c(
       setNames(rfFit[["results"]]$AUC, "cv AUC"),
@@ -355,10 +447,9 @@ observeEvent(input$rf_prediction, {
     train_tab <- table(predicted = predict(rfFit, x_test), actual = as.factor(make.names(as.integer(unlist(y_test)))))
     test_con_mat <- confusionMatrix(train_tab)
 
-    # for XGB gridsearch was performed
-    if (input$prediction_method != "LR") {
-      rfFit[["results"]] <- rfFit[["results"]][rownames(rfFit[["bestTune"]]), ]
-    }
+
+    rfFit[["results"]] <- rfFit[["results"]][rownames(rfFit[["bestTune"]]), ]
+
 
     prediction_stored$scores <- t(round(as.matrix(c(
        setNames(rfFit[["results"]]$AUC, 'cv AUC'),
@@ -387,6 +478,16 @@ observeEvent(input$rf_prediction, {
     prediction_stored$rfFit <- rfFit
     prediction_stored$computation_done <- TRUE
   }
+
+  output$best_params <- renderPrint({
+    # Print the best tuning parameters found
+    if (!is.null(rfFit$bestTune)) {
+      cat("Best Parameters:\n")
+      print(rfFit$bestTune)
+    } else {
+      cat("No best parameters found.")
+    }
+  })
 })
 
 
@@ -494,5 +595,16 @@ output$report_prediction <- downloadHandler(
   }
 )
 
+observe({
+  # Determine the new value based on the selected prediction method
+  new_value <- ""
+  if (input$prediction_method == "XGB") {
+    new_value <- "max_depth=(3,5,7,10) nrounds=(50,100,150,200,250,300,350,400,450,500) eta=(0.3) gamma=(0) subsample=(1) min_child_weight=(1) colsample_bytree=(0.6)"
+  } else if (input$prediction_method == "RF") {
+    new_value <- "mtry=(1,2,3,4,5)"  # Example value for RF method
+  }
 
+  # Update the textInput value
+  updateTextInput(session, "param_grid", value = new_value)
+})
 

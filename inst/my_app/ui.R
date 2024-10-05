@@ -509,7 +509,7 @@ ui <- dashboardPage(
             width = 3,
             radioButtons(
               "prediction_method",
-              "prediction_method",
+              "Prediction Method",
               choices = c("RF", "LR", "XGB"),
               selected = "LR",
             )
@@ -518,30 +518,37 @@ ui <- dashboardPage(
             width = 3,
             radioButtons(
               "valitation_method",
-              "valitation_method",
+              "Valitation Method",
               choices = c("CV", "LOOCV"),
               selected = "CV",
             )
           )
         ),
         fluidRow(
-          column(1, h5("testdata in %")),
+          column(1, h5("Test Data in %")),
           column(
             width = 2,
-            selectInput("testdata", NULL, c(0, 0.1, 0.2, 0.3, 0.4, 0.5), selected = 0),
-          ),
+            selectInput("testdata", NULL, c(0, 0.1, 0.2, 0.3, 0.4, 0.5), selected = 0)
+          )
         ),
         fluidRow(
           column(1, h5("Metric")),
           column(
             width = 2,
-            selectInput("metric", NULL, c("AUC", "Accuracy"), selected = "AUC"),
-          ),
+            selectInput("metric", NULL, c("AUC", "Accuracy"), selected = "AUC")
+          )
         ),
         fluidRow(
           column(
-            width = 2,
-            numericInput("tuneLength", "Tune Length:", value = 1, min = 1, step = 1)  # Numeric input for tune length
+            width = 12,
+            textInput("param_grid", "Parameter Grid",
+                      value = "max_depth=(3,5,7,10) nrounds=(50,100,300,500) eta=(0.3) gamma=(0) subsample=(1) min_child_weight=(1) colsample_bytree=(0.6)",
+                      width = "49%")  # Set width to 100% for a larger input field
+          )
+        ),
+        fluidRow(
+          column(width = 6,
+                 verbatimTextOutput("best_params")  # Display best parameters here
           )
         ),
         fluidRow(
