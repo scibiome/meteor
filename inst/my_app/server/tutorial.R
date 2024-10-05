@@ -154,7 +154,7 @@ helptext_pca <- reactive(data.table::data.table(
   step = c(
     1, 2, 3,
     4, 5, 6,
-    7, 8
+    7, 8, 9
   ),
   element = c(
     "#sidebarItemExpanded > ul > li:nth-child(3) > a",
@@ -164,7 +164,8 @@ helptext_pca <- reactive(data.table::data.table(
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
     "#shiny-tab-pca > div:nth-child(4) > div:nth-child(1)",
     "#biplotPCA > img",
-    "#add_graph_pc_cross_3d"
+    "#add_graph_pc_cross_3d",
+    "#report_PCA"
   ),
   intro = c(
     "The principal component analysis is calculated for the selected time points. If the time point is changed, the analysis is also recalculated. ",
@@ -185,12 +186,13 @@ helptext_pca <- reactive(data.table::data.table(
              smaller angles indicate higher positive correlations, while angles close to 180 degrees indicate negative correlations.
              In addition, the angle of the variables to the axes indicates their correlation with each principal component axis.
              This visualisation helps to understand the relative contributions of the variables to the principal components and their correlations with the axes.",
-    "If you click on this button, you can create a 3D PCA plot."
+    "If you click on this button, you can create a 3D PCA plot.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
   position = c(
     "auto", "auto", "auto",
     "auto", "auto", "auto",
-    "auto", "auto"
+    "auto", "auto", "auto"
   )
 ))
 
@@ -218,7 +220,8 @@ helptext_tcam <- reactive(data.table::data.table(
   step = c(
     1, 2, 3,
     4, 5, 6,
-    7, 8, 9
+    7, 8, 9,
+    10
   ),
   element = c(
     "#ind_pca_long > div > div > svg:nth-child(1) > g.draglayer.cursor-crosshair > g > rect.nsewdrag.drag",
@@ -229,7 +232,8 @@ helptext_tcam <- reactive(data.table::data.table(
     "#pca_loadings_long > div > div",
     "#fc_loadings_long > div > div",
     "#add_graph_pc_3d",
-    "#add_graph_fc_3d"
+    "#add_graph_fc_3d",
+    "#report_tcam"
   ),
   intro = c(
     "Here, principal component analysis is performed on the data, including all time points of the measurement.",
@@ -240,12 +244,14 @@ helptext_tcam <- reactive(data.table::data.table(
     "Here you can see the contribution of the metabolites to the respective principal component. The metabolites are listed in descending order of their contribution.",
     "Here you can see the contribution of the metabolites to the respective factors. Positive and negative factor loadings are displayed for the most important metabolites.",
     "If you click on this button, you can create a 3D PCA plot.",
-    "If you click on this button, you can create a 3D TCAM plot."
+    "If you click on this button, you can create a 3D TCAM plot.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
   position = c(
     "auto", "auto", "auto",
     "auto", "auto", "auto",
-    "auto", "auto", "auto"
+    "auto", "auto", "auto",
+    "auto"
   )
 ))
 
@@ -270,18 +276,20 @@ observeEvent(
 
 helptext_rp <- reactive(data.table::data.table(
   tab = c("tutorial_rp"),
-  step = c(1, 2, 3),
+  step = c(1, 2, 3, 4),
   element = c(
     "#sidebarItemExpanded > ul > div.form-group.shiny-input-container",
     "#shiny-tab-op1 > div:nth-child(2) > div > div > div.box-body > div > div > div",
-    "#rp_compute"
+    "#rp_compute",
+    "#report_rp_time"
   ),
   intro = c(
     "Here you can select one or more metabolites to visualize.",
     "Here you can select the time points you want to compare.",
-    "Click here to generate a ridge plot showing the density distribution for the selected metabolites grouped by time points."
+    "Click here to generate a ridge plot showing the density distribution for the selected metabolites grouped by time points.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
-  position = c("auto", "auto", "auto")
+  position = c("auto", "auto", "auto", "auto")
 ))
 
 
@@ -306,23 +314,25 @@ helptext_rp2 <- reactive(data.table::data.table(
   tab = c("tutorial_rp2"),
   step = c(
     1, 2, 3,
-    4
+    4, 5
   ),
   element = c(
     "#sidebarItemExpanded > ul > div.form-group.shiny-input-container",
     "#sidebarItemExpanded > ul > li:nth-child(3) > a",
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
-    "#rp_compute2"
+    "#rp_compute2",
+    "#report_rp_groups"
   ),
   intro = c(
     "Here you can select one or more metabolites to visualize.",
     "Here you can select the time point for which you want to create the ridge plot.",
     "Here you the categorical variable for which you want to compare the groups",
-    "Click here to generate a ridge plot showing the density distribution for the selected metabolites grouped by the categorical variable."
+    "Click here to generate a ridge plot showing the density distribution for the selected metabolites grouped by the categorical variable.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
   position = c(
     "auto", "auto", "auto",
-    "auto"
+    "auto", "auto"
   )
 ))
 
@@ -351,7 +361,8 @@ helptext_pred <- reactive(data.table::data.table(
   step = c(1, 2, 3,
            4, 5, 6,
            7, 8, 9,
-           10, 11, 12),
+           10, 11, 12,
+           13),
   element = c(
     "#sidebarItemExpanded > ul > li:nth-child(3) > a",
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
@@ -364,7 +375,8 @@ helptext_pred <- reactive(data.table::data.table(
     "#valitation_method > div > div:nth-child(2) > label",
     "#shiny-tab-pred > div:nth-child(3) > div.col-sm-2 > div > div > div > div.selectize-input.items.full.has-options.has-items",
     "#rf_prediction",
-    "#load_top_features"
+    "#load_top_features",
+    "#report_prediction"
   ),
   intro = c(
     "Here, you can select for which time point you want to perform the analysis.",
@@ -378,12 +390,13 @@ helptext_pred <- reactive(data.table::data.table(
     "If you choose this option leave-one-out cross-validation is applied.",
     "Here, you can choose the percentage of your data to use as test data. Ensure that your dataset is sufficiently large to allow for splitting the data.",
     "If you click on this button the model is computed.",
-    "Here, you can add the most predictive features to the selection."
+    "Here, you can add the most predictive features to the selection.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
   position = c("auto", "auto", "auto",
                "auto", "auto", "auto",
                "auto", "auto", "auto",
-               "auto")
+               "auto", "auto")
 ))
 
 
@@ -413,14 +426,16 @@ observeEvent(
 
 helptext_fried <- reactive(data.table::data.table(
   tab = c("tutorial_fried"),
-  step = c(1, 2),
+  step = c(1, 2, 3),
   element = c(
     "#id8-label",
-    "#act_fried"
+    "#act_fried",
+    "#report_friedman"
   ),
   intro = c(
     "Here you can select a metabolite for which you want to perform the Friedman test.",
-    "Click here to compute the Friedman test."
+    "Click here to compute the Friedman test.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
   position = c("auto", "auto")
 ))
@@ -447,23 +462,25 @@ helptext_mixedanova <- reactive(data.table::data.table(
   tab = c("tutorial_mixanova"),
   step = c(
     1, 2, 3,
-    4
+    4, 5
   ),
   element = c(
     "#shiny-tab-mixedanova > div > ul > li.active",
     "#id10-label",
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
-    "#act_mixed_anova"
+    "#act_mixed_anova",
+    "#report_mixed_anova"
   ),
   intro = c(
     "Here you can calculate a mixed ANOVA for a single selected metabolite.",
     "Here you can select the metabolite for which you want to perform the analysis.",
     "Here you can select a categorical variable to be used as the between factor in the analysis.",
-    "If you click on this button, the mixed ANOVA is calculated."
+    "If you click on this button, the mixed ANOVA is calculated.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
   position = c(
     "auto", "auto", "auto",
-    "auto"
+    "auto", "auto"
   )
 ))
 
@@ -490,7 +507,7 @@ helptext_mixedanova_feat <- reactive(data.table::data.table(
   tab = c("tutorial_mixanova_feat"),
   step = c(
     1, 2, 3,
-    4, 5
+    4, 5, 6
   ),
   element = c(
     "#shiny-tab-mixedanova > div > ul > li.active",
@@ -498,7 +515,8 @@ helptext_mixedanova_feat <- reactive(data.table::data.table(
     "#selectfactor-label",
     "#act_mixed_anova_selection",
     "#load_top_features_anova",
-    "#sidebarItemExpanded > ul > div.form-group.shiny-input-container"
+    "#sidebarItemExpanded > ul > div.form-group.shiny-input-container",
+    "#report_mixed_anova_selection"
   ),
   intro = c(
     "Here, you can perform a mixed ANOVA for all metabolites. The metabolites will then be ranked based on their p-values for the given factor.",
@@ -506,11 +524,12 @@ helptext_mixedanova_feat <- reactive(data.table::data.table(
     "Here, you can select the within factor (time), the between factor (categorical variable), or the interaction between time and the categorical variable.",
     "If you click on this button, the mixed ANOVA is calculated.",
     "Here, you can select the top-ranked feature based on the lowest p-value for a given factor. The selected feature will be marked in the metabolite picker.",
-    "Selected metabolites can be found here."
+    "Selected metabolites can be found here.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
   position = c(
     "auto", "auto", "auto",
-    "auto", "auto"
+    "auto", "auto", "auto"
   )
 ))
 
@@ -538,24 +557,26 @@ helptext_repanova <- reactive(data.table::data.table(
   tab = c("tutorial_repanova"),
   step = c(
     1, 2, 3,
-    4
+    4, 5
   ),
   element = c(
     "#repeated_anova_metabolite-label",
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
     "#repeated_anova_category-label",
-    "#act_repeated_anova"
+    "#act_repeated_anova",
+    "#report_repeated_measures_anova"
   ),
   intro = c(
     "Here, you can select a single metabolite for the analysis.",
     "Here, you can select a categorical variable.
      In the next stept you can select a subgroup for which you want to perform the analysis.",
     "Here, you can select a subgroup for which you want to perform the analysis.",
-    "If you click here the repeated measures ANOVA is performed."
+    "If you click here the repeated measures ANOVA is performed.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
   position = c(
     "auto", "auto", "auto",
-    "auto"
+    "auto", "auto"
   )
 ))
 
@@ -576,22 +597,20 @@ observeEvent(
 
 ###### Tutorial repeated measures ANOVA for feature selection ------
 
-# TODO Infotext missing
-
-
 
 helptext_repanova_sel <- reactive(data.table::data.table(
   tab = c("tutorial_repanova_sel"),
   step = c(
     1, 2, 3,
-    4, 5
+    4, 5, 6
   ),
   element = c(
    "#sidebarItemExpanded > ul > li:nth-child(4) > a",
    "#repeated_category-label",
    "#act_repeated_anova_selection",
    "#load_top_features_repeated_anova",
-   "#sidebarItemExpanded > ul > div.form-group.shiny-input-container"
+   "#sidebarItemExpanded > ul > div.form-group.shiny-input-container",
+   "#report_repeated_anova_selection"
   ),
   intro = c(
     "Here, you can select a categorical variable.
@@ -600,11 +619,12 @@ helptext_repanova_sel <- reactive(data.table::data.table(
     "If you click here the repeated measures ANOVA is performed.",
     "Here, you can select the top-ranked feature based on the lowest p-value for the time factor.
     The selected feature will be marked in the metabolite picker.",
-    "Selected metabolites can be found here."
+    "Selected metabolites can be found here.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
   position = c(
     "auto", "auto", "auto",
-    "auto", "auto"
+    "auto", "auto", "auto"
   )
 ))
 
@@ -635,7 +655,7 @@ helptext_lmm <- reactive(data.table::data.table(
   step = c(
     1, 2, 3,
     4, 5, 6,
-    7
+    7, 8
   ),
   element = c(
     "#shiny-tab-lmm > div > ul > li.active",
@@ -645,7 +665,8 @@ helptext_lmm <- reactive(data.table::data.table(
     "#act_lmm",
     "#tab-2496-1 > div:nth-child(4) > div",
     "#tab-2496-1 > div:nth-child(5) > div > div",
-    "#tab-2496-1 > div:nth-child(6) > div > div"
+    "#tab-2496-1 > div:nth-child(6) > div > div",
+    "#report_linear_mixed_model"
   ),
   intro = c(
     "Here you can calculate a mixed ANOVA for a single selected metabolite.",
@@ -655,12 +676,13 @@ helptext_lmm <- reactive(data.table::data.table(
     "If you click on this button, the linear mixed model is calculated.",
     "This box shows you the testing of the model assumptions.",
     "This box shows you the model formula used for computing the linear mixed model.",
-    "This box shows you the model summary including estimates for fixed and random effects."
+    "This box shows you the model summary including estimates for fixed and random effects.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
   position = c(
     "auto", "auto", "auto",
     "auto", "auto", "auto",
-    "auto"
+    "auto", "auto"
   )
 ))
 
@@ -686,25 +708,27 @@ helptext_lmm_comp <- reactive(data.table::data.table(
   tab = c("tutorial_lmm_comp"),
   step = c(
     1, 2, 3,
-    4, 5
+    4, 5, 6
   ),
   element = c(
     "#shiny-tab-lmm > div > ul > li.active",
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
     "#act_lmm2",
     "#tab-5319-2 > div:nth-child(3) > div > div",
-    "#tab-5319-2 > div:nth-child(4) > div"
+    "#tab-5319-2 > div:nth-child(4) > div",
+    "#report_linear_mixed_model_comparison_report"
   ),
   intro = c(
     "Here you can perform a model comparion between the different types of the linear mixed model.",
     "Here you can select a categorical variable to be used as a fixed factor in the analysis.",
     "If you click on this button, the different linear mixed modesl are calculated",
     "This box shows you the model summary including estimates for fixed and random effects for the different models.",
-    "This box displays a model comparison using ANOVA: for linear mixed models (LMM), ANOVA evaluates whether adding fixed or random effects significantly improves model fit by comparing nested models and providing statistics such as AIC, BIC, log-likelihood, chi-square, and p-values."
+    "This box displays a model comparison using ANOVA: for linear mixed models (LMM), ANOVA evaluates whether adding fixed or random effects significantly improves model fit by comparing nested models and providing statistics such as AIC, BIC, log-likelihood, chi-square, and p-values.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
   position = c(
     "auto", "auto", "auto",
-    "auto", "auto"
+    "auto", "auto", "auto"
   )
 ))
 
@@ -731,7 +755,7 @@ helptext_pcn <- reactive(data.table::data.table(
   step = c(
     1, 2, 3,
     4, 5, 6,
-    7, 8
+    7, 8, 9
   ),
   element = c(
     "#sidebarItemExpanded > ul > li:nth-child(3) > a",
@@ -741,7 +765,8 @@ helptext_pcn <- reactive(data.table::data.table(
     "#selectedBynetwork",
     "#graphnetwork > div.vis-network > div.vis-edit-mode > button",
     "#shiny-tab-pcn > div:nth-child(4) > div",
-    "#shiny-tab-pcn > div:nth-child(6) > div"
+    "#shiny-tab-pcn > div:nth-child(6) > div",
+    "#report_network_pearson"
   ),
   intro = c(
     "Here you can select for which time point the correlation network should be calculated.",
@@ -752,12 +777,13 @@ helptext_pcn <- reactive(data.table::data.table(
     "Here you can perform modifications to the graph.",
     "To export the current network as an HTML file, first click on 'Store positions!' and then click on 'Download network'.",
     "If you select one or multiple metabolites from the network (by pressing Ctrl/Cmd),
-             the table will display the correlations between the selected metabolites. Below the table, the associations between the metabolites will be shown in scatterplots."
+             the table will display the correlations between the selected metabolites. Below the table, the associations between the metabolites will be shown in scatterplots.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
   position = c(
     "auto", "auto", "auto",
     "auto", "auto", "auto",
-    "auto", "auto"
+    "auto", "auto", "auto"
   )
 ))
 
@@ -786,7 +812,8 @@ helptext_ggm <- reactive(data.table::data.table(
   step = c(
     1, 2, 3,
     4, 5, 6,
-    7, 8, 9
+    7, 8, 9,
+    10
   ),
   element = c(
     "#sidebarItemExpanded > ul > li:nth-child(3) > a",
@@ -797,7 +824,8 @@ helptext_ggm <- reactive(data.table::data.table(
     "#selectedBynetwork_ggm",
     "#graphnetwork_ggm > div.vis-network > div.vis-edit-mode > button",
     "#shiny-tab-ggm > div:nth-child(5) > div",
-    "#shiny-tab-ggm > div:nth-child(7) > div"
+    "#shiny-tab-ggm > div:nth-child(7) > div",
+    "#ggm_compute"
   ),
   intro = c(
     "Here you can select for which time point the correlation network should be calculated.",
@@ -809,12 +837,14 @@ helptext_ggm <- reactive(data.table::data.table(
     "Here you can perform modifications to the graph.",
     "To export the current network as an HTML file, first click on 'Store positions!' and then click on 'Download network'.",
     "If you select one or multiple metabolites from the network (by pressing Ctrl/Cmd),
-             the table will display the partial correlations between the selected metabolites. Below the table, the associations between the metabolites will be shown in scatterplots."
+             the table will display the partial correlations between the selected metabolites. Below the table, the associations between the metabolites will be shown in scatterplots.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
   position = c(
     "auto", "auto", "auto",
     "auto", "auto", "auto",
-    "auto", "auto", "auto"
+    "auto", "auto", "auto",
+    "auto"
   )
 ))
 
@@ -839,18 +869,21 @@ observeEvent(
 
 helptext_il <- reactive(data.table::data.table(
   tab = c("tutorial_il"),
-  step = c(1, 2, 3),
+  step = c(1, 2, 3, 4),
   element = c(
     "#sidebarItemExpanded > ul > div.form-group.shiny-input-container",
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
-    "#lp_compute2"
+    "#lp_compute2",
+    "#report_lp_individuals"
   ),
   intro = c(
     "Here, you can select the metabolites to be displayed in a line plot. The lines represent the trajectories of individuals, color-coded by the categorical variable.",
     "Here, you can select the categorical variable to color-code the individuals.",
-    "If you click here the line plots are generated."
+    "If you click here the line plots are generated.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
-  position = c("auto", "auto", "auto")
+  position = c("auto", "auto", "auto",
+               "auto")
 ))
 
 
@@ -873,18 +906,20 @@ observeEvent(
 
 helptext_gl <- reactive(data.table::data.table(
   tab = c("tutorial_gl"),
-  step = c(1, 2, 3),
+  step = c(1, 2, 3, 4),
   element = c(
     "#sidebarItemExpanded > ul > div.form-group.shiny-input-container",
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
-    "#lp_compute3"
+    "#lp_compute3",
+    "#report_lp_groups"
   ),
   intro = c(
     "Here, you can select the metabolites to be displayed in a line plot. The lines represent the trajectories of group means, color-coded by the categorical variable.",
     "Here, you can select the categorical variable to color-code the individuals.",
-    "If you click here the line plots are generated."
+    "If you click here the line plots are generated.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
-  position = c("auto", "auto", "auto")
+  position = c("auto", "auto", "auto", "auto")
 ))
 
 
@@ -907,16 +942,18 @@ observeEvent(
 
 helptext_ml <- reactive(data.table::data.table(
   tab = c("tutorial_ml"),
-  step = c(1, 2),
+  step = c(1, 2, 3),
   element = c(
     "#sidebarItemExpanded > ul > div.form-group.shiny-input-container",
-    "#lp_compute4"
+    "#lp_compute4",
+    "#report_lp_mean"
   ),
   intro = c(
     "Here, you can select the metabolites to be displayed in a line plot. The lines represent the mean trajectories of the individual metabolites.",
-    "If you click here the line plots are generated."
+    "If you click here the line plots are generated.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
-  position = c("auto", "auto")
+  position = c("auto", "auto", "auto")
 ))
 
 
@@ -940,18 +977,21 @@ observeEvent(
 
 helptext_sm <- reactive(data.table::data.table(
   tab = c("tutorial_sm"),
-  step = c(1, 2, 3),
+  step = c(1, 2, 3,
+           4),
   element = c(
     "#shiny-tab-sm > div.form-group.shiny-input-container",
     "#shiny-tab-sm > div:nth-child(3) > div:nth-child(1) > div",
-    "#shiny-tab-sm > div:nth-child(3) > div:nth-child(2) > div"
+    "#shiny-tab-sm > div:nth-child(3) > div:nth-child(2) > div",
+    "#report_clusterheatmap1"
   ),
   intro = c(
     "Here, you can select the metabolite for which you want to generate the heatmap.",
     "Here, you can separate individuals into distinct clusters using a hierarchical clustering solution.",
-    "Here, you can separate time points into distinct clusters using a hierarchical clustering solution."
+    "Here, you can separate time points into distinct clusters using a hierarchical clustering solution.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
-  position = c("auto", "auto", "auto")
+  position = c("auto", "auto", "auto", "auto")
 ))
 
 
@@ -976,23 +1016,25 @@ observeEvent(
 helptext_bt <- reactive(data.table::data.table(
   tab = c("tutorial_bt"),
   step = c(1, 2, 3,
-           4, 5),
+           4, 5, 6),
   element = c(
         "#sidebarItemExpanded > ul > li:nth-child(3) > a",
         "#sidebarItemExpanded > ul > div.form-group.shiny-input-container",
         "#heatmap_compute",
         "#shiny-tab-bt > div:nth-child(3) > div:nth-child(1)",
-        "#shiny-tab-bt > div:nth-child(3) > div:nth-child(2)"
+        "#shiny-tab-bt > div:nth-child(3) > div:nth-child(2)",
+        "#report_clusterheatmap2"
   ),
   intro = c(
     "Here, you can select a time point for which you want to generate the heatmap.",
     "Here, you can select multiple metabolites to be used in the heatmap.",
     "If you click here the heatmap generated.",
     "Here, you can separate individuals into distinct clusters using a hierarchical clustering solution.",
-    "Here, you can separate metabolites into distinct clusters using a hierarchical clustering solution."
+    "Here, you can separate metabolites into distinct clusters using a hierarchical clustering solution.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
   position = c("auto", "auto", "auto",
-               "auto", "auto")
+               "auto", "auto", "auto")
 ))
 
 
@@ -1016,7 +1058,8 @@ observeEvent(
 helptext_volcano <- reactive(data.table::data.table(
   tab = c("tutorial_volcano"),
   step = c(1, 2, 3,
-           4, 5, 6),
+           4, 5, 6,
+           7),
   element = c(
     "#sidebarItemExpanded > ul > li:nth-child(3) > a",
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
@@ -1025,7 +1068,8 @@ helptext_volcano <- reactive(data.table::data.table(
     "#shiny-tab-volcano > div:nth-child(5) > div.col-sm-3 > div",
     "#shiny-tab-volcano > div:nth-child(5) > div.col-sm-6 > div",
     "#act_volc",
-    "#load_top_features_volcano"),
+    "#load_top_features_volcano",
+    "#report_volcano"),
   intro = c(
     "Here, you can select the time point of measurement for the analysis.",
     "Here, you can select the categorical variable for the analysis",
@@ -1035,11 +1079,12 @@ helptext_volcano <- reactive(data.table::data.table(
     "Here, you can select a cut-off for statistical significance.",
     "Here, you can select a cut-off for absolute log2 fold-change",
     "Click here to perform the differential abundance analysis and generate the volcano plot.",
-    "Here, you can select the top 10 differentially abundant metabolites based on the p-value. They are added to the metabolite picker."
+    "Here, you can select the top 10 differentially abundant metabolites based on the p-value. They are added to the metabolite picker.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
   position = c("auto", "auto", "auto",
                "auto", "auto", "auto",
-               "auto", "auto")
+               "auto", "auto", "auto")
 ))
 
 
@@ -1064,22 +1109,24 @@ observeEvent(
 helptext_enrichment <- reactive(data.table::data.table(
   tab = c("tutorial_enrichment"),
   step = c(1, 2, 3,
-           4, 5),
+           4, 5, 6),
   element = c(
     "#sidebarItemExpanded > ul > li:nth-child(3) > a",
     "#editableField",
     "#shiny-tab-export > div:nth-child(4) > div > a",
     "#jsonInput",
-    "#shiny-tab-export > div:nth-child(6) > div"),
+    "#shiny-tab-export > div:nth-child(6) > div",
+    "#report_query"),
   intro = c(
     "Here, you can select metabolites to be included in the enrichment analysis.",
     "Here, you can copy the selected metabolites.",
     "Go to MetaboAnalyst and paste the copied metabolites.",
     "Paste the downloaded query results here.",
-    "Click on the button 'Get enriched pathways' to receive a list of pathways where your selected metabolites are present."
+    "Click on the button 'Get enriched pathways' to receive a list of pathways where your selected metabolites are present.",
+    "If you click on this button, you can generate a report of your current analysis."
   ),
   position = c("auto", "auto", "auto",
-               "auto", "auto" )
+               "auto", "auto" , "auto")
 ))
 
 
