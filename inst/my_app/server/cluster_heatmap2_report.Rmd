@@ -1,17 +1,24 @@
 ---
-title: "Dynamic report"
-output: html_document
+title: "Cluster Heatmp - Timepoint"
+output:
+  html_document:
+    code_folding: "hide"
 params:
   heatmap_plot_stored_RMD: NA
   input_RMD: NA
 ---
 
-```{r}
+```{r include = FALSE}
 heatmap_plot_stored <- params$heatmap_plot_stored_RMD
 input <- params$input_RMD
 ```
 
 ```{r}
+library(heatmaply)
+library(ggplot2)
+```
+
+```{r, fig.width=12, fig.height=6}
 if(heatmap_plot_stored$computation_done_plot) {
   if (nrow(heatmap_plot_stored$computed_data_plot) == 0) {
     # Display an error message if no data is available
@@ -37,21 +44,3 @@ if(heatmap_plot_stored$computation_done_plot) {
   }
 }
 ```
-
-
-```{r}
-# Check if test data is available
-
-```
-
-```{r}
-
-
-```
-
-
-```{r}
-
-```
-
-

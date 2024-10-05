@@ -1,15 +1,28 @@
 ---
-title: "Dynamic report"
-output: html_document
+title: "Statistical Testing - RM ANOVA for Feature Selection"
+output:
+  html_document:
+    code_folding: "hide"
 params:
   repeated.anova.feat.selection_RMD: NA
   input_RMD: NA
   data_RMD: NA
 ---
 
-```{r}
+```{r include = FALSE}
 repeated.anova.feat.selection <- params$repeated.anova.feat.selection_RMD
 input <- params$input_RMD
+```
+
+```{r}
+library(dplyr)
+library(magrittr)
+library(rstatix)
+library(DT)
+library(parallel)
+library(doParallel)
+library(foreach)
+library(rmarkdown)
 ```
 
 ```{r}
@@ -25,27 +38,3 @@ datatable(repeated.anova.feat.selection$ranking.sorted,
   )
 )
 ```
-
-```{r}
-
-```
-
-```{r}
-
-```
-
-
-
-```{r}
-
-```
-
-```{r}
-
-```
-
-```{r}
-
-```
-
-

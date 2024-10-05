@@ -1,15 +1,29 @@
 ---
-title: "Dynamic report"
-output: html_document
+title: "Statistical Testing - Mixed ANOVA"
+output:
+  html_document:
+    code_folding: "hide"
 params:
   reactive_mixed_anova_RMD: NA
   input_RMD: NA
 ---
 
-```{r}
+```{r include = FALSE}
 reactive_mixed_anova <- params$reactive_mixed_anova_RMD
 input <- params$input_RMD
 ```
+
+
+```{r}
+library(DT)
+library(rstatix)
+library(ggplot2)
+library(ggpubr)
+library(purrr)
+library(parallel)
+library(doParallel)
+```
+
 
 ```{r}
 # Summary statistics
@@ -46,8 +60,6 @@ datatable(reactive_mixed_anova$shapiro,
 )
 
 ```
-
-
 
 ```{r}
 # Homogeneity of variance (Levene's test checks for equal variances across groups):

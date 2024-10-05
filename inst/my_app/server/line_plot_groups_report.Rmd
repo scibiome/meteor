@@ -1,18 +1,26 @@
 ---
-title: "Dynamic report"
-output: html_document
+title: "Line Plot - Groups"
+output:
+  html_document:
+    code_folding: "hide"
 params:
   lineplot_stored_RMD: NA
   input_RMD: NA
 ---
 
-```{r}
+```{r include = FALSE}
 lineplot_stored <- params$lineplot_stored_RMD
 input <- params$input_RMD
-
 ```
 
 ```{r}
+library(ggplot2)
+library(plotly)
+library(dplyr)
+```
+
+
+```{r, fig.width=10, fig.height=6}
 # Check if the computation is done for plot3
 if (lineplot_stored$computation_done_plot3) {
 
@@ -50,22 +58,6 @@ if (lineplot_stored$computation_done_plot3) {
     ggplotly(p)
   }
 }
-```
-
-
-```{r}
-# Check if test data is available
-
-```
-
-```{r}
-
-
-```
-
-
-```{r}
-
 ```
 
 

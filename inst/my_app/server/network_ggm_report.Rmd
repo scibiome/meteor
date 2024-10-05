@@ -1,6 +1,9 @@
 ---
-title: "Dynamic report"
-output: html_document
+title: "Network Diagram - Gaussian Graphical Model"
+output:
+  html_document:
+    code_folding: "hide"
+
 params:
   data_RMD: NA
   df_pca_RMD: NA
@@ -8,7 +11,7 @@ params:
   ggm_data_stored_RMD: NA
 ---
 
-```{r}
+```{r include = FALSE}
 d <- params$data_RMD
 
 ed <- params$df_pca_RMD
@@ -17,6 +20,17 @@ input <- params$input_RMD
 
 ggm_data_stored <- params$ggm_data_stored_RMD
 ```
+
+```{r}
+library(DT)
+library(dplyr)
+library(ggpubr)
+library(rstatix)
+library(igraph)
+library(mgm)
+library(visNetwork)
+```
+
 
 ```{r}
 # Correlation matrix and tidy format

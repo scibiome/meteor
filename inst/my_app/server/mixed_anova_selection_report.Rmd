@@ -1,0 +1,40 @@
+---
+title: "Statistical Testing - Mixed ANOVA for Feature Selection"
+output:
+  html_document:
+    code_folding: "hide"
+params:
+  mixed.anova.feat.selection_RMD: NA
+  input_RMD: NA
+
+---
+
+```{r include = FALSE}
+mixed.anova.feat.selection <- params$mixed.anova.feat.selection_RMD
+input <- params$input_RMD
+```
+
+```{r}
+library(DT)
+library(rstatix)
+library(ggplot2)
+library(ggpubr)
+library(purrr)
+library(parallel)
+library(doParallel)
+```
+
+
+```{r}
+datatable(mixed.anova.feat.selection$ranking.sorted,
+          caption = "Ranked metabolites by p-values",
+          extensions = "Buttons",
+          options = list(
+            searching = FALSE,
+            lengthChange = FALSE,
+            paging = TRUE,
+            dom = 'Bfrtip',
+            buttons = c("copy", "print", "csv", "excel")
+          )
+)
+```

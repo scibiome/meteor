@@ -474,5 +474,21 @@ output$report_mixed_anova <- downloadHandler(
   }
 )
 
+output$report_mixed_anova_selection <- downloadHandler(
+  filename = "report_mixed_anova_selection.html",
+  content = function(file) {
+    tempReport <- file.path(tempdir(), "report.Rmd")
+    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/mixed_anova_selection_report.Rmd", tempReport, overwrite = TRUE)
+
+    params <- list(mixed.anova.feat.selection_RMD = mixed.anova.feat.selection, input_RMD = input)
+
+    rmarkdown::render(tempReport, output_file = file,
+                      params = params,
+                      envir = new.env(parent = globalenv())
+    )
+  }
+)
+
+
 
 

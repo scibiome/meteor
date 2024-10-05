@@ -1,17 +1,30 @@
 ---
-title: "Dynamic report"
-output: html_document
+title: "Prediction"
+output:
+  html_document:
+    code_folding: "hide"
 params:
   prediction_stored_RMD: NA
   input_RMD: NA
 ---
 
-```{r}
+```{r include = FALSE}
 # The `params` object is available in the document.
 prediction_stored <- params$prediction_stored_RMD
 input <- params$input_RMD
 print(prediction_stored)
 ```
+
+
+```{r}
+library(dplyr)
+library(caret)
+library(pROC)
+library(ggplot2)
+library(plotly)
+library(DT)
+```
+
 
 ```{r}
 

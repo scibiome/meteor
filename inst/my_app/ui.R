@@ -469,12 +469,11 @@ ui <- dashboardPage(
             )
           )),
         )),
-        fluidRow(column(width = 12, actionButton(
+        fluidRow(column(width = 2, actionButton(
           "rp_compute",
           "Compute"
-        ))),
-        fluidRow(
-          column(width = 6, downloadButton("report_rp_time", "Generate report"))
+        )),
+        column(width = 2, downloadButton("report_rp_time", "Generate report"))
         ),
         plotOutput("ridgeplot1", width = "100%", height = "1000px")
       ),
@@ -487,13 +486,13 @@ ui <- dashboardPage(
           htmlOutput("info_box_ridge2"),
           column(width =  4, actionButton("tutorial_rp2", "Start page tutorial!", class =  "btn-info"))
         )),
-        fluidRow(column(width = 12, actionButton(
+        fluidRow(column(width = 2, actionButton(
           "rp_compute2",
           "Compute"
-        ))),
-        fluidRow(
-          column(width = 6, downloadButton("report_rp_groups", "Generate report"))
+        )),
+        column(width = 2, downloadButton("report_rp_groups", "Generate report"))
         ),
+
         plotOutput("ridgeplot2", width = "100%", height = "1000px")
       ),
       tabItem(
@@ -529,19 +528,32 @@ ui <- dashboardPage(
           column(1, h5("testdata in %")),
           column(
             width = 2,
-            selectInput("testdata", NULL, c(0, 0.1, 0.2), selected = 0.5),
+            selectInput("testdata", NULL, c(0, 0.1, 0.2, 0.3, 0.4, 0.5), selected = 0),
           ),
         ),
         fluidRow(
-          column(width = 1, actionButton(
+          column(1, h5("Metric")),
+          column(
+            width = 2,
+            selectInput("metric", NULL, c("AUC", "Accuracy"), selected = "AUC"),
+          ),
+        ),
+        fluidRow(
+          column(
+            width = 2,
+            numericInput("tuneLength", "Tune Length:", value = 1, min = 1, step = 1)  # Numeric input for tune length
+          )
+        ),
+        fluidRow(
+          column(width = 2, actionButton(
             "rf_prediction",
             "Compute"
           )),
-          column(width = 6, actionButton(
+          column(width = 2, downloadButton("report_prediction", "Generate report")),
+          column(width = 2, actionButton(
             "load_top_features",
             "Add top features to selection"
-          )),
-          column(width = 6, downloadButton("report_prediction", "Generate report"))
+          ))
         ),
         fluidRow(
           column(
@@ -593,11 +605,10 @@ ui <- dashboardPage(
           )
         ),
         fluidRow(column(
-          width = 4,
+          width = 2,
           actionButton("act_fried", "Compute")
-        )),
-        fluidRow(
-          column(width = 6, downloadButton("report_friedman", "Generate report"))
+        ),
+        column(width = 2, downloadButton("report_friedman", "Generate report"))
         ),
         fluidRow(column(width = 12, DTOutput("summary_stat"))),
         fluidRow(column(width = 6, DTOutput("res_fried")), column(width = 6, DTOutput("res_fried_eff"))),
@@ -630,11 +641,10 @@ ui <- dashboardPage(
               )
             ),
             fluidRow(column(
-              width = 4,
+              width = 2,
               actionButton("act_mixed_anova", "Compute")
-            )),
-            fluidRow(
-              column(width = 6, downloadButton("report_mixed_anova", "Generate report"))
+            ),
+            column(width = 2, downloadButton("report_mixed_anova", "Generate report"))
             ),
             fluidRow(column(width = 12, DT::DTOutput("summary_stats_mixed_anova"))),
             fluidRow(column(width = 12, DT::DTOutput("outliers_mixed_anova"))),
@@ -661,7 +671,8 @@ ui <- dashboardPage(
               column(width = 3, selectInput("selectfactor", "Select factor:", c("Categorical", "Time", "Time x Categorical"), selected = "Time x Categorical"))
             ),
             fluidRow(
-              column(width = 1, actionButton("act_mixed_anova_selection", "Compute")),
+              column(width = 2, actionButton("act_mixed_anova_selection", "Compute")),
+              column(width = 2, downloadButton("report_mixed_anova_selection", "Generate report")),
               column(width = 2, actionButton("load_top_features_anova", "Add top features to selection"))
             ),
             fluidRow(column(width = 4, DTOutput("ranking.sorted"))),
@@ -707,12 +718,10 @@ ui <- dashboardPage(
             ),
 
             fluidRow(column(
-              width = 4,
-              actionButton("act_repeated_anova", "Compute")
+              width = 2,
+              actionButton("act_repeated_anova", "Compute"),
+              column(width = 2, downloadButton("report_repeated_measures_anova", "Generate report"))
             )),
-            fluidRow(
-              column(width = 6, downloadButton("report_repeated_measures_anova", "Generate report"))
-            ),
             fluidRow(column(width = 12, DT::DTOutput("summary_stats_repeated_anova"))),
             fluidRow(column(width = 12, DT::DTOutput("outliers_repeated_anova"))),
             fluidRow(column(width = 12, DT::DTOutput("normality_repeated_anova"))),
@@ -750,10 +759,8 @@ ui <- dashboardPage(
               )
             ),
             fluidRow(
-              column(width = 1, actionButton("act_repeated_anova_selection", "Compute")),
-              fluidRow(
-                column(width = 6, downloadButton("report_repeated_anova_selection", "Generate report"))
-              ),
+              column(width = 2, actionButton("act_repeated_anova_selection", "Compute")),
+              column(width = 2, downloadButton("report_repeated_anova_selection", "Generate report")),
               column(width = 2, actionButton("load_top_features_repeated_anova", "Add top features to selection"))
             ),
             fluidRow(column(width = 4, DTOutput("repeated.ranking.sorted"))),
@@ -798,13 +805,11 @@ ui <- dashboardPage(
             ),
             fluidRow(
               column(
-                width = 4,
+                width = 2,
                 actionButton("act_lmm", "Compute"),
                 style = "padding-bottom:17px",
-              )
-            ),
-            fluidRow(
-              column(width = 6, downloadButton("report_linear_mixed_model", "Generate report"))
+              ),
+              column(width = 2, downloadButton("report_linear_mixed_model", "Generate report"))
             ),
             fluidRow(
               column(
@@ -857,13 +862,11 @@ ui <- dashboardPage(
             fluidRow(
               column(
                 # align="center",
-                width = 4,
+                width = 2,
                 actionButton("act_lmm2", "Compute"),
                 style = "padding-bottom:17px",
-              )
-            ),
-            fluidRow(
-              column(width = 6, downloadButton("report_linear_mixed_model_comparison_report", "Generate report"))
+              ),
+              column(width = 2, downloadButton("report_linear_mixed_model_comparison_report", "Generate report"))
             ),
             fluidRow(
               column(
@@ -933,6 +936,9 @@ ui <- dashboardPage(
           ))
         ),
         fluidRow(
+          column(width = 6, downloadButton("report_network_pearson", "Generate report"))
+        ),
+        fluidRow(
           column(
             width = 12,
             visNetworkOutput("network", height = "70vh")
@@ -947,9 +953,6 @@ ui <- dashboardPage(
         ),
         fluidRow(
           column(width = 12, "Click and hold nodes for a second to select additional nodes.")
-        ),
-        fluidRow(
-          column(width = 6, downloadButton("report_network_pearson", "Generate report"))
         ),
         fluidRow(
           column(
@@ -1008,7 +1011,9 @@ ui <- dashboardPage(
         fluidRow(column(width = 4, actionButton(
           "ggm_compute",
           "Compute"
-        ))),
+        )),
+        column(width = 6, downloadButton("report_network_ggm", "Generate report"))
+        ),
         fluidRow(
           column(
             width = 12,
@@ -1021,9 +1026,6 @@ ui <- dashboardPage(
             actionButton("store_position", "Store positions !"),
             downloadLink("downloadNetwork", "Download network")
           )
-        ),
-        fluidRow(
-          column(width = 6, downloadButton("report_network_ggm", "Generate report"))
         ),
         fluidRow(
           column(width = 12, "Click and hold nodes for a second to select additional nodes.")
@@ -1049,15 +1051,14 @@ ui <- dashboardPage(
           status = "info", solidHeader = TRUE,
           collapsible = TRUE, collapsed = TRUE,
           htmlOutput("info_box_il"),
-          column(width =  4, actionButton("tutorial_il", "Start page tutorial!", class =  "btn-info"))
+          column(width =  2, actionButton("tutorial_il", "Start page tutorial!", class =  "btn-info"))
         )),
         tabName = "il",
-        fluidRow(column(width = 12, actionButton(
+        fluidRow(column(width = 2, actionButton(
           "lp_compute2",
           "Compute"
-        ))),
-        fluidRow(
-          column(width = 6, downloadButton("report_lp_individuals", "Generate report"))
+        )),
+        column(width = 2, downloadButton("report_lp_individuals", "Generate report"))
         ),
         plotlyOutput("plot2", width = "100%", height = "1000px")
       ),
@@ -1070,12 +1071,11 @@ ui <- dashboardPage(
           htmlOutput("info_box_gl"),
           column(width =  4, actionButton("tutorial_gl", "Start page tutorial!", class =  "btn-info"))
         )),
-        fluidRow(column(width = 12, actionButton(
+        fluidRow(column(width = 2, actionButton(
           "lp_compute3",
           "Compute"
-        ))),
-        fluidRow(
-          column(width = 6, downloadButton("report_lp_groups", "Generate report"))
+        )),
+        column(width = 2, downloadButton("report_lp_groups", "Generate report"))
         ),
         plotlyOutput("plot3", width = "100%", height = "1000px")
       ),
@@ -1088,12 +1088,11 @@ ui <- dashboardPage(
           htmlOutput("info_box_ml"),
           column(width =  4, actionButton("tutorial_ml", "Start page tutorial!", class =  "btn-info"))
         )),
-        fluidRow(column(width = 12, actionButton(
+        fluidRow(column(width = 2, actionButton(
           "lp_compute4",
           "Compute"
-        ))),
-        fluidRow(
-          column(width = 6, downloadButton("report_lp_mean", "Generate report"))
+        )),
+        column(width = 2, downloadButton("report_lp_mean", "Generate report"))
         ),
         plotlyOutput("plot4", width = "100%", height = "1000px")
       ),
@@ -1122,10 +1121,11 @@ ui <- dashboardPage(
             min = 2, max = 10, value = 2
           ))
         ),
-        imageOutput("clustheatmap", width = "300%", height = "200%"),
         fluidRow(
           column(width = 6, downloadButton("report_clusterheatmap1", "Generate report"))
         ),
+        imageOutput("clustheatmap", width = "300%", height = "200%"),
+
       ),
       tabItem(
         tabName = "bt",
@@ -1136,10 +1136,7 @@ ui <- dashboardPage(
           htmlOutput("info_box_tb"),
           column(width =  4, actionButton("tutorial_bt", "Start page tutorial!", class =  "btn-info"))
         )),
-        fluidRow(column(width = 12, actionButton(
-          "heatmap_compute",
-          "Compute"
-        ))),
+
         fluidRow(
           column(width = 6, sliderInput("clustrow", "Number of clusters (rows):",
             min = 2, max = 10, value = 2
@@ -1148,10 +1145,12 @@ ui <- dashboardPage(
             min = 2, max = 10, value = 2
           ))
         ),
+        fluidRow(column(width = 2, actionButton(
+          "heatmap_compute",
+          "Compute"
+        )),
+        column(width = 2, downloadButton("report_clusterheatmap2", "Generate report"))),
         plotlyOutput("clustheatmap2", height = "1000px"),
-        fluidRow(
-          column(width = 6, downloadButton("report_clusterheatmap2", "Generate report"))
-        ),
       ),
       tabItem(
         tabName = "volcano",
@@ -1194,13 +1193,11 @@ ui <- dashboardPage(
         # textOutput("text2"),
         fluidRow(
           column(
-            width = 4,
+            width = 2,
             actionButton("act_volc", "Compute")
           ),
+          column(width = 2, downloadButton("report_volcano", "Generate report")),
           column(width = 2, actionButton("load_top_features_volcano", "Add top features to selection"))
-        ),
-        fluidRow(
-          column(width = 6, downloadButton("report_volcano", "Generate report"))
         ),
         fluidRow(column(width = 12, height = 20, withSpinner(plotOutput("volcano.plot", width = "100%", height = "1000px"))))
       ),
@@ -1242,16 +1239,21 @@ ui <- dashboardPage(
         ),
         fluidRow(
           column(
-            width = 12,
-            tags$h4("3. Enrichment Analysis", style = "font-weight: bold; font-size: 15px;"),
-            actionButton("api.go", "Get enriched pathways"),
-          )
+            width = 2,  # Adjust width as needed for layout
+            tags$h4("3. Enrichment Analysis", style = "font-weight: bold; font-size: 15px;")
+          )),
+          fluidRow(
+            column(
+              width = 2,
+              actionButton("api.go", "Get enriched pathways")
+            ),
+            column(
+              width = 2,
+              downloadButton("report_query", "Generate report")
+            )
         ),
         fluidRow(column(width = 12, DTOutput("export.dt"))),
         fluidRow(column(width = 12, DTOutput("pathways.dt"))),
-        fluidRow(
-          column(width = 6, downloadButton("report_query", "Generate report"))
-        )
       ),
       tabItem(
         tabName = "packages",

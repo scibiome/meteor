@@ -1,14 +1,24 @@
 ---
-title: "Dynamic report"
-output: html_document
+title: "Statistical Testing - Linear Mixed Model Comparison"
+output:
+  html_document:
+    code_folding: "hide"
 params:
     input_RMD: NA
     lmm.res_RMD: NA
 ---
 
-```{r}
+```{r include = FALSE}
 input <- params$input_RMD
 lmm.res <- params$lmm.res_RMD
+```
+
+```{r}
+library(lme4)       # For fitting linear mixed models
+library(performance) # For checking model assumptions
+library(sjPlot)      # For visualizing model results
+library(ggplot2)     # For creating plots
+library(ggpubr)      # For ggplot2 extensions and publication-ready plots
 ```
 
 ```{r}

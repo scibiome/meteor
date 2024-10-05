@@ -1,6 +1,8 @@
 ---
-title: "Dynamic report"
-output: html_document
+title: "Dimensionality Reduction - PCA"
+output:
+  html_document:
+    code_folding: "hide"
 params:
   df_pca_RMD: NA
   input_RMD: NA
@@ -8,15 +10,25 @@ params:
   data_RMD: NA
 ---
 
-```{r}
+```{r include = FALSE}
 df_pca <- params$df_pca_RMD
 input <- params$input_RMD
 catv <- params$catv_RMD
 data <- params$data_RMD
 ```
 
-
 ```{r}
+library(dplyr)
+library(tidyr)
+library(factoextra)
+library(ggplot2)
+library(plotly)
+library(shiny)
+library(rmarkdown)
+```
+
+
+```{r, fig.width=9, warning = FALSE}
 res.pca <- prcomp(df_pca)
 
 # Visualize eigenvalues/variances
@@ -24,12 +36,11 @@ k <- fviz_screeplot(res.pca, addlabels = TRUE) +
                     theme_apa()
 
 ggplotly(k) %>% layout(plot_bgcolor  = "#edeff4",
-                       paper_bgcolor = "#edeff4",
-                       fig_bgcolor   = "#edeff4")
+                       paper_bgcolor = "#edeff4")
 ```
 
 
-```{r}
+```{r, fig.width=10}
 a <- catv
 
 vars <- c("id", "time", a, "metabolites", "values")
@@ -78,7 +89,6 @@ for (i in 1:length(k$x$data)) {
 k %>% layout(
   plot_bgcolor  = "#edeff4",
   paper_bgcolor = "#edeff4",
-  fig_bgcolor   = "#edeff4",
   legend = list(bgcolor = "#edeff4")
 )
 
@@ -86,7 +96,7 @@ k %>% layout(
 
 
 
-```{r}
+```{r, fig.width=10}
 res.pca <- prcomp(df_pca)
 
 dim1 <- input$pcA %>% as.integer()
@@ -95,14 +105,13 @@ dim1 <- input$pcA %>% as.integer()
 k <- fviz_contrib(res.pca, choice = "var", axes = dim1, top = 10)
 ggplotly(k) %>% layout(
   plot_bgcolor  = "#edeff4",
-  paper_bgcolor = "#edeff4",
-  fig_bgcolor   = "#edeff4"
+  paper_bgcolor = "#edeff4"
 )
 
 ```
 
 
-```{r}
+```{r, fig.width=10}
 res.pca <- prcomp(df_pca, scale. = TRUE)
 
 dim2 <- input$pcB %>% as.integer()
@@ -119,7 +128,7 @@ ggplotly(k) %>% layout(
 ```
 
 
-```{r}
+```{r, fig.width=11}
 res.pca <- prcomp(df_pca)
 
 dim1 <- input$pcA %>% as.integer()
@@ -146,7 +155,66 @@ k <- fviz_pca_var(res.pca, col.var = "contrib",
 plot(k)
 ```
 
+```{r, fig.width=11}
+# Assume `data()` is defined and provides the required dataset
+# Replace `catv()` and `input$timepoint` with appropriate selections
 
+# Select the categorical variable for grouping
+a <- catv  # This function should return a valid categorical variable
+
+# Prepare the data for PCA
+vars <- c("id", "time", a, "metabolites", "values")
+
+df <- data %>%
+  select(all_of(vars)) %>%
+  filter(time %in% input$timepoint) %>%
+  select(-time) %>%
+  pivot_wider(names_from = "metabolites", values_from = "values", id_cols = all_of(c("id", a))) %>%
+  select(-id)
+
+# Perform PCA
+pca <- prcomp(df[,-1], center = TRUE, scale. = TRUE)
+
+# Extract the scores
+scores <- pca$x
+
+# Get dimensions for the PCA
+dim1 <- input$pcA %>% as.integer()
+dim2 <- input$pcB %>% as.integer()
+dim3 <- input$pcC %>% as.integer()
+
+# Extract scores for the selected dimensions
+x <- scores[, dim1]
+y <- scores[, dim2]
+z <- scores[, dim3]
+
+# Create a data frame for plotly
+dt.pltly <- cbind(x, y, z, as.factor(df[[a]])) %>% as.data.frame()
+colnames(dt.pltly) <- c("x", "y", "z", a)
+
+# Define legend title
+legend.title <- colnames(dt.pltly[a])
+
+# Create 3D plot using plotly
+p <- plot_ly(dt.pltly, 
+              x = ~x, 
+              y = ~y, 
+              z = ~z, 
+              color = ~ifelse(is.na(dt.pltly[[a]]), "NA", as.character(dt.pltly[[a]])),
+              colors = c('#BF382A', '#0C4B8E'), 
+              type = "scatter3d", 
+              mode = "markers") %>%
+  layout(scene = list(xaxis = list(title = paste0("PC", dim1)),
+                      yaxis = list(title = paste0("PC", dim2)),
+                      zaxis = list(title = paste0("PC", dim3)),
+                      showlegend = TRUE,
+                      legend = list(title = list(text = legend.title))),
+         plot_bgcolor = "#edeff4",
+         paper_bgcolor = "#edeff4")
+
+# Display the plot
+p
+```
 
 
 

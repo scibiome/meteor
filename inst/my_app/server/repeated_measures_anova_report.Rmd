@@ -1,15 +1,26 @@
 ---
-title: "Dynamic report"
-output: html_document
+title: "Statistical Testing - RM ANOVA"
+output:
+  html_document:
+    code_folding: "hide"
 params:
   reactive_repeated_anova_RMD: NA
   input_RMD: NA
   data_RMD: NA
 ---
 
-```{r}
+```{r include = FALSE}
 reactive_repeated_anova <- params$reactive_repeated_anova_RMD
 input <- params$input_RMD
+```
+
+```{r include = FALSE}
+library(rstatix)
+library(DT)
+library(parallel)
+library(doParallel)
+library(foreach)
+library(rmarkdown)
 ```
 
 ```{r}

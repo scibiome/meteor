@@ -1,16 +1,26 @@
 ---
-title: "Dynamic report"
-output: html_document
+title: "Ridge Plot - Compare time points"
+output:
+  html_document:
+    code_folding: "hide"
 params:
   ridgeplot_stored_RMD: NA
 
 ---
 
-```{r}
+```{r include = FALSE}
 ridgeplot_stored <- params$ridgeplot_stored_RMD
 ```
 
 ```{r}
+library(ggplot2)
+library(ggridges)
+library(dplyr)
+library(rmarkdown)
+library(purrr)
+```
+
+```{r, fig.width=12, fig.height=6}
 
 # Check if the computation is done
 if (ridgeplot_stored$computation_done_plot1) {

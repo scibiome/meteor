@@ -1,15 +1,28 @@
 ---
-title: "Dynamic report"
-output: html_document
+title: "Volcano Plot"
+output:
+  html_document:
+    code_folding: "hide"
 params:
   volcano.dat_RMD: NA
   input_RMD: NA
 ---
 
-```{r}
+```{r include = FALSE}
 volcano.dat <- params$volcano.dat_RMD
 input <- params$input_RMD
 
+```
+
+```{r}
+# Required libraries
+library(shiny)               # For building the Shiny app
+library(dplyr)               # For data manipulation
+library(tidyr)               # For data reshaping
+library(EnhancedVolcano)     # For creating volcano plots
+library(DT)                  # For rendering DataTables
+library(rmarkdown)           # For rendering R Markdown reports
+library(shinyWidgets)        # For enhanced widgets (e.g., picker inputs)
 ```
 
 ```{r}
@@ -28,15 +41,3 @@ cat("Selected Categorical Variable:", input$catVars)
 print("Cutoff:", input$pcut)
 print("FCcutoff:", input$fccut)
 ```
-
-```{r}
-
-
-```
-
-
-```{r}
-
-```
-
-

@@ -1,6 +1,8 @@
 ---
-title: "Dynamic report"
-output: html_document
+title: "Network Diagram - Pearson Correlation Network"
+output:
+  html_document:
+    code_folding: "hide"
 params:
   data_RMD: NA
   df_pca_RMD: NA
@@ -8,7 +10,7 @@ params:
   stored_node_pcn_RMD: NA
 ---
 
-```{r}
+```{r include = FALSE}
 d <- params$data_RMD
 
 ed <- params$df_pca_RMD
@@ -16,6 +18,17 @@ ed <- params$df_pca_RMD
 input <- params$input_RMD
 
 stored_node_pcn <- params$stored_node_pcn_RMD
+```
+
+```{r}
+library(DT)
+library(dplyr)
+library(ggpubr)
+library(igraph)
+library(visNetwork)
+library(corrr)
+library(shiny)
+library(rmarkdown)
 ```
 
 ```{r}

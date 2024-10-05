@@ -112,7 +112,7 @@ output$feature_imp_plot <- renderPlotly({
     ggplotly(p) %>% layout(
       plot_bgcolor = "#edeff4",
       paper_bgcolor = "#edeff4",
-      fig_bgcolor = "#edeff4",
+      # fig_bgcolor = "#edeff4",
       legend = list(bgcolor = "#edeff4")
     )
   }
@@ -184,7 +184,7 @@ observeEvent(input$rf_prediction, {
   }
 
   # in case the first variable would be equal to unique_values[1, 1]
-  ed[ed[catv()] == as.numeric(unique_values[2, 1]), ][catv()] <-  999
+  ed[ed[catv()] == as.numeric(unique_values[2, 1]), ][catv()] <- 999
   ed[ed[catv()] == as.numeric(unique_values[1, 1]), ][catv()] <- 1
 
   ed[ed[catv()] == 999, ][catv()] <- 0
@@ -205,7 +205,7 @@ observeEvent(input$rf_prediction, {
   }
 
   # create stratified folds for CV
-  n_folds <- 10
+  n_folds <- 5
   cvIndex <- createFolds(as.factor(pull(y_train)), n_folds, returnTrain = T, list=T)
 
   # CV method
@@ -235,16 +235,9 @@ observeEvent(input$rf_prediction, {
 
   #### prediction methods ====
 
+  # metric: AUC, Accuracy, F1
+  # gridsearch? or specify parameter.
   y_train_names <- make.names(as.integer(unlist(y_train)))
-  if (input$prediction_method == "RF") {
-    rfFit <- train(
-      y = y_train_names, x = x_train,
-      method = "rf",
-      trControl = train_control,
-      tuneLength = 1,
-      metric = "AUC"
-    )
-  }
 
   if (input$prediction_method == "LR") {
     # train the model on training set
@@ -253,12 +246,11 @@ observeEvent(input$rf_prediction, {
       trControl = train_control,
       method = "glm",
       family = binomial(),
-      tuneLength = 1,
-      metric = "AUC"
+      metric = input$metric
     )
   }
-  if (input$prediction_method == "XGB") {
-    mtry <- round(sqrt(18), 0)
+
+  # Define the grid for hyperparameter tuning
     gbmGrid <- expand.grid(
       max_depth = c(3, 5, 7, 10),#, 5, 7, 10),
       nrounds = (1:10) * 50, # number of trees
@@ -269,20 +261,62 @@ observeEvent(input$rf_prediction, {
       min_child_weight = 1,
       colsample_bytree = 0.6
     )
+  rfGrid <- expand.grid(
+    mtry = c(3, 5, 7, 10)  # Number of variables randomly sampled as candidates at each split
+  )
 
-    rfFit <- train(
-      y = y_train_names, x = x_train,
-      method = "xgbTree",
-      trControl = train_control,
-      tuneGrid = gbmGrid,
-      tuneLength = 1,
-      verbose = FALSE,
-      metric = "AUC"
+  if (input$prediction_method == "RF") {
+    # Use either tuneGrid or tuneLength based on user input
+    if (input$tuneLength > 0) {
+      rfFit <- train(
+        y = y_train_names,
+        x = x_train,
+        method = "rf",
+        trControl = train_control,
+        tuneLength = input$tuneLength,  # Use input$tuneLength for Random Forest
+        metric = input$metric
+      )
+    } else {
+      rfFit <- train(
+        y = y_train_names,
+        x = x_train,
+        method = "rf",
+        trControl = train_control,
+        tuneGrid = rfGrid,  # Use gbmGrid if tuneLength is not specified
+        metric = input$metric
+      )
+    }
+  }
 
-    )
+  if (input$prediction_method == "XGB") {
+    mtry <- round(sqrt(18), 0)
+
+    # Use either tuneGrid or tuneLength based on user input
+    if (input$tuneLength > 0) {
+      rfFit <- train(
+        y = y_train_names,
+        x = x_train,
+        method = "xgbTree",
+        trControl = train_control,
+        tuneLength = input$tuneLength,  # Use input$tuneLength for XGBoost
+        metric = input$metric
+      )
+    } else {
+      rfFit <- train(
+        y = y_train_names,
+        x = x_train,
+        method = "xgbTree",
+        trControl = train_control,
+        tuneGrid = gbmGrid,  # Use gbmGrid if tuneLength is not specified
+        verbose = FALSE,
+        metric = input$metric
+      )
+    }
   }
 
 
+
+  rfFit$bestTune
 
   print(input$prediction_method)
   print(rfFit[["bestTune"]])
@@ -293,7 +327,7 @@ observeEvent(input$rf_prediction, {
     predition1 <- rfFit[["pred"]][, 3:4]
     predition1$obs <- as.factor(y_train_names)
 
-    if (input$prediction_method == "XGB") {
+    if (input$prediction_method != "LR") {
       rfFit[["results"]] <- rfFit[["results"]][rownames(rfFit[["bestTune"]]), ]
     }
 
@@ -301,13 +335,18 @@ observeEvent(input$rf_prediction, {
       setNames(rfFit[["results"]]$AUC, "cv AUC"),
       setNames(rfFit[["results"]]$Sensitivity, "cv Sensitivity"),
       setNames(rfFit[["results"]]$Specificity, "cv Specificity"),
+      setNames(rfFit[["results"]]$F1, 'cv F1'),
+      setNames(rfFit[["results"]]$Accuracy, 'cv Accuracy'),
       setNames(nrow(y_train), "y_train"), # updated later
       imbalance
     )),3))
 
+    # browser()
+
     prediction_stored$prediction1 <- predition1
     prediction_stored$rfFit <- rfFit
     prediction_stored$computation_done <- TRUE
+    print(rfFit)
 
   } else {
     predition1 <- predict(rfFit, x_test, type = "prob")
@@ -317,7 +356,7 @@ observeEvent(input$rf_prediction, {
     test_con_mat <- confusionMatrix(train_tab)
 
     # for XGB gridsearch was performed
-    if (input$prediction_method == "XGB") {
+    if (input$prediction_method != "LR") {
       rfFit[["results"]] <- rfFit[["results"]][rownames(rfFit[["bestTune"]]), ]
     }
 
@@ -326,6 +365,7 @@ observeEvent(input$rf_prediction, {
         setNames(rfFit[["results"]]$Sensitivity, 'cv Sensitivity'),
        setNames(rfFit[["results"]]$Specificity, 'cv Specificity'),
        setNames(rfFit[["results"]]$F1, 'cv F1'),
+       setNames(rfFit[["results"]]$Accuracy, 'cv Accuracy'),
        imbalance,
        setNames(0, "test AUC"), # updated later
        setNames(nrow(y_train), "y_train"), # updated later
@@ -337,6 +377,8 @@ observeEvent(input$rf_prediction, {
       setNames(test_con_mat$byClass["Balanced Accuracy"], "test Balanced Accuracy")
 
     )), 3))
+
+
 
 
     predition1$obs <- as.factor(make.names(as.integer(unlist(y_test))))
@@ -423,7 +465,7 @@ output$feature_imp_plot <- renderPlotly({
     ggplotly(p) %>% layout(
       plot_bgcolor = "#edeff4",
       paper_bgcolor = "#edeff4",
-      fig_bgcolor = "#edeff4",
+      # fig_bgcolor = "#edeff4",
       legend = list(bgcolor = "#edeff4")
     )
   }

@@ -1,6 +1,8 @@
 ---
-title: "Dynamic report"
-output: html_document
+title: "Dimensionality Reduction - Tensor Factorization"
+output:
+  html_document:
+    code_folding: "hide"
 params:
   df_tcam_RMD: NA
   input_RMD: NA
@@ -8,11 +10,25 @@ params:
   data_RMD: NA
 ---
 
-```{r}
+```{r include = FALSE}
 df_tcam <- params$df_tcam_RMD
 input <- params$input_RMD
 catv <- params$catv_RMD
 data <- params$data_RMD
+```
+
+```{r}
+library(shiny)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(plotly)
+library(factoextra)
+library(FactoMineR)
+library(purrr)
+library(rmarkdown)
+library(ggpubr)
+library(lubridate)  # If you use date manipulations
 ```
 
 
@@ -298,6 +314,7 @@ p
 
 
 ```
+
 ```{r}
 
                 a <- catv

@@ -1,6 +1,8 @@
 ---
-title: "Dynamic report"
-output: html_document
+title: "Enrichment"
+output:
+  html_document:
+    code_folding: "hide"
 params:
   DT_pathways_RMD: NA
   input_RMD: NA
@@ -8,7 +10,7 @@ params:
   raw_list_RMD: NA
 ---
 
-```{r}
+```{r include = FALSE}
 # DT_pathways <- params$DT_pathways_RMD
 input <- params$input_RMD
 stored_enriched_kegg_pathways <- params$stored_enriched_kegg_pathways_RMD
@@ -16,8 +18,17 @@ raw_list <- params$raw_list_RMD
 ```
 
 ```{r}
+library(KEGGREST)
+library(DT)
+library(dplyr)
+library(jsonlite)
+library(httr)
+```
+
+```{r}
 datatable(data.frame(metabolites = raw_list$data$metabolites), editable = TRUE)
 ```
+
 
 ```{r}
 datatable(stored_enriched_kegg_pathways$query_results.df, editable = TRUE,
