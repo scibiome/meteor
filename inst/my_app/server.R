@@ -82,7 +82,7 @@ if (IS_IN_CONTAINER == "TRUE") {
     # Check if directory my_env exists
     if (!dir.exists("../my_env")) {
       reticulate::use_python(rminiconda::find_miniconda_python("miniconda_for_meteor", path = "C:\\miniconda_py_r"), required = TRUE)
-      reticulate::conda_create(envname = "../my_env", python = rminiconda::find_miniconda_python("miniconda_for_meteor", path = "C:\\miniconda_py_r"))
+      reticulate::conda_create(envname = "../my_env", python = rminiconda::find_miniconda_python("miniconda_for_meteor", path = "C:\\miniconda_py_r"), python_version = "3.10")
       reticulate::use_condaenv("../my_env", required = T)
       reticulate::py_install(packages = c("pandas == 1.5.2"), pip = T)
       reticulate::py_install(packages = c("mprod-package"))
@@ -95,7 +95,7 @@ if (IS_IN_CONTAINER == "TRUE") {
     # Check if directory my_env exists
     if (!dir.exists("../my_env")) {
       reticulate::use_python(rminiconda::find_miniconda_python("miniconda_for_meteor"), required = TRUE)
-      reticulate::conda_create(envname = "../my_env", python = rminiconda::find_miniconda_python("miniconda_for_meteor"))
+      reticulate::conda_create(envname = "../my_env", python = rminiconda::find_miniconda_python("miniconda_for_meteor"), python_version = "3.10")
       reticulate::use_condaenv("../my_env", required = T)
       reticulate::py_install(packages = c("pandas == 1.5.2"), pip = T)
       reticulate::py_install(packages = c("mprod-package"))
@@ -108,7 +108,7 @@ if (IS_IN_CONTAINER == "TRUE") {
     # Check if directory my_env exists
     if (!dir.exists("../my_env")) {
       reticulate::use_python(rminiconda::find_miniconda_python("miniconda_for_meteor"), required = TRUE)
-      reticulate::conda_create(envname = "../my_env", python = rminiconda::find_miniconda_python("miniconda_for_meteor"))
+      reticulate::conda_create(envname = "../my_env", python = rminiconda::find_miniconda_python("miniconda_for_meteor"), python_version = "3.10")
       reticulate::use_condaenv("../my_env", required = T)
       reticulate::py_install(packages = c("pandas == 1.5.2"), pip = T)
       reticulate::py_install(packages = c("mprod-package"))

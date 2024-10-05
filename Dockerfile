@@ -1,7 +1,7 @@
 #R base image
 FROM rocker/r-ver:latest
 
-MAINTAINER "Gordon Grabert"
+LABEL org.opencontainers.image.authors="Gordon Grabert"
 
 # system libraries of general use
 ## install debian packages
@@ -54,16 +54,20 @@ RUN apt-get update
 
 RUN apt-get install -y wget && rm -rf /var/lib/apt/lists/*
 
+
 RUN wget \
-    https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh \
+    https://repo.anaconda.com/miniconda/Miniconda3-py310_23.5.0-3-Linux-x86_64.sh \
     && mkdir /root/.conda \
-    && bash Miniconda3-latest-Linux-x86_64.sh -b \
-    && rm -f Miniconda3-latest-Linux-x86_64.sh
+    && bash Miniconda3-py310_23.5.0-3-Linux-x86_64.sh -b \
+    && rm -f Miniconda3-py310_23.5.0-3-Linux-x86_64.sh
 RUN conda --version
+
+
 
 RUN pip3 install pandas==1.5.2 --upgrade
 RUN conda install -c conda-forge -y mprod-package
-# RUN pip3 install numpy==1.23.0 --upgrade
+RUN pip3 install scipy==1.10.0 --upgrade
+RUN pip3 install numpy==1.23.0 --upgrade
 
 # run app on container start
 CMD ["Rscript", "-e", "MeTEor::meteor()"]
