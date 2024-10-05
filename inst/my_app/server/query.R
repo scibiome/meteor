@@ -261,7 +261,7 @@ output$report_query <- downloadHandler(
   filename = "report_query.html",
   content = function(file) {
     tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/query_report.Rmd", tempReport, overwrite = TRUE)
+    file.copy(file.path("server", "query_report.Rmd"), tempReport, overwrite = TRUE)
 
     params <- list(DT_pathways_RMD = DT_pathways(), input_RMD = input, stored_enriched_kegg_pathways_RMD = stored_enriched_kegg_pathways, raw_list_RMD = raw_list)
 
