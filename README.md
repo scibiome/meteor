@@ -6,7 +6,6 @@
 
 [![Tutorial](https://img.youtube.com/vi/V46K-fMeCVc/0.jpg)](https://youtu.be/V46K-fMeCVc)
 
-https://youtu.be/V46K-fMeCVc
 # Overview
 
 \`MeTEor\` is an R Shiny application that offers the possibility to explore longitudinal metabolomics data. For this purpose, a variety of statistical analysis and visualization methods are implemented in MeTEor to help the user to get a quick overview of the data.
