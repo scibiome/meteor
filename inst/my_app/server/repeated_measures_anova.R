@@ -81,7 +81,7 @@ observe({
 
   choices <- trt.names[!is.na(trt.names)]
 
-  updateSelectInput(session, "repeated_anova_category", choices = choices, selected = choices)
+  updateSelectInput(session, "repeated_anova_category", choices = choices, selected = choices[1])
 })
 
 
@@ -414,7 +414,7 @@ observeEvent(input$catVars, {
 
   choices <- trt.names[!is.na(trt.names)]
 
-  updateSelectInput(session, "repeated_category", choices = choices, selected = choices)
+  updateSelectInput(session, "repeated_category", choices = choices, selected = choices[1])
 })
 
 
