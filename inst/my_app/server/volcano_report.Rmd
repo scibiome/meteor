@@ -25,7 +25,7 @@ library(rmarkdown)           # For rendering R Markdown reports
 library(shinyWidgets)        # For enhanced widgets (e.g., picker inputs)
 ```
 
-```{r}
+```{r, fig.width=9}
 # Render the data table
 datatable(volcano.dat$res)
 

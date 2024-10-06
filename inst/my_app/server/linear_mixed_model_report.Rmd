@@ -25,15 +25,15 @@ library(ggpubr)      # For ggplot2 extensions and publication-ready plots
 paste0("Model: ", lmm.res$model.code)
 ```
 
-```{r}
-knitr::include_graphics(lmm.res$outfile2)
+```{r fig.width=12, fig.height=10,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG(lmm.res$outfile2)
+ grid.raster(img)
 ```
 
-```{r}
-lmm.res$check_model_finished
-```
 
-```{r}
+```{r, fig.width=9}
 lmm_model <- ggplot(lmm.res$data.filtered, aes(x = time, y = values, color = factor(!!sym(input$catVars)), group = factor(id))) +
   labs(color = input$catVars) +
   geom_point(size = 1) +
@@ -53,7 +53,7 @@ lmm_model <- ggplot(lmm.res$data.filtered, aes(x = time, y = values, color = fac
 print(lmm_model)
 ```
 
-```{r}
+```{r, fig.width=9}
 line_plot <- ggplot(lmm.res$data.filtered, aes(x = time, y = values, color = factor(!!sym(input$catVars)), group = factor(id))) +
   labs(color = input$catVars) +
   geom_point(size = 1) +

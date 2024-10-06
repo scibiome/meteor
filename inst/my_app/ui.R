@@ -803,7 +803,7 @@ ui <- dashboardPage(
                 selectInput(
                   inputId = "lmm_select", label = "Select model:",
                   choices = c("Random intercept", "Random slope", "Random intercept + slope"),
-                  selected = "Random intercept + slope",
+                  selected = "Random intercept",
                   width = "800px",
                   multiple = F,
                   selectize = TRUE
@@ -1015,7 +1015,7 @@ ui <- dashboardPage(
             selected = "layout_nicely"
           ))
         ),
-        fluidRow(column(width = 4, actionButton(
+        fluidRow(column(width = 2, actionButton(
           "ggm_compute",
           "Compute"
         )),

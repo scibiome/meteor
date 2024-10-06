@@ -1,6 +1,8 @@
 ---
 title: "Statistical Testing - Friedman Test"
-output: html_document
+output:
+  html_document:
+    code_folding: "hide"
 params:
   reactive_friedman_RMD: NA
   input_RMD: NA
@@ -51,7 +53,7 @@ datatable(reactive_friedman$res_fried_eff,
 
 
 
-```{r}
+```{r, fig.width=9}
 # Generate pairwise comparisons with xy positions
 pair.ws <- reactive_friedman$pair.ws %>% add_xy_position(x = "time")
 

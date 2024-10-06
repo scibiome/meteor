@@ -101,9 +101,7 @@ observeEvent(input$act_mixed_anova, {
 
   outliers <- outliers[, c("ID", "Time", "Category", "Group", "Metabolites", "Values", "is.outlier", "is.extreme")]
 
-  browser()
-  print(data.filtered %>%
-         group_by(time, input$catVars), n=100 )
+
   ## normality assumption
   shapiro <- data.filtered %>%
     filter(!is.na(!!sym(input$catVars))) %>%  # Filter out NA values in the categorical variable

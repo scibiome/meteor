@@ -256,6 +256,10 @@ observeEvent(input$act_lmm,{
   print(plot_object)
   dev.off()
 
+
+
+
+
   lmm.res$outfile2 <- outfile2
 
   output$model.code <- renderText({paste0("Model: ", lmm.res$model.code)})
