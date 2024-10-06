@@ -19,9 +19,33 @@ output$info_box_pred <- renderUI({
         To learn more about the algorithms used and their applications, refer to
         Kuhn, M. <a href='https://www.jstatsoft.org/article/view/v028i05' target='_blank'>Building predictive models in R using the caret package</a> 2008.<br>
         For detailed information on cross-validation (CV) and leave-one-out cross-validation (LOOCV), visit
-        Ng, A. Y. <a href='https://ai.stanford.edu/~ang/papers/cv-final.pdf' target='_blank'>Preventing \"overfitting\" of cross-validation data</a> 1997.
+        Ng, A. Y. <a href='https://ai.stanford.edu/~ang/papers/cv-final.pdf' target='_blank'>Preventing \"overfitting\" of cross-validation data</a> 1997.<br><br>
+
+        <u>Parameter Information:</u><br>
+        <b>XGBoost (XGB) Parameters:</b><br>
+        <ul>
+          <li><b>max_depth</b>: Controls the maximum depth of each decision tree. Higher values allow the model to learn more complex patterns but can lead to overfitting.</li>
+          <li><b>nrounds</b>: Number of boosting iterations or the number of trees. More rounds increase model complexity and training time.</li>
+          <li><b>eta</b>: The learning rate, used to control the contribution of each tree. Lower values help reduce overfitting.</li>
+          <li><b>gamma</b>: Regularization parameter to control tree complexity, penalizing leaf nodes.</li>
+          <li><b>subsample</b>: Fraction of data to be randomly sampled for each tree to prevent overfitting.</li>
+          <li><b>min_child_weight</b>: Minimum sum of instance weights in a child node. Larger values prevent overfitting.</li>
+          <li><b>colsample_bytree</b>: Fraction of features randomly sampled for each tree. Lower values help avoid overfitting.</li>
+        </ul>
+
+        <b>Random Forest (RF) Parameters:</b><br>
+        <ul>
+          <li><b>mtry</b>: Number of variables randomly sampled as candidates at each split. Higher values may increase model complexity.</li>
+        </ul>
+
+        <b>Logistic Regression (LR) Parameters:</b><br>
+        <ul>
+          <li><b>alpha</b>: Elastic net mixing parameter. alpha=0 represents Ridge (L2) regularization, and alpha=1 represents Lasso (L1) regularization.</li>
+          <li><b>lambda</b>: Regularization strength. Higher values add more penalty, reducing model complexity.</li>
+        </ul>
       </p>")
 })
+
 
 
 
@@ -205,7 +229,7 @@ observeEvent(input$rf_prediction, {
   }
 
   # create stratified folds for CV
-  n_folds <- 10
+  n_folds <- 5
   cvIndex <- createFolds(as.factor(pull(y_train)), n_folds, returnTrain = T, list=T)
 
   # CV method
