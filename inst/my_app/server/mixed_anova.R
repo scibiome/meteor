@@ -99,11 +99,18 @@ observeEvent(input$act_mixed_anova, {
 
   colnames(outliers) <- c("Time", "Category", "ID", "Group", "Metabolites", "Values", "is.outlier", "is.extreme")
 
+  outliers <- outliers[, c("ID", "Time", "Category", "Group", "Metabolites", "Values", "is.outlier", "is.extreme")]
+
+  browser()
+  print(data.filtered %>%
+         group_by(time, input$catVars), n=100 )
   ## normality assumption
   shapiro <- data.filtered %>%
-                group_by(time, input$catVars) %>%
-                rstatix::shapiro_test(values) %>%
-                mutate(across(where(is.numeric), ~round(.,3)))
+    filter(!is.na(!!sym(input$catVars))) %>%  # Filter out NA values in the categorical variable
+    group_by(!!sym(input$catVars), time) %>%  # Group by category and time
+    shapiro_test(values) %>%                   # Perform the Shapiro-Wilk test on 'values'
+    mutate(across(where(is.numeric), ~round(., 3)))  # Round numeric results
+
 
   colnames(shapiro) <- c("Category", "Time", "Variable", "statistic", "p")
 
