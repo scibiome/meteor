@@ -164,7 +164,7 @@ output$report_friedman <- downloadHandler(
   filename = "report_friedman.html",
   content = function(file) {
     tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/friedman_report.Rmd", tempReport, overwrite = TRUE)
+    file.copy(file.path("server", "friedman_report.Rmd"), tempReport, overwrite = TRUE)
 
     params <- list(reactive_friedman_RMD = reactive_friedman, input_RMD = input, data_RMD = data())
 

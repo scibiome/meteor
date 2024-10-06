@@ -175,7 +175,7 @@ output$report_volcano <- downloadHandler(
   filename = "report_volcano.html",
   content = function(file) {
     tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/volcano_report.Rmd", tempReport, overwrite = TRUE)
+    file.copy(file.path("server", "volcano_report.Rmd"), tempReport, overwrite = TRUE)
 
     params <- list(volcano.dat_RMD = volcano.dat, input_RMD = input)
 

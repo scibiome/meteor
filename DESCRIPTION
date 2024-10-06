@@ -3,15 +3,15 @@ Type: Package
 Title: MeTEor - an R Shiny app for Metabolite Trajectory Exploration
 Version: 1.0.0
 Authors@R: c(
-    person("Grabert", "Gordon", email = "gordon.grabert@tu-braunschweig.de", role = c("aut", "cre"),
+    person("Gordon", "Grabert", email = "gordon.grabert@tu-braunschweig.de", role = c("aut", "cre"),
             comment = c(ORCID = "0000-0001-5499-9970")),
-    person("Dehncke", "Daniel", email = "daniel.dehncke@plri.de", role = c("aut")),
-    person("More", "Tushar", role = c("aut")),
-    person("List", "Markus", role = c("aut")), 
-    person("Kraft", "Anke RM", role = c("aut")),
-    person("Cornberg", "Markus", role = c("aut")),
-    person("Hiller", "Karsten", role = c("aut")),
-    person("Kacprowski", "Tim", role = c("aut")),
+    person("Daniel", "Dehncke", email = "daniel.dehncke@plri.de", role = c("aut")),
+    person("Tushar", "More", role = c("aut")),
+    person("Markus", "List", role = c("aut")), 
+    person("Anke RM", "Kraft", role = c("aut")),
+    person("Markus", "Cornberg", role = c("aut")),
+    person("Karsten", "Hiller", role = c("aut")),
+    person("Tim", "Kacprowski", role = c("aut")),
     person("Data Science in Biomedicine", role = c("fnd"))
     )
 Description: MeTEor streamlines exploratory analysis of

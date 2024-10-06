@@ -270,7 +270,7 @@ output$report_linear_mixed_model <- downloadHandler(
   filename = "report_linear_mixed_model.html",
   content = function(file) {
     tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/linear_mixed_model_report.Rmd", tempReport, overwrite = TRUE)
+    file.copy(file.path("server", "linear_mixed_model_report.Rmd"), tempReport, overwrite = TRUE)
 
     params <- list(input_RMD = input, lmm.res_RMD = lmm.res)
 
@@ -320,7 +320,7 @@ output$report_linear_mixed_model_comparison_report <- downloadHandler(
   filename = "report_pca.html",
   content = function(file) {
     tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/linear_mixed_model_comparison_report.Rmd", tempReport, overwrite = TRUE)
+    file.copy(file.path("server", "linear_mixed_model_comparison_report.Rmd"), tempReport, overwrite = TRUE)
 
     params <- list(input_RMD = input, lmm.res_RMD = lmm.res)
 

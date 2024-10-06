@@ -20,7 +20,7 @@ observe({
       dat.nam <- data()
       time.names <- unique(dat.nam[,2]) %>% as.numeric() %>% sort()
 
-      updateSelectInput(session, "time.names", choices = time.names, selected = NULL)
+      updateSelectInput(session, "time.names", choices = time.names, selected = time.names)
 })
 
 # variable that stores the metabolites stores in the UI

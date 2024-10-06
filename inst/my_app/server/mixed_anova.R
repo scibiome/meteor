@@ -463,7 +463,7 @@ output$report_mixed_anova <- downloadHandler(
   filename = "report_mixed_anova.html",
   content = function(file) {
     tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/mixed_anova_report.Rmd", tempReport, overwrite = TRUE)
+    file.copy(file.path("server", "mixed_anova_report.Rmd"), tempReport, overwrite = TRUE)
 
     params <- list(reactive_mixed_anova_RMD = reactive_mixed_anova, input_RMD = input)
 
@@ -478,7 +478,7 @@ output$report_mixed_anova_selection <- downloadHandler(
   filename = "report_mixed_anova_selection.html",
   content = function(file) {
     tempReport <- file.path(tempdir(), "report.Rmd")
-    file.copy("~/PycharmProjects/meteor_github/inst/my_app/server/mixed_anova_selection_report.Rmd", tempReport, overwrite = TRUE)
+    file.copy(file.path("server", "mixed_anova_selection_report.Rmd"), tempReport, overwrite = TRUE)
 
     params <- list(mixed.anova.feat.selection_RMD = mixed.anova.feat.selection, input_RMD = input)
 

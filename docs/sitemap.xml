@@ -1,54 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://scibiome.github.io/meteor/404.html</loc>
-  </url>
-  <url>
-    <loc>https://scibiome.github.io/meteor/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://scibiome.github.io/meteor/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://scibiome.github.io/meteor/articles/Covid_data.html</loc>
-  </url>
-  <url>
-    <loc>https://scibiome.github.io/meteor/articles/Example_data.html</loc>
-  </url>
-  <url>
-    <loc>https://scibiome.github.io/meteor/articles/Tutorial.html</loc>
-  </url>
-  <url>
-    <loc>https://scibiome.github.io/meteor/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://scibiome.github.io/meteor/articles/preprocess_raw_data.html</loc>
-  </url>
-  <url>
-    <loc>https://scibiome.github.io/meteor/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://scibiome.github.io/meteor/index.html</loc>
-  </url>
-  <url>
-    <loc>https://scibiome.github.io/meteor/reference/covid_data.html</loc>
-  </url>
-  <url>
-    <loc>https://scibiome.github.io/meteor/reference/data_check.html</loc>
-  </url>
-  <url>
-    <loc>https://scibiome.github.io/meteor/reference/data_validation.html</loc>
-  </url>
-  <url>
-    <loc>https://scibiome.github.io/meteor/reference/example_data.html</loc>
-  </url>
-  <url>
-    <loc>https://scibiome.github.io/meteor/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://scibiome.github.io/meteor/reference/meteor.html</loc>
-  </url>
-  <url>
-    <loc>https://scibiome.github.io/meteor/reference/raw_example_data.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://scibiome.github.io/meteor/404.html</loc></url>
+<url><loc>https://scibiome.github.io/meteor/LICENSE-text.html</loc></url>
+<url><loc>https://scibiome.github.io/meteor/LICENSE.html</loc></url>
+<url><loc>https://scibiome.github.io/meteor/articles/Covid_data.html</loc></url>
+<url><loc>https://scibiome.github.io/meteor/articles/Example_data.html</loc></url>
+<url><loc>https://scibiome.github.io/meteor/articles/Tutorial.html</loc></url>
+<url><loc>https://scibiome.github.io/meteor/articles/index.html</loc></url>
+<url><loc>https://scibiome.github.io/meteor/articles/preprocess_raw_data.html</loc></url>
+<url><loc>https://scibiome.github.io/meteor/authors.html</loc></url>
+<url><loc>https://scibiome.github.io/meteor/index.html</loc></url>
+<url><loc>https://scibiome.github.io/meteor/reference/covid_data.html</loc></url>
+<url><loc>https://scibiome.github.io/meteor/reference/data_check.html</loc></url>
+<url><loc>https://scibiome.github.io/meteor/reference/data_validation.html</loc></url>
+<url><loc>https://scibiome.github.io/meteor/reference/example_data.html</loc></url>
+<url><loc>https://scibiome.github.io/meteor/reference/index.html</loc></url>
+<url><loc>https://scibiome.github.io/meteor/reference/meteor.html</loc></url>
+<url><loc>https://scibiome.github.io/meteor/reference/raw_example_data.html</loc></url>
 </urlset>
+
