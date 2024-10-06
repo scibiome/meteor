@@ -25,17 +25,20 @@ library(plotly)
 library(DT)
 ```
 
+### Parameter Grid
 
 ```{r}
+print(input$param_grid)
+```
 
-print(prediction_stored$computation_done)
+### Best Model
+
+```{r}
 print(prediction_stored$rfFit)
-print(input$prediction_method)
-# Check if prediction is done
 ```
 
 
-```{r}
+```{r, fig.width=9}
 # Check if test data is available
 if (!is.na(input$testdata) && input$testdata != 0) {
   
@@ -79,7 +82,7 @@ if (!is.na(input$testdata) && input$testdata != 0) {
 
 ```
 
-```{r}
+```{r, fig.width=9}
 # Check if prediction is done
 if (prediction_stored$computation_done) {
   # Depending on the prediction method, extract importance
@@ -109,7 +112,6 @@ if (prediction_stored$computation_done) {
   ggplotly(p) %>% layout(
     plot_bgcolor = "#edeff4",
     paper_bgcolor = "#edeff4",
-    fig_bgcolor = "#edeff4",
     legend = list(bgcolor = "#edeff4")
   )
 }

@@ -237,23 +237,6 @@ observeEvent(input$rf_prediction, {
 
   y_train_names <- make.names(as.integer(unlist(y_train)))
 
-  if (input$prediction_method == "LR") {
-    # Train the model on the training set using glmnet for L1 regularization
-    rfFit <- train(
-      y = y_train_names,
-      x = x_train,
-      trControl = train_control,
-      method = "glmnet",  # Change to glmnet for L1 and L2 regularization
-      metric = input$metric,
-      tuneGrid = expand.grid(
-        alpha = 0.5,  # Elastic net mixing parameter (0 = L2, 1 = L1)
-        lambda = seq(0.1, 0.7, 0.05)  # Range of lambda values for regularization
-      )
-    )
-  }
-
-
-
   parse_param_grid <- function(param_grid_input) {
     # Split by space to separate each parameter (adjusted to handle the new format)
     param_pairs <- strsplit(param_grid_input, "\\s+")[[1]]
@@ -275,8 +258,6 @@ observeEvent(input$rf_prediction, {
     return(param_list)
   }
   param_grid <- parse_param_grid(input$param_grid)
-
-
 
   valid_params <- list(
     max_depth = 1,
@@ -331,7 +312,55 @@ observeEvent(input$rf_prediction, {
       }
     }
 
+    # Validation for Logistic Regression (LR)
+    if (prediction_method == "LR") {
+      valid_param_names_lr <- c("alpha", "lambda")
+
+      # Check for any unwanted parameters in LR
+      invalid_params_lr <- setdiff(names(param_grid), valid_param_names_lr)
+      if (length(invalid_params_lr) > 0) {
+        valid <- FALSE
+        message <- paste("Invalid parameters found for LR:", paste(invalid_params_lr, collapse = ", "))
+      }
+
+      # Ensure both 'alpha' and 'lambda' are present for LR
+      missing_params_lr <- setdiff(valid_param_names_lr, names(param_grid))
+      if (length(missing_params_lr) > 0) {
+        valid <- FALSE
+        message <- paste(message, "Missing parameters for LR:", paste(missing_params_lr, collapse = ", "))
+      }
+    }
+
     return(list(valid = valid, message = message))
+  }
+
+  # Function to check for empty parameter values in param_grid
+  check_empty_param_values <- function(param_grid) {
+    empty_params <- list()
+
+    # Loop through param_grid to check for empty values
+    for (param in names(param_grid)) {
+      if (length(param_grid[[param]]) == 0) {
+        empty_params <- c(empty_params, param)
+      }
+    }
+
+    # Return a list of empty parameters if any
+    return(empty_params)
+  }
+
+  # Example Usage
+  empty_params <- check_empty_param_values(param_grid)
+  if (length(empty_params) > 0) {
+    show_alert(
+      title = NULL,
+      text = tags$span(
+        tags$h3("Warning", style = "color: steelblue;"),
+        paste("The following parameters have no values:", paste(empty_params, collapse = ", "))
+      ),
+      html = TRUE
+    )
+    return()  # Stop execution if there are empty parameters
   }
 
   result <- validate_params(param_grid, input$prediction_method)
@@ -350,34 +379,21 @@ observeEvent(input$rf_prediction, {
     return()
   }
 
-    # Convert the parsed parameters into a grid for grid search
-  if (length(param_grid) > 0) {
-    output$grid_output <- renderPrint({
-      gbmGrid  # Show the generated grid
-    })
-    gbmGrid <- expand.grid(param_grid)
-  } else {
-    output$grid_output <- renderPrint({
-      "Invalid parameter grid input, using base grid"
-    })
-    gbmGrid <- expand.grid(
-      max_depth = c(3, 5, 7, 10),
-      nrounds = (1:10) * 50,
-      eta = 0.3,
-      gamma = 0,
-      subsample = 1,
-      min_child_weight = 1,
-      colsample_bytree = 0.6
-    )
-  }
-
   output$grid_output <- renderPrint({
     input$param_grid  # Display the parameter grid input
   })
 
-  rfGrid <- expand.grid(
-    mtry = c(3, 5, 7, 10)  # Number of variables randomly sampled as candidates at each split
-  )
+  if (input$prediction_method == "LR") {
+    # Train the model on the training set using glmnet for L1 regularization
+    rfFit <- train(
+      y = y_train_names,
+      x = x_train,
+      trControl = train_control,
+      method = "glmnet",  # Change to glmnet for L1 and L2 regularization
+      metric = input$metric,
+      tuneGrid = expand.grid(param_grid)
+    )
+  }
 
   if (input$prediction_method == "RF") {
       rfFit <- train(
@@ -385,21 +401,19 @@ observeEvent(input$rf_prediction, {
         x = x_train,
         method = "rf",
         trControl = train_control,
-        tuneGrid = rfGrid,  # Use gbmGrid if tuneLength is not specified
+        tuneGrid = expand.grid(param_grid),  # Use gbmGrid if tuneLength is not specified
         metric = input$metric
       )
   }
 
   if (input$prediction_method == "XGB") {
     mtry <- round(sqrt(18), 0)
-
-
       rfFit <- train(
         y = y_train_names,
         x = x_train,
         method = "xgbTree",
         trControl = train_control,
-        tuneGrid = gbmGrid,  # Use gbmGrid if tuneLength is not specified
+        tuneGrid = expand.grid(param_grid),  # Use gbmGrid if tuneLength is not specified
         verbose = FALSE,
         metric = input$metric
       )
@@ -602,6 +616,8 @@ observe({
     new_value <- "max_depth=(3,5,7,10) nrounds=(50,100,150,200,250,300,350,400,450,500) eta=(0.3) gamma=(0) subsample=(1) min_child_weight=(1) colsample_bytree=(0.6)"
   } else if (input$prediction_method == "RF") {
     new_value <- "mtry=(1,2,3,4,5)"  # Example value for RF method
+  } else if (input$prediction_method == "LR") {
+    new_value <- "alpha=(0.5) lambda=(0.1,0.2)"  # Example value for LR method
   }
 
   # Update the textInput value
