@@ -205,7 +205,7 @@ observeEvent(input$rf_prediction, {
   }
 
   # create stratified folds for CV
-  n_folds <- 5
+  n_folds <- 10
   cvIndex <- createFolds(as.factor(pull(y_train)), n_folds, returnTrain = T, list=T)
 
   # CV method
