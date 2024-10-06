@@ -663,9 +663,9 @@ helptext_lmm <- reactive(data.table::data.table(
     "#id9-label",
     "#lmm_select-label",
     "#act_lmm",
-    "#tab-2496-1 > div:nth-child(4) > div",
-    "#tab-2496-1 > div:nth-child(5) > div > div",
-    "#tab-2496-1 > div:nth-child(6) > div > div",
+    "#tab-1181-1 > div:nth-child(4) > div > div",
+    "#tab-1181-1 > div:nth-child(5) > div",
+    "#tab-1181-1 > div:nth-child(6) > div",
     "#report_linear_mixed_model"
   ),
   intro = c(
@@ -714,8 +714,8 @@ helptext_lmm_comp <- reactive(data.table::data.table(
     "#shiny-tab-lmm > div > ul > li.active",
     "#sidebarItemExpanded > ul > li:nth-child(4) > a",
     "#act_lmm2",
-    "#tab-5319-2 > div:nth-child(3) > div > div",
-    "#tab-5319-2 > div:nth-child(4) > div",
+    "#tab-1181-2 > div:nth-child(3) > div",
+    "#tab-1181-2 > div:nth-child(4) > div > div",
     "#report_linear_mixed_model_comparison_report"
   ),
   intro = c(
