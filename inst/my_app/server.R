@@ -137,7 +137,7 @@ server <- function(input, output, session) {
   data("example_data", package = "MeTEor")
 
   #### Source: tcam_shiny.py ----
-  # reticulate::source_python("tcam_shiny.py")
+  reticulate::source_python("tcam_shiny.py")
 
   #### source: tutorial.R ====
   source(file.path("server", "tutorial.R"), local = TRUE)$value
@@ -152,7 +152,7 @@ server <- function(input, output, session) {
   source(file.path("server", "pca.R"), local = TRUE)$value
 
   #### source: tcam.R ====
-  # source(file.path("server", "tcam.R"), local = TRUE)$value
+  source(file.path("server", "tcam.R"), local = TRUE)$value
 
   #### source: ridge_plot.R ====
   source(file.path("server", "ridge_plot.R"), local = TRUE)$value
